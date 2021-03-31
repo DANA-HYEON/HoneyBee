@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honeybee.mapper.MeetMapper">
+
+<select id="getList" resultType="com.honeybee.domain.MeetVO">
+	<![CDATA[
+		select 
+			GNO,
+			CID,
+			CID2,
+			ID,
+			TITLE,
+			SMRY,
+			to_char(CONTENT) AS CONTENT,
+			STARTDT,
+			ENDDT,
+			RECSDT,
+			RECEDT,
+			RECNO,
+			CURRNO,
+			CNCLNO,
+			HIT,
+			THUMB,
+			CHARGE,
+			ONOFF,
+			PLACE,
+			LINK,
+			IMG,
+			REGDT,
+			UPDDT,
+			DELDT
+			from MEET
+			where gno >0
+	]]>
+</select>
+
+<insert id="insert">
+	insert into meet(
+			GNO,
+			CID,
+			CID2,
+			ID,
+			TITLE,
+			SMRY,
+			CONTENT,
+			STARTDT,
+			ENDDT,
+			RECSDT,
+			RECEDT,
+			RECNO,
+			CURRNO,
+			CNCLNO,
+			HIT,
+			THUMB,
+			CHARGE,
+			ONOFF,
+			PLACE,
+			LINK,
+			IMG)
+			values 
+			(
+			SEQ_meet.nextval,
+			#{cid},
+			#{cid2},
+			#{id},
+			#{title},
+			#{smry},
+			#{content},
+			#{startDt},
+			#{endDt},
+			#{recsDt},
+			#{receDt},
+			#{recNo},
+			#{currNo},
+			#{cnclNo},
+			#{hit},
+			#{thumb},
+			#{charge},
+			#{onoff},
+			#{place},
+			#{link},
+			#{img}
+			)
+</insert>
+
+<insert id="insertSelectKey">
+	<selectKey keyProperty="gno" order="BEFORE" resultType="long">
+		select seq_meet.nextval from dual
+	</selectKey>
+	
+	insert into meet(GNO,
+			CID,
+			CID2,
+			ID,
+			TITLE,
+			SMRY,
+			CONTENT,
+			STARTDT,
+			ENDDT,
+			RECSDT,
+			RECEDT,
+			RECNO,
+			CURRNO,
+			CNCLNO,
+			HIT,
+			THUMB,
+			CHARGE,
+			ONOFF,
+			PLACE,
+			LINK,
+			IMG)
+			values(
+			#{gno},
+			#{cid},
+			#{cid2},
+			#{id},
+			#{title},
+			#{smry},
+			#{content},
+			#{startDt},
+			#{endDt},
+			#{recsDt},
+			#{receDt},
+			#{recNo},
+			#{currNo},
+			#{cnclNo},
+			#{hit},
+			#{thumb},
+			#{charge},
+			#{onoff},
+			#{place},
+			#{link},
+			#{img})
+</insert>
+
+<select id="read" resultType="com.honeybee.domain.MeetVO">
+	select GNO,
+			CID,
+			CID2,
+			ID,
+			TITLE,
+			SMRY,
+			to_char(CONTENT) AS CONTENT,
+			STARTDT,
+			ENDDT,
+			RECSDT,
+			RECEDT,
+			RECNO,
+			CURRNO,
+			CNCLNO,
+			HIT,
+			THUMB,
+			CHARGE,
+			ONOFF,
+			PLACE,
+			LINK,
+			IMG,
+			REGDT,
+			UPDDT,
+			DELDT
+			from MEET
+			where gno = #{gno}
+</select>
+
+<delete id="delete">
+	delete from meet where gno = #{gno}
+</delete>
+
+<update id="update">
+	update meet
+	set
+			TITLE = #{title},
+			SMRY = #{smry},
+			CONTENT = #{content},
+			STARTDT = #{startDt},
+			ENDDT = #{endDt},
+			RECSDT = #{recsDt},
+			RECEDT = #{receDt},
+			RECNO = #{recNo},
+			CHARGE = #{charge},
+			ONOFF = #{onoff},
+			PLACE = #{place},
+			LINK = #{link},
+			IMG = #{img},
+			updDt = sysdate
+	where gno = #{gno}
+</update>
+</mapper>
