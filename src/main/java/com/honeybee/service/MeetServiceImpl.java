@@ -20,6 +20,7 @@ public class MeetServiceImpl implements MeetService {
 	
 	@Setter(onMethod_ =@Autowired)
 	private MeetMapper mapper;
+	
 
 	@Override
 	public void register(MeetVO meet) {
@@ -47,8 +48,8 @@ public class MeetServiceImpl implements MeetService {
 	
 	@Override
 	public List<MeetVO> getList() {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("getList.................");
+		return mapper.getList();
 	}
 
 

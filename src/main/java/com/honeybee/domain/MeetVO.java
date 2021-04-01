@@ -7,28 +7,28 @@ import lombok.Data;
 @Data
 public class MeetVO {
 	
-	private long gno; //¸ğÀÓ¹øÈ£
-	private String cid; //¸ğÀÓÄ«Å×°í¸®
-	private String cid2; //¸ğÁı»óÅÂ
-	private String id; //È¸¿øID
-	private String title; //¸ğÀÓÁ¦¸ñ
-	private String smry; //¸ğÀÓ¿ä¾à³»¿ë
-	private String content; //¸ğÀÓ»ó¼¼³»¿ë(NCLUB)
-	private String startDt; //¸ğÀÓ½ÃÀÛÀÏÀÚ
-	private String endDt; //¸ğÀÓÁ¾·áÀÏÀÚ
-	private String recsDt; //¸ğÀÓ¸ğÁı½ÃÀÛÀÏÀÚ
-	private String receDt; //¸ğÀÓ¸ğÁıÁ¾·áÀÏÀÚ
-	private int recNo; //¸ğÁıÀÎ¿ø
-	private int currNo; //ÇöÀçÀÎ¿ø
-	private int cnclNo; //Ãë¼ÒÀÎ¿ø
-	private int hit; //Á¶È¸¼ö
-	private int thumb; //Âò¼ö
-	private String charge; //À¯¹«·á±¸ºĞ
-	private String onoff; //¿Â¿ÀÇÁ¶óÀÎ ¿©ºÎ
-	private String place; //¸ğÀÓÀå¼Ò
-	private String link; //¸µÅ©
-	private String img; //´ëÇ¥ÀÌ¹Ì¤Ó
-	private Date regDt; //¸ğÀÓ°³¼³ÀÏÀÚ
-	private Date updDt; //¸ğÀÓ¼öÁ¤ÀÏÀÚ
-	private Date delDt; //¸ğÀÓ»èÁ¦ÀÏÀÚ
+	private long mno; //ëª¨ì„ë²ˆí˜¸
+	private String cid; //ëª¨ì„ì¹´í…Œê³ ë¦¬
+	private String cid2; //ëª¨ì§‘ìƒíƒœ
+	private String id; //íšŒì›ID
+	private String title; //ëª¨ì„ì œëª©
+	private String smry; //ëª¨ì„ìš”ì•½ë‚´ìš©
+	private String content; //ëª¨ì„ìƒì„¸ë‚´ìš©(NCLUB)
+	private String startDt; //ëª¨ì„ì‹œì‘ì¼ì
+	private String endDt; //ëª¨ì„ì¢…ë£Œì¼ì
+	private String recsDt; //ëª¨ì„ëª¨ì§‘ì‹œì‘ì¼ì
+	private String receDt; //ëª¨ì„ëª¨ì§‘ì¢…ë£Œì¼ì
+	private int recNo; //ëª¨ì§‘ì¸ì›
+	private int currNo; //í˜„ì¬ì¸ì›
+	private int cnclNo; //ì·¨ì†Œì¸ì›
+	private int hit; //ì¡°íšŒìˆ˜
+	private int thumb; //ì°œìˆ˜
+	private String charge; //ìœ ë¬´ë£Œêµ¬ë¶„
+	private String onoff; //ì˜¨ì˜¤í”„ë¼ì¸ ì—¬ë¶€
+	private String place; //ëª¨ì„ì¥ì†Œ
+	private String link; //ë§í¬
+	private String img; //ëŒ€í‘œì´ë¯¸ì§€
+	private Date regDt; //ëª¨ì„ê°œì„¤ì¼ì
+	private Date updDt; //ëª¨ì„ìˆ˜ì •ì¼ì
+	private Date delDt; //ëª¨ì„ì‚­ì œì¼ì
 }

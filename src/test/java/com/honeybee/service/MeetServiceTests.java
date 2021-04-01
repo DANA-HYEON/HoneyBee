@@ -54,7 +54,7 @@ public class MeetServiceTests {
 		meet.setImg("IMG");
 		
 		service.register(meet);
-		log.info("생성된 게시물의 번호 : " + meet.getGno());
+		log.info("생성된 게시물의 번호 : " + meet.getMno());
 	}
 	
 	@Test
@@ -78,5 +78,10 @@ public class MeetServiceTests {
 		
 		meet.setTitle("하이 수정수정수정");
 		log.info("modify result : " + service.modify(meet));
+	}
+	
+	@Test
+	public void testGetList() {
+		service.getList().forEach(meet -> log.info(meet));
 	}
 }

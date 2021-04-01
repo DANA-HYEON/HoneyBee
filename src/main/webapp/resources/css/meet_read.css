@@ -1,0 +1,123 @@
+
+.navbar>.container, .navbar>.container-fluid, .navbar>.container-lg, .navbar>.container-md, .navbar>.container-sm, .navbar>.container-xl, .navbar>.container-xxl{
+    margin-top: 20px;
+}
+
+.navbar-brand{
+    margin-left: 10%;
+}
+
+.bg-light{
+    background: transparent  !important;
+}
+
+.total{
+    width: 100%;
+}
+.wrap{
+    width: 70%;
+    height: 250px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.meet{
+    float: left;
+}
+
+.meet.left{
+    border:solid 1px black;
+    width: 30%;
+    height: 100%;
+}
+
+.left img{
+    width: 100%;
+    height: 100%;
+}
+
+.meet.right{
+    width: 70%;
+    height: 100%;
+    margin-right: 0;
+    overflow: hidden;
+}
+
+.meet.top{
+    width: 100%;
+    height: 25%;
+    letter-spacing: 1.5px;
+    text-align: left;
+}
+
+.title p{
+    margin-top: 30px;
+    margin-left: 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.title p{
+    width: 80%;
+    height: 100%;
+}
+
+
+.line{
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    bottom: 30px;
+
+}
+
+.meet.bottom{
+    margin-top: 30px;
+    margin-left: 10px;
+    background-color: rgb(62,44,29);
+    width: 100%;
+
+}
+.content{
+    width: 100%;
+    height: 100%;
+    margin-top: 6%;
+    letter-spacing: 2px;
+    color: rgb(250, 176, 24);
+}
+
+.mid{
+    width: 70%;
+    margin: auto;
+    margin-top: 30px;
+    box-sizing: border-box;
+}
+
+.information{
+    font-size: large;
+    font-weight: bold;
+    margin-left: 30px;
+}
+
+.first_line{
+    width: 100%;
+    margin-top: 15px;
+}
+
+.data{
+    background-color:rgb(250, 176, 24);
+    width: 100%;
+    height: 120px;
+    border-radius: 10px;
+    padding: 20px;
+    font-weight: 800;
+}
+
+.text{
+    margin-top: 30px;
+}
+
+.second_line{
+    width: 100%;
+    margin-top: 15px;
+}

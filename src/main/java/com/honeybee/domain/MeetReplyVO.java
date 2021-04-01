@@ -6,16 +6,16 @@ import lombok.Data;
 
 @Data
 public class MeetReplyVO {
-	private int GRNO; //´ñ±Û¹øÈ£
-	private int GNO; //¸ğÀÓ°Ô½Ã¹°¹øÈ£
-	private String ID; //È¸¿øID
-	private int GRNO2; //´ë´ñ±Û¹øÈ£
-	private String REPLY; //´ñ±Û³»¿ë
-	private int LAYER; //´ë´ñ±Û°èÃş
-	private int BUNDLE; //´ñ±Û±×·ì
-	private int BUNORDER; //´ñ±Û±×·ì¼ø¼­
-	private String NICK; //´Ğ³×ÀÓ
-	private Date REGDT; //´ñ±ÛÀÛ¼ºÀÏÀÚ
-	private Date UPTDT; //´ñ±Û¼öÁ¤ÀÏÀÚ
-	private Date DELDT; //´ñ±Û»èÁ¦ÀÏÀÚ
+	private int mrno; //ëŒ“ê¸€ë²ˆí˜¸
+	private int mno; //ëª¨ì„ê²Œì‹œë¬¼ ë²ˆí˜¸
+	private String id; //íšŒì›ID
+	private int grno2; //ëŒ€ëŒ“ê¸€ë²ˆí˜¸
+	private String reply; //ëŒ“ê¸€ë‚´ìš©
+	private int layer; //ëŒ€ëŒ“ê¸€ê³„ì¸µ
+	private int bundle; //ëŒ“ê¸€ê·¸ë£¹
+	private int bunOrder; //ëŒ“ê¸€ê·¸ë£¹ìˆœì„œ
+	private String nick; //ë‹‰ë„¤ì„
+	private Date regDt; //ëŒ“ê¸€ì‘ì„±ì¼ì
+	private Date uptDt; //ëŒ“ê¸€ìˆ˜ì •ì¼ì
+	private Date delDt; //ëŒ“ê¸€ì‚­ì œì¼ì
 }

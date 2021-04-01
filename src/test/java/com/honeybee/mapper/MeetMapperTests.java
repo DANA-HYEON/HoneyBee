@@ -93,7 +93,7 @@ public class MeetMapperTests {
 	@Test
 	public void testUpdate() {
 		MeetVO meet = new MeetVO();
-		meet.setGno(21L);
+		meet.setMno(21L);
 		
 		meet.setTitle("수정된 제목입니다");
 		meet.setSmry("수정된 섬머리 내용입니다");

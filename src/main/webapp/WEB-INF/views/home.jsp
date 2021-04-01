@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -72,19 +74,12 @@
                               카테고리
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <li><a class="dropdown-item" href="/meet/list">스포츠</a></li>
-                              <li><a class="dropdown-item" href="/meet/list">스터디/자기개발</a></li>
+                            <c:forEach items="${catList}" var="cat"> 
+                              <li><a class="dropdown-item" href="/meet/list"><c:out value="${cat.cName}" /></a></li>
+                            </c:forEach>
                               <!-- <li><hr class="dropdown-divider"></li> --> <!-- 라인 -->
-                              <li><a class="dropdown-item" href="/meet/list">독서/토론</a></li>
-                              <li><a class="dropdown-item" href="/meet/list">게임</a></li>
-                              <li><a class="dropdown-item" href="/meet/list">여행</a></li>
-                              <li><a class="dropdown-item" href="/meet/list">문화/예술</a></li>
-                              <li><a class="dropdown-item" href="/meet/list">봉사활동</a></li>
-                              <li><a class="dropdown-item" href="/meet/list">패션/뷰티</a></li>
-                              <li><a class="dropdown-item" href="/meet/list">반려동물</a></li>
-                              <li><a class="dropdown-item" href="/meet/list">원데이클래스</a></li>
                             </ul>
-                          </li>
+                         </li>
                         <!-- <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">카테고리</a></li> -->
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">인기게시물</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/free/list">자유게시판</a></li>

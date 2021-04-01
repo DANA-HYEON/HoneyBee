@@ -5,7 +5,7 @@
 <select id="getList" resultType="com.honeybee.domain.MeetVO">
 	<![CDATA[
 		select 
-			GNO,
+			MNO,
 			CID,
 			CID2,
 			ID,
@@ -30,13 +30,13 @@
 			UPDDT,
 			DELDT
 			from MEET
-			where gno >0
+			where mno >0
 	]]>
 </select>
 
 <insert id="insert">
 	insert into meet(
-			GNO,
+			MNO,
 			CID,
 			CID2,
 			ID,
@@ -84,11 +84,11 @@
 </insert>
 
 <insert id="insertSelectKey">
-	<selectKey keyProperty="gno" order="BEFORE" resultType="long">
+	<selectKey keyProperty="mno" order="BEFORE" resultType="long">
 		select seq_meet.nextval from dual
 	</selectKey>
 	
-	insert into meet(GNO,
+	insert into meet(MNO,
 			CID,
 			CID2,
 			ID,
@@ -110,7 +110,7 @@
 			LINK,
 			IMG)
 			values(
-			#{gno},
+			#{mno},
 			#{cid},
 			#{cid2},
 			#{id},
@@ -134,7 +134,7 @@
 </insert>
 
 <select id="read" resultType="com.honeybee.domain.MeetVO">
-	select GNO,
+	select MNO,
 			CID,
 			CID2,
 			ID,
@@ -159,11 +159,11 @@
 			UPDDT,
 			DELDT
 			from MEET
-			where gno = #{gno}
+			where mno = #{mno}
 </select>
 
 <delete id="delete">
-	delete from meet where gno = #{gno}
+	delete from meet where mno = #{mno}
 </delete>
 
 <update id="update">
@@ -183,6 +183,6 @@
 			LINK = #{link},
 			IMG = #{img},
 			updDt = sysdate
-	where gno = #{gno}
+	where mno = #{mno}
 </update>
 </mapper>
