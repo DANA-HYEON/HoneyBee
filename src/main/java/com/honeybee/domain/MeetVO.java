@@ -31,4 +31,5 @@ public class MeetVO {
 	private Date regDt; //모임개설일자
 	private Date updDt; //모임수정일자
 	private Date delDt; //모임삭제일자
+  
 }

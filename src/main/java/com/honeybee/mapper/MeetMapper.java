@@ -9,14 +9,16 @@ public interface MeetMapper {
 	
 	public List<MeetVO> getList();
 	
-	public void insert(MeetVO meet); //PK°ª ¸ð¸§
+	public void insert(MeetVO meet); //PKê°’ ì—†ëŠ”ê±°
 	 
-	public void insertSelectKey(MeetVO meet); //PK°ª Ã¼Å©°¡´É
+	public void insertSelectKey(MeetVO meet); //PKê°’ ìžˆëŠ”ê±°
 	
 	public MeetVO read(Long gno);
 	
 	public int delete(Long gno);
 	
 	public int update(MeetVO meet);
+
+	public List<MeetVO> getMyList(String id);
 
 }

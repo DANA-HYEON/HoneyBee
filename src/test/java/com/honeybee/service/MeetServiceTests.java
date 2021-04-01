@@ -35,9 +35,9 @@ public class MeetServiceTests {
 		meet.setCid("02");
 		meet.setCid2("01");
 		meet.setId("idididid");
-		meet.setTitle("ÀÌ°ÍÀº Á¦¸ñ Å×½ºÆ®ÀÔ´Ï´Ù.");
-		meet.setSmry("ÀÌ°ÍÀº ¸ðÀÓ ¼¶¸Ó¸® ¼³¸í Å×½ºÆ®ÀÔ´Ï´Ù.");
-		meet.setContent("ÀÌ°ÍÀº ¸ðÀÓ ³»¿ëÀÔ´Ï´Ù. ¸ðÀÓ ³»¿ëÀÔ´Ï´Ù. ¸ðÀÓ ³»¿ëÀÔ´Ï´Ù. ¸ðÀÓ ³»¿ëÀÔ´Ï´Ù.");
+		meet.setTitle("ï¿½Ì°ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ®ï¿½Ô´Ï´ï¿½.");
+		meet.setSmry("ï¿½Ì°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ®ï¿½Ô´Ï´ï¿½.");
+		meet.setContent("ï¿½Ì°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
 		meet.setStartDt("202103310730");
 		meet.setEndDt("202103310930");
 		meet.setRecsDt("202103161200");
@@ -49,12 +49,12 @@ public class MeetServiceTests {
 		meet.setThumb(10);
 		meet.setCharge("N");
 		meet.setOnoff("OFF");
-		meet.setPlace("¼­¿ï ¸¶Æ÷±¸ È«´ë ¾îÂ¼±¸ÀúÂ¼±¸");
+		meet.setPlace("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È«ï¿½ï¿½ ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½");
 		meet.setLink("www.naver.com");
 		meet.setImg("IMG");
 		
 		service.register(meet);
-		log.info("»ý¼ºµÈ °Ô½Ã¹°ÀÇ ¹øÈ£ : " + meet.getMno());
+		log.info("ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ï¿½ï¿½ ï¿½ï¿½È£ : " + meet.getMno());
 	}
 	
 	@Test
@@ -76,7 +76,7 @@ public class MeetServiceTests {
 			return;
 		}
 		
-		meet.setTitle("ÇÏÀÌ ¼öÁ¤¼öÁ¤¼öÁ¤");
+		meet.setTitle("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		log.info("modify result : " + service.modify(meet));
 	}
 	
@@ -84,4 +84,5 @@ public class MeetServiceTests {
 	public void testGetList() {
 		service.getList().forEach(meet -> log.info(meet));
 	}
+
 }

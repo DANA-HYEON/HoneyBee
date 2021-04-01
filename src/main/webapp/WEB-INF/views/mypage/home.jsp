@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 
 <html>
 <head>
@@ -227,24 +230,37 @@ a:hover {
 
 		<div class="user_information">
 			<div class="name"></div>
-			<thead>
-				<tr class="posttitle">
+				
+				 <table
+            border="1"
+            width="50%"
+            height="200"
+            cellspacing="5">
+            <thead>
+                <tr>
+                    <th colspan="2"><c:out value="${list.id}"/></th>
+                </tr>
+            </thead>
 
-					<th class="innerposttitle">ID</th>
-					<th class="content"></th>
-					<th class="date"></th>
-					<th class="check"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-
-					<p class="innerposttitle">휴대전화</p>
-					<p class="content">가입일</p>
-					<th class="date">기타</th>
-					<th class="check"><input type="checkbox"></th>
-
-				</tr>
+            <tbody>
+                <tr align="center" bgcolor="white">
+                    <td>이메일</td>
+                    <td>값</td>
+                </tr>
+                <tr align="center" bgcolor="white">
+                  <td>휴대전화</td>
+                  <td>값</td>
+                </tr>
+                  <tr align="center" bgcolor="white">
+                  <td>가입일</td>
+                  <td>값</td>
+                </tr>
+                  <tr align="center" bgcolor="white">
+                  <td>기타</td>
+                  <td><input type="radio"></td>
+                </tr>
+            </tbody>
+        </table>
 		</div>
 
 
@@ -261,6 +277,7 @@ a:hover {
 				<th>날짜</th>
 				<tr>
 					<!-- 두번째 줄 시작 -->
+					
 					<td colspan="3">모임이름</td>
 
 				</tr>

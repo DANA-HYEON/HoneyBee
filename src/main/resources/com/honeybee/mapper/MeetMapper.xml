@@ -185,4 +185,37 @@
 			updDt = sysdate
 	where mno = #{mno}
 </update>
+  
+  
+<select id="getMyList" resultType="com.honeybee.domain.MeetVO">
+  <![CDATA[
+    select 
+      MNO,
+      CID,
+      CID2,
+      ID,
+      TITLE,
+      SMRY,
+      to_char(CONTENT) AS CONTENT,
+      STARTDT,
+      ENDDT,
+      RECSDT,
+      RECEDT,
+      RECNO,
+      CURRNO,
+      CNCLNO,
+      HIT,
+      THUMB,
+      CHARGE,
+      ONOFF,
+      PLACE,
+      LINK,
+      IMG,
+      REGDT,
+      UPDDT,
+      DELDT
+      from MEET
+      where id = #{id}
+  ]]>
+</select>
 </mapper>

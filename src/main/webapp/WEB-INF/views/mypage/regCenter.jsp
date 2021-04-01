@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -206,7 +208,7 @@ body {
 
 .applylist {
 	position: relative;
-	display: none;
+	/*  display: none; */
 	width: 800px;
 }
 
@@ -278,118 +280,31 @@ body {
 					<tr class="posttitle">
 						<th class="check"><input type="checkbox"></th>
 						<th class="category">카테고리</th>
-						<th class="meettitle">모임제목</th>
-						<th class="peoplenum">현재인원</th>
+						<th class="meettitle">제목</th>
+						<th class="peoplenum">모집인원</th>
 						<th class="meetstatus">모임상태</th>
 						<th class="recruteenddate">모집마감일</th>
 						<th class="meetstartdate">모임시작일</th>
-						<th class="meetenddate">모임종료일</th>
-
-
+						<th class="meetenddate">모임마감일</th>
 					</tr>
 				</thead>
 				<tbody>
+				<c:forEach items="${list}" var="meet">
 					<tr>
-
-						<th class="check"><input type="checkbox"></th>
-						<th class="category">카테고리</th>
-						<th class="meettitle"><a href="#" class="num on">모임제목</a></th>
-						<th class="peoplenum">현재인원</th>
-						<th class="meetstatus">모임상태</th>
-						<th class="recruteenddate">모집마감일</th>
-						<th class="meetstartdate">모임시작일</th>
-						<th class="meetenddate">모임종료일</th>
-
-
+						<td><input type="checkbox"></td>
+						<td><c:out value="${meet.cid}"/></td>
+						<td><a href="/free/list"><c:out value="${meet.title}"/></a></td>
+						<td><c:out value="${meet.currNo}"/></td>
+						<td><c:out value="${meet.cid2}"/></td>
+						<td><c:out value="${meet.receDt}"/></td>
+						<td><c:out value="${meet.startDt}"/></td>
+						<td><c:out value="${meet.endDt}"/></td>
 					</tr>
-					<tr>
-
-						<th class="check"><input type="checkbox"></th>
-						<th class="category">카테고리</th>
-						<th class="meettitle"><a href="#" class="num on">모임제목</a></th>
-						<th class="peoplenum">현재인원</th>
-						<th class="meetstatus">모임상태</th>
-						<th class="recruteenddate">모집마감일</th>
-						<th class="meetstartdate">모임시작일</th>
-						<th class="meetenddate">모임종료일</th>
-
-					</tr>
-					<tr>
-
-						<th class="check"><input type="checkbox"></th>
-						<th class="category">카테고리</th>
-						<th class="meettitle"><a href="#" class="num on">모임제목</a></th>
-						<th class="peoplenum">현재인원</th>
-						<th class="meetstatus">모임상태</th>
-						<th class="recruteenddate">모집마감일</th>
-						<th class="meetstartdate">모임시작일</th>
-						<th class="meetenddate">모임종료일</th>
-
-					</tr>
-					<tr>
-
-						<th class="check"><input type="checkbox"></th>
-						<th class="category">카테고리</th>
-						<th class="meettitle"><a href="#" class="num on">모임제목</a></th>
-						<th class="peoplenum">현재인원</th>
-						<th class="meetstatus">모임상태</th>
-						<th class="recruteenddate">모집마감일</th>
-						<th class="meetstartdate">모임시작일</th>
-						<th class="meetenddate">모임종료일</th>
-
-					</tr>
-					<tr>
-						<th class="check"><input type="checkbox"></th>
-						<th class="category">카테고리</th>
-						<th class="meettitle"><a href="#" class="num on">모임제목</a></th>
-						<th class="peoplenum">현재인원</th>
-						<th class="meetstatus">모임상태</th>
-						<th class="recruteenddate">모집마감일</th>
-						<th class="meetstartdate">모임시작일</th>
-						<th class="meetenddate">모임종료일</th>
-
-					</tr>
-					<tr>
-						<th class="check"><input type="checkbox"></th>
-						<th class="category">카테고리</th>
-						<th class="meettitle"><a href="#" class="num on">모임제목</a></th>
-						<th class="peoplenum">현재인원</th>
-						<th class="meetstatus">모임상태</th>
-						<th class="recruteenddate">모집마감일</th>
-						<th class="meetstartdate">모임시작일</th>
-						<th class="meetenddate">모임종료일</th>
-
-					</tr>
-					<tr>
-
-						<th class="check"><input type="checkbox"></th>
-						<th class="category">카테고리</th>
-						<th class="meettitle"><a href="#" class="num on">모임제목</a></th>
-						<th class="peoplenum">현재인원</th>
-						<th class="meetstatus">모임상태</th>
-						<th class="recruteenddate">모집마감일</th>
-						<th class="meetstartdate">모임시작일</th>
-						<th class="meetenddate">모임종료일</th>
-
-					</tr>
-					<tr>
-
-						<th class="check"><input type="checkbox"></th>
-						<th class="category">카테고리</th>
-						<th class="meettitle"><a href="#" class="num on">모임제목</a></th>
-						<th class="peoplenum">현재인원</th>
-						<th class="meetstatus">모임상태</th>
-						<th class="recruteenddate">모집마감일</th>
-						<th class="meetstartdate">모임시작일</th>
-						<th class="meetenddate">모임종료일</th>
-
-					</tr>
-
+				</c:forEach>
 				</tbody>
 			</table>
 			<div class="applylist">
-				<table>
-
+			<table>
 					<tr class="posttitle">
 						<th class="category">문의/신고번호</th>
 						<th class="meettitle">닉네임</th>
@@ -408,37 +323,8 @@ body {
 						<th class="meetstartdate">처리상태</th>
 						<th class="meetenddate">상태변경</th>
 					</tr>
-					<tr>
-						<th class="category">문의/신고번호</th>
-						<th class="meettitle"><a href="#" class="num on">닉네임</a></th>
-						<th class="peoplenum">신청제목</th>
-						<th class="meetstatus">이메일</th>
-						<th class="recruteenddate">신청일자</th>
-						<th class="meetstartdate">처리상태</th>
-						<th class="meetenddate">상태변경</th>
-					</tr>
-					<tr>
-						<th class="category">문의/신고번호</th>
-						<th class="meettitle"><a href="#" class="num on">닉네임</a></th>
-						<th class="peoplenum">신청제목</th>
-						<th class="meetstatus">이메일</th>
-						<th class="recruteenddate">신청일자</th>
-						<th class="meetstartdate">처리상태</th>
-						<th class="meetenddate">상태변경</th>
-					</tr>
-					<tr>
-						<th class="category">문의/신고번호</th>
-						<th class="meettitle"><a href="#" class="num on">닉네임</a></th>
-						<th class="peoplenum">신청제목</th>
-						<th class="meetstatus">이메일</th>
-						<th class="recruteenddate">신청일자</th>
-						<th class="meetstartdate">처리상태</th>
-						<th class="meetenddate">상태변경</th>
-					</tr>
-
-
-
 				</table>
+			
 
 				<div class="applyexit">닫기</div>
 			</div>

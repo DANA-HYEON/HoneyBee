@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.honeybee.mapper.UserMapper">
+	
+	
+	<select id="getList" resultType="com.honeybee.domain.UserVO">
+	select * from USER_INFO
+	</select>
+	
+	<insert id="insert">
+		insert into USER_INFO (
+		ID,
+		PWD,
+		NAME,
+		BIRTH,
+		SEX,
+		EMAIL,
+		TELNO,
+		URL,
+		RCVYN,
+		NICK,
+		SCOR,
+		IMG)
+		values(#{id},
+		#{pwd},
+		#{name},
+		#{birth},
+		#{sex},
+		#{email},
+		#{telno},
+		#{url},
+		#{rcvyn},
+		#{nick},
+		#{scor},
+		#{img})
+	</insert>
+	
+	<select id="read" resultType="com.honeybee.domain.UserVO">
+		select * from USER_INFO where ID=#{id}
+	</select>
+	
+	<delete id="delete">
+		delete from USER_INFO where ID=#{id}
+	</delete>
+	
+	<update id="update">
+		update USER_INFO
+		set 
+		CID=#{cid},
+		PWD=#{pwd},
+		NAME=#{name},
+		BIRTH=#{birth},
+		SEX=#{sex},
+		EMAIL=#{email},
+		TELNO=#{telno},
+		URL=#{url},
+		RCVYN=#{rcvyn},
+		NICK=#{nick},
+		SCOR=#{scor},
+		IMG=#{img},
+		UPDDT=sysdate
+		where ID = #{id}
+	</update>
+	
+	
+	</mapper>

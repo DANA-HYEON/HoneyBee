@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -196,63 +198,15 @@ li {
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td class="num">Lorem</td>
-						<td class="innerposttitle">Ipsum</td>
-						<td class="date">Dolor</td>
-						<th class="viewnum">조회수</th>
-						<th class="status"><input type="checkbox"></th>
-					</tr>
-					<tr>
-						<td class="num">Lorem</td>
-						<td class="innerposttitle">Ipsum</td>
-						<td class="date">Dolor</td>
-						<th class="viewnum">조회수</th>
-						<th class="status"><input type="checkbox"></th>
-					</tr>
-					<tr>
-						<td class="num">Lorem</td>
-						<td class="innerposttitle">Ipsum</td>
-						<td class="date">Dolor</td>
-						<th class="viewnum">조회수</th>
-						<th class="status"><input type="checkbox"></th>
-					</tr>
-					<tr>
-						<td class="num">Lorem</td>
-						<td class="innerposttitle">Ipsum</td>
-						<td class="date">Dolor</td>
-						<th class="viewnum">조회수</th>
-						<th class="status"><input type="checkbox"></th>
-					</tr>
-					<tr>
-						<td class="num">Lorem</td>
-						<td class="innerposttitle">Ipsum</td>
-						<td class="date">Dolor</td>
-						<th class="viewnum">조회수</th>
-						<th class="status"><input type="checkbox"></th>
-					</tr>
-					<tr>
-						<td class="num">Lorem</td>
-						<td class="innerposttitle">Ipsum</td>
-						<td class="date">Dolor</td>
-						<th class="viewnum">조회수</th>
-						<th class="status"><input type="checkbox"></th>
-					</tr>
-					<tr>
-						<td class="num">Lorem</td>
-						<td class="innerposttitle">Ipsum</td>
-						<td class="date">Dolor</td>
-						<th class="viewnum">조회수</th>
-						<th class="status"><input type="checkbox"></th>
-					</tr>
-					<tr>
-						<td class="num">Lorem</td>
-						<td class="innerposttitle">Ipsum</td>
-						<td class="date">Dolor</td>
-						<th class="viewnum">조회수</th>
-						<th class="status"><input type="checkbox"></th>
-					</tr>
-
+						<c:forEach items="${list}" var="free">
+						<tr>
+							<td><c:out value="${free.fno}" /></td>
+							<td><c:out value="${free.title}" /></td>
+							<td><c:out value="${free.regdt}" /></td>
+							<td><c:out value="${free.hit}" /></td>
+							<td><input type="checkbox"></td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 
