@@ -6,8 +6,10 @@ import lombok.Data;
 
 @Data
 public class MeetReplyVO {
+
 	private int mrno; //댓글번호
-	private int mno; //모임게시물 번호
+	private int mno; //모임게시물번호
+
 	private String id; //회원ID
 	private int grno2; //대댓글번호
 	private String reply; //댓글내용
@@ -18,4 +20,5 @@ public class MeetReplyVO {
 	private Date regDt; //댓글작성일자
 	private Date uptDt; //댓글수정일자
 	private Date delDt; //댓글삭제일자
+
 }

@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+.write-head {
+	margin-top: 20px;
+    margin-bottom: 15px;
+    display: inline-block;
+    width: 100%;
+}
+
+.reg-head input {
+	width: 100%;
+}
+
+button {
+    margin: 10px 5px;
+    border: 1px solid rgb(48,27,1);
+    background-color: rgb(48,27,1);
+    color: rgb(246, 218, 66);
+    padding: 2px;
+    font-size: 13px;
+    float: right;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: rgb(246, 218, 66);
+    border: 1px solid rgb(246, 218, 66);
+    color: rgb(48,27,1);
+}

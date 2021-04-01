@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,10 +10,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>자유게시판 - 허니비</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="/resources/css/free_list.css">    
+    <link rel="stylesheet" href="/resources/css/free/list.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-    <div class="container" style="padding:100px 150px 0 150px">
+  	<%@include file="../include/header.jsp" %>
+    <div class="container" style="padding:50px 150px 0 150px">
         <table class="board_list">
             <caption>게시판 목록</caption>
             <thead>
@@ -21,100 +25,22 @@
                     <th>글쓴이</th>
                     <th>작성일</th>
                     <th>조회수</th>
+                    <th>추천</th>
                 </tr>
             </thead>
-            <tbody>
+           	<c:forEach items="${list}" var="free">
                 <tr>
-                    <td class="freeBno">10</td>
+                    <td class="freeBno"><c:out value="${free.fno}" /></td>
                     <td class="title">
-                        <a href="#">자유게시판에서는 정숙!</a>
+                        <a href='/free/get?fno=<c:out value="${free.fno}"/>'><c:out value="${free.title}"></c:out></a>
                     </td>
-                    <td>정수기</td>
-                    <td>2021-03-22</td>
-                    <td>111</td>
+                    <td><c:out value="${free.id}"/></td>
+                    <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${free.regdt}"/></td>
+                    <td><c:out value="${free.hit}"/></td>
+                    <td><c:out value="${free.thumb}"/></td>
                 </tr>
-                <tr>
-                    <td class="freeBno">9</td>
-                    <td class="title">
-                        <a href="#">자유게시판 공지사항</a>
-                    </td>
-                    <td>관리자</td>
-                    <td>2021-03-22</td>
-                    <td>111</td>
-                </tr>
-                <tr>
-                    <td class="freeBno">8</td>
-                    <td class="title">
-                        <a href="#">이거 만들어주세요!</a>
-                    </td>
-                    <td>남소연</td>
-                    <td>2021-03-22</td>
-                    <td>111</td>
-                </tr>
-                <tr>
-                    <td class="freeBno">7</td>
-                    <td class="title">
-                        <a href="#">이게 말이 되나요???</a>
-                    </td>
-                    <td>김세훈</td>
-                    <td>2021-03-22</td>
-                    <td>111</td>
-                </tr>
-                <tr>
-                    <td class="freeBno">6</td>
-                    <td class="title">
-                        <a href="#">허니비 너무 좋아용</a>
-                    </td>
-                    <td>이다현</td>
-                    <td>2021-03-22</td>
-                    <td>111</td>
-                </tr>
-                <tr>
-                    <td class="freeBno">5</td>
-                    <td class="title">
-                        <a href="#">걱정도 비용이다</a>
-                    </td>
-                    <td>이향일</td>
-                    <td>2021-03-22</td>
-                    <td>111</td>
-                </tr>
-                <tr>
-                    <td class="freeBno">4</td>
-                    <td class="title">
-                        <a href="#">횐님들,,,오늘도,,활기차게,,,*^^*</a>
-                    </td>
-                    <td>이향일</td>
-                    <td>2021-03-22</td>
-                    <td>111</td>
-                </tr>
-                <tr>
-                    <td class="freeBno">3</td>
-                    <td class="title">
-                        <a href="#">열쩡열쩡열쩡!!!</a>
-                    </td>
-                    <td>구희승</td>
-                    <td>2021-03-22</td>
-                    <td>111</td>
-                </tr>
-                <tr>
-                    <td class="freeBno">2</td>
-                    <td class="title">
-                        <a href="/free/read">복귀합니다.</a>
-                    </td>
-                    <td>남궁성</td>
-                    <td>2021-03-22</td>
-                    <td>111</td>
-                </tr>
-                <tr>
-                    <td class="freeBno">1</td>
-                    <td class="title">
-                        <a href="#">test</a>
-                    </td>
-                    <td>tester</td>
-                    <td>2021-03-22</td>
-                    <td>111</td>
-                </tr>
-            </tbody>
+            </c:forEach>
+
         </table>
         <div class="bottom-line">
             <form id="searchForm">
@@ -128,7 +54,7 @@
                 <button>Search</button>
             </form>
 
-            <button class="register">글쓰기</button>
+            <button id="reg" type="button">글쓰기</button>
         </div>
         <div class="paging">
             <a href="#" class="btn">&lt;</a>
@@ -142,5 +68,13 @@
             <a href="#" class="btn">&gt;</a>
         </div>
     </div>
-</body>
-</html>
+    <%@include file="../include/footer.jsp" %>
+
+    
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#reg").on("click", function() {
+			self.location = "/free/reg";
+		})
+	})
+</script>

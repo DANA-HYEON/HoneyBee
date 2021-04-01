@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class MeetVO {
-	
+
 	private long mno; //모임번호
 	private String cid; //모임카테고리
 	private String cid2; //모집상태
@@ -31,4 +31,5 @@ public class MeetVO {
 	private Date regDt; //모임개설일자
 	private Date updDt; //모임수정일자
 	private Date delDt; //모임삭제일자
+
 }

@@ -4,7 +4,7 @@
 
 <select id="getList" resultType="com.honeybee.domain.MeetVO">
 	<![CDATA[
-		select 
+		select
 			MNO,
 			CID,
 			CID2,
@@ -57,7 +57,7 @@
 			PLACE,
 			LINK,
 			IMG)
-			values 
+			values
 			(
 			SEQ_meet.nextval,
 			#{cid},
@@ -87,7 +87,7 @@
 	<selectKey keyProperty="mno" order="BEFORE" resultType="long">
 		select seq_meet.nextval from dual
 	</selectKey>
-	
+
 	insert into meet(MNO,
 			CID,
 			CID2,
@@ -185,4 +185,36 @@
 			updDt = sysdate
 	where mno = #{mno}
 </update>
+
+<select id="getMyList" resultType="com.honeybee.domain.MeetVO">
+  <![CDATA[
+    select
+      MNO,
+      CID,
+      CID2,
+      ID,
+      TITLE,
+      SMRY,
+      to_char(CONTENT) AS CONTENT,
+      STARTDT,
+      ENDDT,
+      RECSDT,
+      RECEDT,
+      RECNO,
+      CURRNO,
+      CNCLNO,
+      HIT,
+      THUMB,
+      CHARGE,
+      ONOFF,
+      PLACE,
+      LINK,
+      IMG,
+      REGDT,
+      UPDDT,
+      DELDT
+      from MEET
+      where id = #{id}
+  ]]>
+</select>
 </mapper>

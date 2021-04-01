@@ -15,24 +15,25 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class MeetMapperTests {
-	
+
 	@Setter(onMethod_ =@Autowired)
 	private MeetMapper mapper;
-	
+
 	@Test
 	public void testGetList() {
 		mapper.getList().forEach(meet -> log.info(meet));
 	}
-	
+
 	@Test
 	public void insert() {
 		MeetVO meet = new MeetVO();
 		meet.setCid("02");
 		meet.setCid2("01");
 		meet.setId("idididid");
-		meet.setTitle("ÀÌ°ÍÀº Á¦¸ñ Å×½ºÆ®ÀÔ´Ï´Ù.");
-		meet.setSmry("ÀÌ°ÍÀº ¸ðÀÓ ¼¶¸Ó¸® ¼³¸í Å×½ºÆ®ÀÔ´Ï´Ù.");
-		meet.setContent("ÀÌ°ÍÀº ¸ðÀÓ ³»¿ëÀÔ´Ï´Ù. ¸ðÀÓ ³»¿ëÀÔ´Ï´Ù. ¸ðÀÓ ³»¿ëÀÔ´Ï´Ù. ¸ðÀÓ ³»¿ëÀÔ´Ï´Ù.");
+
+		meet.setTitle("ï¿½Ì°ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ®ï¿½Ô´Ï´ï¿½.");
+		meet.setSmry("ï¿½Ì°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ®ï¿½Ô´Ï´ï¿½.");
+		meet.setContent("ï¿½Ì°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
 		meet.setStartDt("202103310730");
 		meet.setEndDt("202103310930");
 		meet.setRecsDt("202103161200");
@@ -44,23 +45,27 @@ public class MeetMapperTests {
 		meet.setThumb(10);
 		meet.setCharge("N");
 		meet.setOnoff("OFF");
-		meet.setPlace("¼­¿ï ¸¶Æ÷±¸ È«´ë ¾îÂ¼±¸ÀúÂ¼±¸");
+
+		meet.setPlace("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È«ï¿½ï¿½ ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½");
 		meet.setLink("www.naver.com");
 		meet.setImg("IMG");
-		
+
 		mapper.insert(meet);
-		log.info("µî·Ï : " + meet);
+
+		log.info("ï¿½ï¿½ï¿½ : " + meet);
+
 	}
-	
+
 	@Test
 	public void testInsertSelectKey() {
 		MeetVO meet = new MeetVO();
 		meet.setCid("02");
 		meet.setCid2("01");
 		meet.setId("idididid");
-		meet.setTitle("ÀÌ°ÍÀº Á¦¸ñ Å×½ºÆ®ÀÔ´Ï´Ù.");
-		meet.setSmry("ÀÌ°ÍÀº ¸ðÀÓ ¼¶¸Ó¸® ¼³¸í Å×½ºÆ®ÀÔ´Ï´Ù.");
-		meet.setContent("ÀÌ°ÍÀº ¸ðÀÓ ³»¿ëÀÔ´Ï´Ù. ¸ðÀÓ ³»¿ëÀÔ´Ï´Ù. ¸ðÀÓ ³»¿ëÀÔ´Ï´Ù. ¸ðÀÓ ³»¿ëÀÔ´Ï´Ù.");
+
+		meet.setTitle("ï¿½Ì°ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ®ï¿½Ô´Ï´ï¿½.");
+		meet.setSmry("ï¿½Ì°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ®ï¿½Ô´Ï´ï¿½.");
+		meet.setContent("ï¿½Ì°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
 		meet.setStartDt("202103310730");
 		meet.setEndDt("202103310930");
 		meet.setRecsDt("202103161200");
@@ -72,32 +77,39 @@ public class MeetMapperTests {
 		meet.setThumb(10);
 		meet.setCharge("N");
 		meet.setOnoff("OFF");
-		meet.setPlace("¼­¿ï ¸¶Æ÷±¸ È«´ë ¾îÂ¼±¸ÀúÂ¼±¸");
+
+		meet.setPlace("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È«ï¿½ï¿½ ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½");
+
 		meet.setLink("www.naver.com");
 		meet.setImg("IMG");
-		
+
 		mapper.insertSelectKey(meet);
-		log.info("µî·Ï : " + meet);
+
+		log.info("ï¿½ï¿½ï¿½ : " + meet);
+
 	}
-	
+
 	@Test
 	public void testRead() {
 		log.info(mapper.read(20L));
 	}
-	
+
 	@Test
 	public void testDelete() {
-		log.info("Ãë¼Ò °³¼ö : " + mapper.delete(20L));
+
+		log.info("ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ : " + mapper.delete(20L));
+
 	}
-	
+
 	@Test
 	public void testUpdate() {
 		MeetVO meet = new MeetVO();
 		meet.setMno(21L);
-		
-		meet.setTitle("¼öÁ¤µÈ Á¦¸ñÀÔ´Ï´Ù");
-		meet.setSmry("¼öÁ¤µÈ ¼¶¸Ó¸® ³»¿ëÀÔ´Ï´Ù");
-		meet.setContent("¼öÁ¤µÈ ³»¿ëÀÔ´Ï´Ù.");
+
+
+		meet.setTitle("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½");
+		meet.setSmry("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½");
+		meet.setContent("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
 		meet.setStartDt("202103312222");
 		meet.setEndDt("222222222222");
 		meet.setRecsDt("222222222222");
@@ -105,12 +117,13 @@ public class MeetMapperTests {
 		meet.setRecNo(99);
 		meet.setCharge("Y");
 		meet.setOnoff("ON");
-		meet.setPlace("¾ß¾ß¾ß¾ß¾ß¾ß¾ß¾ß¾ß");
+
+		meet.setPlace("ï¿½ß¾ß¾ß¾ß¾ß¾ß¾ß¾ß¾ï¿½");
 		meet.setLink("wwww");
 		meet.setImg("www");
-		
-		log.info("¾÷µ« µÈ °¹¼ö  : " + mapper.update(meet));
+
+		log.info("ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½  : " + mapper.update(meet));
 	}
-	
-	
+
+
 }

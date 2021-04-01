@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,27 +12,34 @@
     <title>자유게시판 - 허니비</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/resources/css/free_read.css">
+    <link rel="stylesheet" href="/resources/css/free/get.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+	<%@include file="../include/header.jsp" %>
     <div class="container">
         <div class="title">
-            <h4>Title</h4>
+            <h4><c:out value="${free.title}" /></h4>
             <div class="minibox">
                 <div class="nick">
-                    <img src="img/mypage.PNG" />
+                    <img src="../../../resources/img/me.png" />
                     <small>nickname</small>
                 </div>
                 <div class="regdate">
-                    <small>2021.03.31 10:11:12</small>
+                    <small><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${free.regdt}" /></small>
                 </div>
             </div>
         </div>
         <hr class="solid">
         <div class="content">
-            Hello My name is~~
-
+            <c:out value="${free.content}" />
         </div>
+        <button data-oper="modify" class="modBtn">수정</button>
+        <button data-oper="delete" class="delBtn">삭제</button>
+        <form id='operForm' action="/free/modify" method="get">
+        	<input type='hidden' id="fno" name="fno" value='<c:out value="${free.fno}" />'>
+        </form>
+        
         <hr class="solid">
         
         <!-- 댓글 읽기 창 -->
@@ -89,6 +99,17 @@
             </div>
         </div>
     </div>
+	<%@include file="../include/footer.jsp" %>
 
-</body>
-</html>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var operForm = $("#operForm");
+		$("button[data-oper='modify']").on("click", function(e) {
+			operForm.attr("action", "/free/modify").submit();
+		});
+		
+		$("button[data-oper='delete']").on("click", function(e) {
+			/*  삭제 버튼 클릭 시, deldt 컬럼에 일자 저장. 해당 row는 view에서 hidden 처리*/
+		})
+	})
+</script>

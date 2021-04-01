@@ -1,0 +1,110 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+caption {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.board_list {
+    width: 100%;
+    border-top: 2px solid rgb(48,27,1);
+}
+
+.board_list tr {
+    border-bottom: 1px solid #ccc;
+}
+
+.board_list th {
+    background-color: #eee;
+}
+
+.board_list th, .board_list td {
+    padding: 8px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.board_list td {
+    text-align: center;
+}
+
+.board_list .title {
+    text-align: left;
+}
+
+.board_list tbody tr td:nth-child(2) {
+    text-align: left;
+}
+
+.board_list .title:hover {
+    text-decoration: underline;
+}
+
+.container .paging {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 0;
+    text-align: right;
+}
+
+.container .paging a {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-size: 12px;
+}
+
+.container .paging a:first-child {
+    margin-left: 0;
+}
+
+.container .paging a.btn {
+    border: 1px solid #eee;
+    background: #eee;
+}
+
+.container .paging a.num {
+    border: 1px solid #ccc;
+    font-weight: 600;
+}
+
+.container .paging a.num.on {
+    border: 1px solid rgb(246, 218, 66);
+    background: rgb(246, 218, 66);
+}
+
+#searchForm select, input, button {
+    padding: 3px;
+    border: 1px solid #ccc;
+}
+
+#searchForm input {
+    padding: 4px 8px;
+    width: 200px;
+}
+
+.bottom-line button:hover {
+    cursor: pointer;
+    background-color: rgb(246, 218, 66);
+    border: 1px solid rgb(246, 218, 66);
+    outline: none;
+}
+
+.bottom-line {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+}

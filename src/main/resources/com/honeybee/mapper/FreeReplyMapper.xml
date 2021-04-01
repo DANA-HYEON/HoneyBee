@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honeybee.mapper.FreeReplyMapper">
+
+	<insert id="insert">
+		insert into free_reply (frno, fno, id, reply)
+		values (seq_free_reply.nextval, #{fno}, #{id}, #{reply})
+	</insert>
+
+	<select id="read" resultType="com.honeybee.domain.FreeReplyVO">
+		select * from free_reply where frno = #{frno}
+	</select>
+	
+	<update id="update">
+		update FREE_REPLY
+		set reply = #{reply}
+		where frno = #{frno}
+	</update>
+	
+	<delete id="delete">
+		delete from FREE_REPLY where frno = #{frno}
+	</delete>
+	
+	
+	
+
+</mapper>
