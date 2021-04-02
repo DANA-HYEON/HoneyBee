@@ -175,6 +175,9 @@ h6 {
 	background-color: rgb(246, 218, 66);
 }
 
+.blog-comment{
+	margin-top : 50px !important;
+}
 .delBtn {
 	margin-top: 20px;
 	outline: none;
@@ -185,4 +188,8 @@ h6 {
 
 .delBtn:hover {
 	cursor: pointer;
+}
+
+.text-success {
+	margin-top: 50px;
 }

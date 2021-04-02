@@ -75,7 +75,7 @@ public class MeetController {
 	}
 
 
-	@PostMapping("/remove")
+	@RequestMapping("/remove")
 	public String remove(@RequestParam("mno") Long mno, RedirectAttributes rttr) {
 		log.info("remove.............." + mno);
 

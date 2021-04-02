@@ -14,13 +14,11 @@ public interface MeetMapper {
 
 	public void insertSelectKey(MeetVO meet); //PK값 있는거
 
-
 	public MeetVO read(Long gno);
 
 	public int delete(Long gno);
 
 	public int update(MeetVO meet);
-
 
 	public List<MeetVO> getMyList(String id);
 

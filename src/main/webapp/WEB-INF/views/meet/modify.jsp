@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/resources/css/meet_reigster.css">
+<link rel="stylesheet" href="/resources/css/meet/reigster.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
@@ -20,9 +20,10 @@
                     <select class="cat" name='cid'>
                         <option>카테고리</option>
 				        <c:forEach items="${category}" var="category">
-				        	<option value="${category.CId}"><c:out value="${category.CName}"/></option>
+				        	<option value='<c:out value="${meet.mno}"/>'><c:out value="${category.CName}"/></option>
 				        </c:forEach>
                     </select>
+                    <input type="hidden" name="mno" value='<c:out value="${meet.mno}"/>'>
                     <input type="text" name="title" value='<c:out value="${meet.title}"/>'>
                 </div>
                 <div class="content">
@@ -70,7 +71,7 @@
                 <div class="map"><input type="text" name="img" value='<c:out value="${meet.img}"/>'></div>
                 
                 <button type="submit" data-oper='modfy'>모임 수정</button>
-                <button type="reset" data-oper='delete'>모임 삭제</button>
+                <button type="reset" data-oper='remove'>모임 삭제</button>
                 <button type="submit" data-oper='list'>목록으로 가기</button>
             </div>
         </div>
@@ -109,7 +110,7 @@
 			 if(operation === 'remove'){
 				 formObj.attr("action", "/meet/remove");
 			 }else if(operation === 'list'){
-				 self.location ="/meet/list";
+				 self.location = "/meet/list";
 				 return;
 			 }
 			 
