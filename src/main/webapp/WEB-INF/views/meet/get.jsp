@@ -88,6 +88,8 @@
 	  
 	  <form id='operForm' action="/meet/modify" method="get">
 	  	<input type='hidden' id='mno' name='mno' value='<c:out value="${meet.mno}"/>'>
+	  	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+	  	<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
 	  </form>
         
         

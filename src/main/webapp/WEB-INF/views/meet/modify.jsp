@@ -73,6 +73,10 @@
                 <button type="submit" data-oper='modfy'>모임 수정</button>
                 <button type="reset" data-oper='remove'>모임 삭제</button>
                 <button type="submit" data-oper='list'>목록으로 가기</button>
+                
+                <!-- 추가 -->
+                <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+                <input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
             </div>
         </div>
     </div>
@@ -110,8 +114,14 @@
 			 if(operation === 'remove'){
 				 formObj.attr("action", "/meet/remove");
 			 }else if(operation === 'list'){
-				 self.location = "/meet/list";
-				 return;
+				 formObj.attr("action", "/meet/list").attr("method", "get");
+				 var pageNumTag = $("input[name='pageNum']").clone();
+				 var amountTag = $("input[name='amount']").clone();
+				 
+				 formObj.empty();
+				 formObj.append(pageNumTag);
+				 formObj.append(amountTag);
+				 
 			 }
 			 
 			 formObj.submit();

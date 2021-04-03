@@ -2,7 +2,7 @@ package com.honeybee.mapper;
 
 import java.util.List;
 
-
+import com.honeybee.domain.Criteria;
 import com.honeybee.domain.MeetVO;
 
 public interface MeetMapper {
@@ -21,5 +21,8 @@ public interface MeetMapper {
 	public int update(MeetVO meet);
 
 	public List<MeetVO> getMyList(String id);
-
+	
+	public List<MeetVO>  getLsitWithPaging(Criteria cri); //페이징
+	
+	public int getTotalCount(Criteria cri); //전체 게시물 갯수 가져오기
 }

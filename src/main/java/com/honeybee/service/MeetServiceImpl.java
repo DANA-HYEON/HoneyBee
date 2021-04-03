@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.honeybee.domain.Criteria;
 import com.honeybee.domain.MeetVO;
 import com.honeybee.mapper.MeetMapper;
 
@@ -60,6 +61,16 @@ public class MeetServiceImpl implements MeetService {
 		return mapper.getMyList(id);
 	}
 
+	@Override
+	public List<MeetVO> getList(Criteria cri) {
+		log.info("get List with criteria : " + cri);
+		return mapper.getLsitWithPaging(cri);
+	}
 
+	@Override
+	public int getTotal(Criteria cri) {
+		log.info("get total count");
+		return mapper.getTotalCount(cri);
+	}
 
 }

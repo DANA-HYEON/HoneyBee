@@ -44,9 +44,9 @@ public class MeetControllerTests {
 				.param("cid", "05")
 				.param("cid2", "01")
 				.param("id", "USAsuper0101")
-				.param("title", "ControllerÅ×½ºÆ® »õ±Û Á¦¸ñ ¸ðÀÓ")
-				.param("smry", "¸ðÀÓ ¿ä¾à ³»¿ë Å×½ºÆ® ÀÔ´Ï´Ù. ÄÁÆ®·Ñ·¯")
-				.param("content", "Controller ³»¿ë³»¿ë³»¿ë³»¿ë³»¿ë³»¿ë Å×½ºÆ® ³»¿ë³»¿ë³»¿ë³»¿ë ")
+				.param("title", "Controllerï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")
+				.param("smry", "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ® ï¿½Ô´Ï´ï¿½. ï¿½ï¿½Æ®ï¿½Ñ·ï¿½")
+				.param("content", "Controller ï¿½ï¿½ï¿½ë³»ï¿½ë³»ï¿½ë³»ï¿½ë³»ï¿½ë³»ï¿½ï¿½ ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ë³»ï¿½ë³»ï¿½ë³»ï¿½ï¿½ ")
 				.param("startDt", "999999999999")
 				.param("endDt", "999999999999")
 				.param("recsDt", "999999999999")
@@ -58,7 +58,7 @@ public class MeetControllerTests {
 				.param("thumb", "101")
 				.param("charge", "N")
 				.param("onoff", "OFF")
-				.param("place", "¼­¿ì·¯¿ï¼­¿ï¼­¿ï¤·¼­¿ï")
+				.param("place", "ï¿½ï¿½ï¿½ì·¯ï¿½ï¼­ï¿½ï¼­ï¿½ï¤·ï¿½ï¿½ï¿½ï¿½")
 				.param("link", "www.naver.com")
 				.param("img", "This is img")).andReturn().getModelAndView().getViewName();
 		
@@ -82,9 +82,9 @@ public class MeetControllerTests {
 				.param("cid", "09")
 				.param("cid2", "09")
 				.param("id", "USAsuper0101")
-				.param("title", "¿À´Ã ¸¸¿ìÀý »ß¿ë»ß¿ë Å×½ºÆ® »õ±Û Á¦¸ñ ¸ðÀÓ")
-				.param("smry", "¸ðÀÓ ¿ä¾à ³»¿ë Å×½ºÆ® ÀÔ´Ï´Ù. ÄÁÆ®·Ñ·¯")
-				.param("content", "Controller ³»¿ë³»¿ë³»¿ë³»¿ë³»¿ë³»¿ë Å×½ºÆ® ³»¿ë³»¿ë³»¿ë³»¿ë ")
+				.param("title", "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß¿ï¿½ß¿ï¿½ ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")
+				.param("smry", "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ® ï¿½Ô´Ï´ï¿½. ï¿½ï¿½Æ®ï¿½Ñ·ï¿½")
+				.param("content", "Controller ï¿½ï¿½ï¿½ë³»ï¿½ë³»ï¿½ë³»ï¿½ë³»ï¿½ë³»ï¿½ï¿½ ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ë³»ï¿½ë³»ï¿½ë³»ï¿½ï¿½ ")
 				.param("startDt", "999999999999")
 				.param("endDt", "999999999999")
 				.param("recsDt", "999999999999")
@@ -96,7 +96,7 @@ public class MeetControllerTests {
 				.param("thumb", "101")
 				.param("charge", "N")
 				.param("onoff", "OFF")
-				.param("place", "¼­¿ì·¯¿ï¼­¿ï¼­¿ï¤·¼­¿ï")
+				.param("place", "ï¿½ï¿½ï¿½ì·¯ï¿½ï¼­ï¿½ï¼­ï¿½ï¤·ï¿½ï¿½ï¿½ï¿½")
 				.param("link", "www.naver.com")
 				.param("img", "This is img")).andReturn().getModelAndView().getViewName();
 		
@@ -110,5 +110,15 @@ public class MeetControllerTests {
 		
 		log.info(resultPage);
 	}
-
+	
+	@Test
+	public void testListPaging() throws Exception{
+		
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/meet/list")
+				.param("pageNum", "2")
+				.param("amount", "50"))
+				.andReturn().getModelAndView().getModelMap());
+	}
+	
+	
 }

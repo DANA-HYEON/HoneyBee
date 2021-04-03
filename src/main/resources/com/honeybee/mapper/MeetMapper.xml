@@ -217,4 +217,69 @@
       where id = #{id}
   ]]>
 </select>
+
+<select id="getLsitWithPaging" resultType="com.honeybee.domain.MeetVO">
+	<![CDATA[
+		select
+		  MNO,
+	      CID,
+	      CID2,
+	      ID,
+	      TITLE,
+	      SMRY,
+	      to_char(CONTENT) AS CONTENT,
+	      STARTDT,
+	      ENDDT,
+	      RECSDT,
+	      RECEDT,
+	      RECNO,
+	      CURRNO,
+	      CNCLNO,
+	      HIT,
+	      THUMB,
+	      CHARGE,
+	      ONOFF,
+	      PLACE,
+	      LINK,
+	      IMG,
+	      REGDT,
+	      UPDDT,
+	      DELDT
+	      
+	      from(
+	      select /*+index_desc(meet meet_pk)*/ 
+	      rownum rn,
+	      MNO,
+	      CID,
+	      CID2,
+	      ID,
+	      TITLE,
+	      SMRY,
+	      to_char(CONTENT) AS CONTENT,
+	      STARTDT,
+	      ENDDT,
+	      RECSDT,
+	      RECEDT,
+	      RECNO,
+	      CURRNO,
+	      CNCLNO,
+	      HIT,
+	      THUMB,
+	      CHARGE,
+	      ONOFF,
+	      PLACE,
+	      LINK,
+	      IMG,
+	      REGDT,
+	      UPDDT,
+	      DELDT
+	      from meet
+	      where rownum <= #{pageNum} * #{amount})
+	      where rn > (#{pageNum}-1) * #{amount}
+	]]>
+</select>
+
+<select id="getTotalCount" resultType="int">
+	select count(*) from meet where mno > 0
+</select>
 </mapper>

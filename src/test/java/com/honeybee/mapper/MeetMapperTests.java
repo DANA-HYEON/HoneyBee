@@ -1,11 +1,14 @@
 package com.honeybee.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.honeybee.domain.Criteria;
 import com.honeybee.domain.MeetVO;
 
 import lombok.Setter;
@@ -31,9 +34,9 @@ public class MeetMapperTests {
 		meet.setCid2("01");
 		meet.setId("idididid");
 
-		meet.setTitle("�̰�� ��� �׽�Ʈ�Դϴ�.");
-		meet.setSmry("�̰�� ���� ���Ӹ� ���� �׽�Ʈ�Դϴ�.");
-		meet.setContent("�̰�� ���� �����Դϴ�. ���� �����Դϴ�. ���� �����Դϴ�. ���� �����Դϴ�.");
+		meet.setTitle("test");
+		meet.setSmry("testtesttest");
+		meet.setContent("testtesttesttesttest");
 		meet.setStartDt("202103310730");
 		meet.setEndDt("202103310930");
 		meet.setRecsDt("202103161200");
@@ -46,13 +49,13 @@ public class MeetMapperTests {
 		meet.setCharge("N");
 		meet.setOnoff("OFF");
 
-		meet.setPlace("���� ���� ȫ�� ��¼����¼��");
+		meet.setPlace("testtesttesttest");
 		meet.setLink("www.naver.com");
 		meet.setImg("IMG");
 
 		mapper.insert(meet);
 
-		log.info("��� : " + meet);
+		log.info("test : " + meet);
 
 	}
 
@@ -63,9 +66,9 @@ public class MeetMapperTests {
 		meet.setCid2("01");
 		meet.setId("idididid");
 
-		meet.setTitle("�̰�� ��� �׽�Ʈ�Դϴ�.");
-		meet.setSmry("�̰�� ���� ���Ӹ� ���� �׽�Ʈ�Դϴ�.");
-		meet.setContent("�̰�� ���� �����Դϴ�. ���� �����Դϴ�. ���� �����Դϴ�. ���� �����Դϴ�.");
+		meet.setTitle("test.");
+		meet.setSmry("test.");
+		meet.setContent("testtesttest.");
 		meet.setStartDt("202103310730");
 		meet.setEndDt("202103310930");
 		meet.setRecsDt("202103161200");
@@ -78,14 +81,14 @@ public class MeetMapperTests {
 		meet.setCharge("N");
 		meet.setOnoff("OFF");
 
-		meet.setPlace("���� ���� ȫ�� ��¼����¼��");
+		meet.setPlace("testtest");
 
 		meet.setLink("www.naver.com");
 		meet.setImg("IMG");
 
 		mapper.insertSelectKey(meet);
 
-		log.info("��� : " + meet);
+		log.info("test :  " + meet);
 
 	}
 
@@ -97,7 +100,7 @@ public class MeetMapperTests {
 	@Test
 	public void testDelete() {
 
-		log.info("��� ���� : " + mapper.delete(20L));
+		log.info("testtest : " + mapper.delete(20L));
 
 	}
 
@@ -107,9 +110,9 @@ public class MeetMapperTests {
 		meet.setMno(21L);
 
 
-		meet.setTitle("����� ����Դϴ�");
-		meet.setSmry("����� ���Ӹ� �����Դϴ�");
-		meet.setContent("����� �����Դϴ�.");
+		meet.setTitle("ddd");
+		meet.setSmry("dddddddddd");
+		meet.setContent("dddddddddddd.");
 		meet.setStartDt("202103312222");
 		meet.setEndDt("222222222222");
 		meet.setRecsDt("222222222222");
@@ -118,12 +121,21 @@ public class MeetMapperTests {
 		meet.setCharge("Y");
 		meet.setOnoff("ON");
 
-		meet.setPlace("�߾߾߾߾߾߾߾߾�");
+		meet.setPlace("ddd");
 		meet.setLink("wwww");
 		meet.setImg("www");
 
-		log.info("�� �� ����  : " + mapper.update(meet));
+		log.info("ddddddddd : " + mapper.update(meet));
 	}
-
-
+	
+	@Test
+	public void testPaging() {
+		Criteria cri = new Criteria();
+		
+		cri.setPageNum(3);
+		cri.setAmount(10);
+		
+		List<MeetVO> list = mapper.getLsitWithPaging(cri);
+		list.forEach(meet -> log.info(meet));
+	}
 }
