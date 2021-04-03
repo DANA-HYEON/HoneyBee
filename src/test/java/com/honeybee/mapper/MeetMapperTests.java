@@ -138,4 +138,15 @@ public class MeetMapperTests {
 		List<MeetVO> list = mapper.getLsitWithPaging(cri);
 		list.forEach(meet -> log.info(meet));
 	}
+	
+	@Test
+	public void testSearch() {
+		Criteria cri = new Criteria();
+		cri.setKeyword("하이");
+		cri.setType("TC");
+		
+		List<MeetVO> list = mapper.getLsitWithPaging(cri);
+		
+		list.forEach(meet -> log.info(meet));
+	}
 }

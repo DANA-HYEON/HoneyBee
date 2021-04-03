@@ -152,10 +152,10 @@
       </table>
       <form id="searchForm">
           <select name='type'>
-              <option value="tc">제목+내용</option>
-              <option value="t">제목</option>
-              <option value="c">내용</option>
-              <option value="w">작성자</option>
+              <option value="TC">제목+내용</option>
+              <option value="T">제목</option>
+              <option value="C">내용</option>
+              <option value="W">작성자 아이디</option>
           </select>
           <input type="text" name="keyword" />
           <button>Search</button>
