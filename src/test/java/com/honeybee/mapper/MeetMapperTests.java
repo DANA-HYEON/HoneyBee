@@ -33,7 +33,6 @@ public class MeetMapperTests {
 		meet.setCid("02");
 		meet.setCid2("01");
 		meet.setId("idididid");
-
 		meet.setTitle("test");
 		meet.setSmry("testtesttest");
 		meet.setContent("testtesttesttesttest");
@@ -48,15 +47,12 @@ public class MeetMapperTests {
 		meet.setThumb(10);
 		meet.setCharge("N");
 		meet.setOnoff("OFF");
-
 		meet.setPlace("testtesttesttest");
 		meet.setLink("www.naver.com");
 		meet.setImg("IMG");
 
 		mapper.insert(meet);
-
 		log.info("test : " + meet);
-
 	}
 
 	@Test
@@ -65,7 +61,6 @@ public class MeetMapperTests {
 		meet.setCid("02");
 		meet.setCid2("01");
 		meet.setId("idididid");
-
 		meet.setTitle("test.");
 		meet.setSmry("test.");
 		meet.setContent("testtesttest.");
@@ -80,14 +75,11 @@ public class MeetMapperTests {
 		meet.setThumb(10);
 		meet.setCharge("N");
 		meet.setOnoff("OFF");
-
 		meet.setPlace("testtest");
-
 		meet.setLink("www.naver.com");
 		meet.setImg("IMG");
 
 		mapper.insertSelectKey(meet);
-
 		log.info("test :  " + meet);
 
 	}
@@ -99,17 +91,13 @@ public class MeetMapperTests {
 
 	@Test
 	public void testDelete() {
-
 		log.info("testtest : " + mapper.delete(20L));
-
 	}
 
 	@Test
 	public void testUpdate() {
 		MeetVO meet = new MeetVO();
 		meet.setMno(21L);
-
-
 		meet.setTitle("ddd");
 		meet.setSmry("dddddddddd");
 		meet.setContent("dddddddddddd.");
@@ -120,33 +108,32 @@ public class MeetMapperTests {
 		meet.setRecNo(99);
 		meet.setCharge("Y");
 		meet.setOnoff("ON");
-
 		meet.setPlace("ddd");
 		meet.setLink("wwww");
 		meet.setImg("www");
 
 		log.info("ddddddddd : " + mapper.update(meet));
 	}
-	
+
 	@Test
 	public void testPaging() {
 		Criteria cri = new Criteria();
-		
+
 		cri.setPageNum(3);
 		cri.setAmount(10);
-		
+
 		List<MeetVO> list = mapper.getLsitWithPaging(cri);
 		list.forEach(meet -> log.info(meet));
 	}
-	
+
 	@Test
 	public void testSearch() {
 		Criteria cri = new Criteria();
 		cri.setKeyword("하이");
 		cri.setType("TC");
-		
+
 		List<MeetVO> list = mapper.getLsitWithPaging(cri);
-		
+
 		list.forEach(meet -> log.info(meet));
 	}
 }

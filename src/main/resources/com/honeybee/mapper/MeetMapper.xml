@@ -245,9 +245,9 @@
 	      REGDT,
 	      UPDDT,
 	      DELDT
-	      
+
 	      from(
-	      select /*+index_desc(meet meet_pk)*/ 
+	      select /*+index_desc(meet meet_pk)*/
 	      rownum rn,
 	      MNO,
 	      CID,
@@ -274,7 +274,7 @@
 	      UPDDT,
 	      DELDT
 	      from meet where]]>
-	      
+
 	      <trim prefix="(" suffix=") AND " prefixOverrides="OR">
 	      	<foreach item='type' collection="typeArr">
 	      	<trim prefix="OR">
@@ -292,11 +292,11 @@
 	      	</trim>
 	      	</foreach>
 	      </trim>
-	      
+
 	      <![CDATA[
 	      rownum <= #{pageNum} * #{amount}
-	      )	      
-	      
+	      )
+
 	      where rn > (#{pageNum}-1) * #{amount}
 		  ]]>
 </select>

@@ -32,16 +32,16 @@ public class MeetController {
 	public void list(@RequestParam(required=false) String cid, Criteria cri, Model model) {
 		log.info("list");
 		model.addAttribute("list", service.getList());
-		
+
 		log.info("list : " + cri);
 		model.addAttribute("list", service.getList(cri));
 		model.addAttribute("category", cService.getCatList());
 		model.addAttribute("pickCat", cid);
-		
+
 		int total = service.getTotal(cri);
-		
+
 		log.info("total : " + total);
-		
+
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 
@@ -94,7 +94,7 @@ public class MeetController {
 		if(service.remove(mno)) {
 			rttr.addFlashAttribute("result" , "success");
 		}
-		
+
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
 

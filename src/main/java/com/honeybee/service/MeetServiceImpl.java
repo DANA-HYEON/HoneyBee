@@ -50,7 +50,6 @@ public class MeetServiceImpl implements MeetService {
 	@Override
 	public List<MeetVO> getList() {
 
-
 		log.info("getlist.............");
 		return mapper.getList();
 	}

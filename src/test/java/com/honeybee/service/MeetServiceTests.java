@@ -35,7 +35,6 @@ public class MeetServiceTests {
 		meet.setCid("02");
 		meet.setCid2("01");
 		meet.setId("idididid");
-
 		meet.setTitle("�̰�� ��� �׽�Ʈ�Դϴ�.");
 		meet.setSmry("�̰�� ���� ���Ӹ� ���� �׽�Ʈ�Դϴ�.");
 		meet.setContent("�̰�� ���� �����Դϴ�. ���� �����Դϴ�. ���� �����Դϴ�. ���� �����Դϴ�.");
@@ -50,14 +49,11 @@ public class MeetServiceTests {
 		meet.setThumb(10);
 		meet.setCharge("N");
 		meet.setOnoff("OFF");
-
 		meet.setPlace("���� ���� ȫ�� ��¼����¼��");
-
 		meet.setLink("www.naver.com");
 		meet.setImg("IMG");
 
 		service.register(meet);
-
 		log.info("��� �Խù��� ��ȣ : " + meet.getMno());
 	}
 
@@ -79,10 +75,7 @@ public class MeetServiceTests {
 		if(meet == null) {
 			return;
 		}
-
-
 		meet.setTitle("���� ���������");
-
 		log.info("modify result : " + service.modify(meet));
 	}
 
