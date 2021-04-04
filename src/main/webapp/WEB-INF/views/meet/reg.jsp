@@ -22,7 +22,7 @@
 				        	<option value="${category.CId}"><c:out value="${category.CName}"/></option>
 				        </c:forEach>
                     </select>
-                    <input type="text" name="title" value='<c:out value="${meet.mno}"/>' readonly="readonly">
+                    <input type="text" name="title" value='<c:out value="${meet.mno}"/>'>
                 </div>
                 <div class="content">
                 	<textarea rows="1" placeholder="모임 요약내용을 입력해주세요." name="smry"></textarea>

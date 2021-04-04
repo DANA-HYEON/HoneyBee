@@ -122,7 +122,7 @@ public class MeetMapperTests {
 		cri.setPageNum(3);
 		cri.setAmount(10);
 
-		List<MeetVO> list = mapper.getLsitWithPaging(cri);
+		List<MeetVO> list = mapper.getListWithPaging(cri);
 		list.forEach(meet -> log.info(meet));
 	}
 
@@ -132,7 +132,7 @@ public class MeetMapperTests {
 		cri.setKeyword("하이");
 		cri.setType("TC");
 
-		List<MeetVO> list = mapper.getLsitWithPaging(cri);
+		List<MeetVO> list = mapper.getListWithPaging(cri);
 
 		list.forEach(meet -> log.info(meet));
 	}

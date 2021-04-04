@@ -90,10 +90,12 @@
 	  	<input type='hidden' id='mno' name='mno' value='<c:out value="${meet.mno}"/>'>
 	  	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
 	  	<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
+	  	<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+	  	<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
 	  </form>
         
         
-              <!-- 댓글 읽기 창 -->
+        <!-- 댓글 읽기 창 -->
         <div class="bootstrap snippets bootdey">
             <div class="row">
                 <div class="col-md-12">

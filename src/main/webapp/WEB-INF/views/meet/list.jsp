@@ -150,17 +150,23 @@
               </c:forEach>
           </tbody>
       </table>
-      <form id="searchForm">
+      <form id="searchForm" action="/meet/list" method="get">
           <select name='type'>
-              <option value="TC">제목+내용</option>
-              <option value="T">제목</option>
-              <option value="C">내용</option>
-              <option value="W">작성자 아이디</option>
+          	  <option value="" <c:out value="${pageMaker.cri.type == null? 'selected' : ''}" />>--</option>
+              <option value="T" <c:out value="${pageMaker.cri.type eq 'T'? 'selected' : ''}" />>제목</option>
+              <option value="C" <c:out value="${pageMaker.cri.type eq 'C'? 'selected' : ''}" />>내용</option>
+              <option value="W" <c:out value="${pageMaker.cri.type eq 'W'? 'selected' : ''}" />>작성자 아이디</option>
+              <option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'? 'selected' : ''}" />>제목+내용</option>
+              <option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'? 'selected' : ''}" />>제목+작성자 아이디</option>
+              <option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC'? 'selected' : ''}" />>제목+내용+작성자 아이디</option>
           </select>
-          <input type="text" name="keyword" />
+          
+          <input type="text" name="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'/>
+          <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+          <input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
           <button>Search</button>
       </form>
-      <button class="meet_reg">모임 개설</a></button>
+      <button class="meet_reg">모임 개설</button>
       
        
            <div class="paging">
@@ -182,6 +188,8 @@
      	   <form id='actionForm' action="/meet/list" method="get">
      	   	<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
      	   	<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+     	   	<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
+     	   	<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
      	   </form>
   </div>
   
@@ -252,6 +260,28 @@
 			 actionForm.append("<input type='hidden' name='mno' value='" +$(this).attr("href")+"'>");
 			 actionForm.attr("action", "/meet/get");
 			 actionForm.submit();
+		 });
+		 
+		 /* 검색 버튼의 이벤트 처리 */
+		 var searchForm = $("#searchForm");
+		 
+		 /* 브라우저에서 검색조건을 선택하지 않고 검색하면 알림 설정 */
+		 $("#searchForm button").on("click", function(e){
+			 if(!searchForm.find("option:selected").val()){
+				 alert("검색 종류를 선택하세요.");
+				 return false;
+			 }
+			 
+			 if(!searchForm.find("input[name='keyword']").val()){
+				 alert("키워드를 입력하세요.");
+				 return false;
+			 }
+			 
+			 /* 검색조건 선택 후 키워드 검색이 없으면 1페이지로 이동 */
+			 searchForm.find("input[name='pageNum']").val("1");
+			 e.preventDefault();
+			 
+			 searchForm.submit();
 		 });
 	 });
  </script>

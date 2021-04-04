@@ -14,19 +14,19 @@ public interface MeetMapper {
 
 	public void insertSelectKey(MeetVO meet); //PK값 있는거
 
-	public MeetVO read(Long gno);
+	public MeetVO read(Long gno); //게시물 읽기
 
-	public int delete(Long gno);
+	public int delete(Long gno); //게시물 삭제
 
-	public int update(MeetVO meet);
+	public int update(MeetVO meet); //게시물 수정
 
-	public List<MeetVO> getMyList(String id);
+	//public MeetVO getMyList(String id); UserMapper참조
 	
-	public List<MeetVO>  getLsitWithPaging(Criteria cri); //페이징
+	public List<MeetVO>  getListWithPaging(Criteria cri); //페이징
 
-  public List<MeetVO> getListTest(String id);
+    public List<MeetVO> getListTest(String id); //내가 속한 모임 리스트 가져오기
 	
-	public List<MeetVO> getNick(String id);
+	public List<MeetVO> getNick(String id); //닉네임 가져오기
 
 	public int getTotalCount(Criteria cri); //전체 게시물 갯수 가져오기
 }

@@ -219,6 +219,25 @@
   ]]>
 </select>
 
+<sql id="criteria">
+      <trim prefix="(" suffix=") AND " prefixOverrides="OR">
+      	<foreach item='type' collection="typeArr">
+      	<trim prefix="OR">
+      		<choose>
+      			<when test="type == 'T'.toString()">
+      				title like '%'||#{keyword}||'%'
+      			</when>
+      			<when test="type =='C'.toString()">
+      				content like '%'||#{keyword}||'%'
+      			</when>
+      			<when test="type =='W'.toString()">
+      				id like '%'||#{keyword}||'%'
+      			</when>
+      		</choose>
+      	</trim>
+      	</foreach>
+      </trim>
+</sql>
 <select id="getListWithPaging" resultType="com.honeybee.domain.MeetVO">
 	<![CDATA[
 		select
@@ -276,23 +295,7 @@
 	      DELDT
 	      from meet where]]>
 
-	      <trim prefix="(" suffix=") AND " prefixOverrides="OR">
-	      	<foreach item='type' collection="typeArr">
-	      	<trim prefix="OR">
-	      		<choose>
-	      			<when test="type == 'T'.toString()">
-	      				title like '%'||#{keyword}||'%'
-	      			</when>
-	      			<when test="type =='C'.toString()">
-	      				content like '%'||#{keyword}||'%'
-	      			</when>
-	      			<when test="type =='W'.toString()">
-	      				id like '%'||#{keyword}||'%'
-	      			</when>
-	      		</choose>
-	      	</trim>
-	      	</foreach>
-	      </trim>
+	      <include refid="criteria"></include>
 
 	      <![CDATA[
 	      rownum <= #{pageNum} * #{amount}
@@ -303,7 +306,8 @@
 </select>
 
 <select id="getTotalCount" resultType="int">
-	select count(*) from meet where mno > 0
+	select count(*) from meet where <include refid="criteria"></include> mno > 0
+	
 </select>
 
 <select id="getListTest" resultType="com.honeybee.domain.MeetVO">
