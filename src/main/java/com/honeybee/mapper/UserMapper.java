@@ -17,4 +17,7 @@ public interface UserMapper {
 	
 	public int update(UserVO user);
 	
+	public UserVO getMyList(String id);
+	
+	
 }

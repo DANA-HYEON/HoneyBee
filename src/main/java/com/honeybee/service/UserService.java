@@ -16,5 +16,7 @@ public interface UserService {
 	
 	public List<UserVO> getList();
 	
+	public UserVO getMyList(String id);
+	
 	
 }

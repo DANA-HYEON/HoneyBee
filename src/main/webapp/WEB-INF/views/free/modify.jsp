@@ -33,6 +33,10 @@
            	<input type="hidden" name="fno" value="<c:out value='${free.fno}' />">
            	<input type="hidden" name="id" value="<c:out value='${free.id}' />">
            	<input type="hidden" name="hit" value="<c:out value='${free.hit}' />">
+           	<input type="hidden" name="pageNum" value="<c:out value='${cri.pageNum}' />">
+           	<input type="hidden" name="amount" value="<c:out value='${cri.amount}' />">
+           	<input type="hidden" name="type" value="<c:out value='${cri.type}' />">
+           	<input type="hidden" name="keyword" value="<c:out value='${cri.keyword}' />">
 
             <button type="submit" data-oper='modify'>수정완료</button>
             <button type="submit" data-oper='list'>목록으로</button>
@@ -51,8 +55,17 @@
 			console.log(operation);
 			
 			if (operation === 'list') {
-				self.location = "/free/list";
-				return;
+				formObj.attr("action", "/free/list").attr("method", "get");
+				var pageNumTag = $("input[name='pageNum']").clone();
+				var amountTag = $("input[name='amount']").clone();
+				var typeTag = $("input[name='type']").clone();
+				var keywordTag = $("input[name='keyword']").clone();
+				
+				formObj.empty();
+				formObj.append(pageNumTag);
+				formObj.append(amountTag);
+				formObj.append(typeTag);
+				formObj.append(keywordTag);
 			}	
 			formObj.submit();
 		});

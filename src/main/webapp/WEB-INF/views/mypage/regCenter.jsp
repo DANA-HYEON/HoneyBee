@@ -289,15 +289,15 @@ body {
 					</tr>
 				</thead>
 				<tbody>
-				<c:forEach items="${list}" var="meet">
+				<c:forEach items="${meet}" var="meet" varStatus="status">
 					<tr>
 						<td><input type="checkbox"></td>
-						<td><c:out value="${meet.cid}"/></td>
+						<td><c:out value="${nick[status.index].CName}"></c:out></td>
 						<td><a href="/free/list"><c:out value="${meet.title}"/></a></td>
 						<td><c:out value="${meet.currNo}"/></td>
 						<td><c:out value="${meet.cid2}"/></td>
-						<td><c:out value="${meet.receDt}"/></td>
-						<td><c:out value="${meet.startDt}"/></td>
+						<td>${meet.receDt}</td>
+						<td>${meet.startDt}</td>
 						<td><c:out value="${meet.endDt}"/></td>
 					</tr>
 				</c:forEach>
@@ -308,7 +308,6 @@ body {
 					<tr class="posttitle">
 						<th class="category">문의/신고번호</th>
 						<th class="meettitle">닉네임</th>
-						<th class="peoplenum">신청제목</th>
 						<th class="meetstatus">이메일</th>
 						<th class="recruteenddate">신청일자</th>
 						<th class="meetstartdate">처리상태</th>
@@ -317,7 +316,6 @@ body {
 					<tr>
 						<th class="category">문의/신고번호</th>
 						<th class="meettitle"><a href="#" class="num on">닉네임</a></th>
-						<th class="peoplenum">신청제목</th>
 						<th class="meetstatus">이메일</th>
 						<th class="recruteenddate">신청일자</th>
 						<th class="meetstartdate">처리상태</th>

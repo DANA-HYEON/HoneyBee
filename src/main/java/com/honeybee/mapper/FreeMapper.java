@@ -2,6 +2,7 @@ package com.honeybee.mapper;
 
 import java.util.List;
 
+import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeVO;
 
 public interface FreeMapper {
@@ -18,7 +19,12 @@ public interface FreeMapper {
 	public int update(FreeVO vo);
 	
 	// DELETE
-	public int delete(Long fno);
+	public int delete(FreeVO vo);
 	
-	public List<FreeVO> getMyList(String id);
+	public FreeVO getMyList(String id);
+	
+	// Paging
+	public List<FreeVO> getListWithPaging(Criteria cri);
+	public int getTotalCount(Criteria cri);
+	
 }

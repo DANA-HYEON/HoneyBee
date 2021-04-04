@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
@@ -116,7 +117,7 @@ li {
 	display: inline-block;
 }
 
-.mypage-bottom-right {
+.mypage-thumb {
 	height: 500px;
 	width: 300px;
 	display: inline-block;
@@ -164,7 +165,7 @@ li {
 	color: rgba(133, 39, 39, 0.973);
 }
 
-.mypage-bottom-right-name {
+.mypage-thumb-name {
 	position: absolute;
 	top: 0px;
 	border-bottom: 1px solid black;
@@ -195,6 +196,34 @@ a:hover {
 	color: blue;
 	text-decoration: underline;
 }
+
+.mypage-subscribe {
+
+	height: 500px;
+	width: 300px;
+	display: inline-block;
+}
+
+.mypage-subscribe-name {
+	top: 0px;
+	border-bottom: 1px solid black;
+	text-align: left;
+	width: 300px;
+	margin-left: 680px;
+	margin-bottom: 8px;
+	font-weight: bold;
+	color: rgba(133, 39, 39, 0.973);
+}
+
+
+
+
+
+
+
+
+
+
 </style>
 </head>
 <body>
@@ -230,37 +259,33 @@ a:hover {
 
 		<div class="user_information">
 			<div class="name"></div>
-				
-				 <table
-            border="1"
-            width="50%"
-            height="200"
-            cellspacing="5">
-            <thead>
-                <tr>
-                    <th colspan="2"><c:out value="${list.id}"/></th>
-                </tr>
-            </thead>
 
-            <tbody>
-                <tr align="center" bgcolor="white">
-                    <td>이메일</td>
-                    <td>값</td>
-                </tr>
-                <tr align="center" bgcolor="white">
-                  <td>휴대전화</td>
-                  <td>값</td>
-                </tr>
-                  <tr align="center" bgcolor="white">
-                  <td>가입일</td>
-                  <td>값</td>
-                </tr>
-                  <tr align="center" bgcolor="white">
-                  <td>기타</td>
-                  <td><input type="radio"></td>
-                </tr>
-            </tbody>
-        </table>
+			<table border="1" width="50%" height="200" cellspacing="5">
+				<thead>
+					<tr>
+						<th colspan="2">${user.nick}</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr align="center" bgcolor="white">
+						<td>이메일</td>
+						<td><c:out value="${user.email}" /></td>
+					</tr>
+					<tr align="center" bgcolor="white">
+						<td>휴대전화</td>
+						<td><c:out value="${user.telno}" /></td>
+					</tr>
+					<tr align="center" bgcolor="white">
+						<td>가입일</td>
+						<td><c:out value="${user.regdt}" /></td>
+					</tr>
+					<tr align="center" bgcolor="white">
+						<td>기타</td>
+						<td><input type="radio"></td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 
 
@@ -272,13 +297,20 @@ a:hover {
 		<div class="user-enroll-list-name">모임신청목록</div>
 		<div class="user-enroll-list">
 			<table>
-				<th>승인완료</th>
-				<th></th>
-				<th>날짜</th>
+				<c:forEach items="${enrollStatus}" var="enrollStatus"
+					varStatus="status">
+					<tr>
+						<td><c:out value="${enrollStatus.CName}" /></td>
+						<td><fmt:formatDate pattern="yyyy-MM-dd"
+								value="${meet[status.index].regDt}" /></td>
+					<tr>
+						<td colspan="3"><c:out value="${meet[status.index].title}" /></td>
+					</tr>
+
+					</tr>
+				</c:forEach>
+				<td></td>
 				<tr>
-					<!-- 두번째 줄 시작 -->
-					
-					<td colspan="3">모임이름</td>
 
 				</tr>
 				<!-- 두번째 줄 끝 -->
@@ -288,33 +320,57 @@ a:hover {
 		<div class="meeting-post-name">
 			모임개설목록
 			<button>
-				<a href="registercenter">더보기</a>
+				<a href="/mypage/regCenter">더보기</a>
 			</button>
 		</div>
 		<span class="meeting-post">
 			<table>
-				<th></th>
-				<th></th>
-				<th></th>
-				<th>날짜</th>
-				<tr>
-					<!-- 두번째 줄 시작 -->
-					<td colspan="3">모임이름</td>
-				</tr>
-				<!-- 두번째 줄 끝 -->
+				<c:forEach items="${meet}" var="tes">
+					<td></td>
+					<td></td>
+					<td><fmt:formatDate pattern="yyyy-MM-dd" value="${tes.regDt}" /></td>
+					<tr>
+						<td colspan="3"><c:out value="${tes.title}" /></td>
+					</tr>
+				</c:forEach>
+
 			</table>
 		</span>
-		<div class="mypage-bottom-right-name">모임 찜목록</div>
-		<div class="mypage-bottom-right">
+		<div class="mypage-thumb-name">
+			모임 찜 목록
+		</div>
+		<div class="mypage-thumb">
 			<table>
+			<c:forEach items="${thumbList}" var="thumbList" varStatus="status">
 				<th></th>
 				<th></th>
 				<th></th>
-				<th>날짜</th>
+				<th><fmt:formatDate pattern="yyyy-MM-dd"
+								value="${thumbRegDate[status.index].regDt}" /></th>
 				<tr>
 					<!-- 두번째 줄 시작 -->
-					<td colspan="3">모임이름</td>
+					<td colspan="3"><c:out value="${thumbList.title}" /> <br></td>
 				</tr>
+					</c:forEach>
+				<!-- 두번째 줄 끝 -->
+			</table>
+
+		</div>
+	</div>
+		<div class="mypage-subscribe-name">
+			구독목록
+		</div>
+		<div class="mypage-subscribe">
+			<table>
+			<c:forEach items="${subscribeList}" var="subscribe" varStatus="status">
+				<th></th>
+				<th></th>
+				<th></th>
+				<th>
+					<!-- 두번째 줄 시작 -->
+				<tr><td colspan="3"><c:out value="${subscribe.nick}" /> <br></td>
+				</tr>
+					</c:forEach>
 				<!-- 두번째 줄 끝 -->
 			</table>
 
@@ -326,18 +382,18 @@ a:hover {
 
 
 	<footer>
-		<div id="footer_box">
-			<div id="address">
-				<ul>
-					<li>회사소개 | 서비스약관 및 정책 | 개인정보 취급방침 | 광고문의 | 투자정보 | 문의하기 | 제안하기
-						| 고객센터</li>
-					<li>주식회사 허니비 | TEAM BEMAJOR</li>
-					<li>서울특별시 종로구 종로69 YMCA 7층 | TEL.02)722-1481 | FAX.02)722-1481<br>
-						<br></li>
-					<li>copyright ⓒ 허니비.com All rights reserved.</li>
-				</ul>
-			</div>
+	<div id="footer_box">
+		<div id="address">
+			<ul>
+				<li>회사소개 | 서비스약관 및 정책 | 개인정보 취급방침 | 광고문의 | 투자정보 | 문의하기 | 제안하기 |
+					고객센터</li>
+				<li>주식회사 허니비 | TEAM BEMAJOR</li>
+				<li>서울특별시 종로구 종로69 YMCA 7층 | TEL.02)722-1481 | FAX.02)722-1481<br>
+					<br></li>
+				<li>copyright ⓒ 허니비.com All rights reserved.</li>
+			</ul>
 		</div>
+	</div>
 	</footer>
 
 

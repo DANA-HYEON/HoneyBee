@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeVO;
 
 import lombok.Setter;
@@ -59,7 +60,7 @@ public class FreeServiceTests {
 	
 	@Test
 	public void testGetList() {
-		service.getList().forEach(vo -> log.info(vo));
+		service.getList(new Criteria(2, 10)).forEach(vo -> log.info(vo));
 	}
 
 }

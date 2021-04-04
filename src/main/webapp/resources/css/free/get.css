@@ -164,7 +164,7 @@ h6 {
     margin-top: 30px;
 }
 
-.modBtn {
+.modBtn, .delBtn {
 	margin-top: 20px;
 	outline: none;
 	border: none;
@@ -175,19 +175,21 @@ h6 {
 	background-color: rgb(246, 218, 66);
 }
 
-.blog-comment{
-	margin-top : 50px !important;
-}
-.delBtn {
-	margin-top: 20px;
-	outline: none;
-	border: none;
+.delBtn:hover {
+	cursor: pointer;
 	background-color: red;
 	color: white;
 }
 
-.delBtn:hover {
+.lstBtn {
+	margin-top: 20px;
+	outline: none;
+	border: none;
+}
+
+.lstBtn:hover {
 	cursor: pointer;
+  background-color: #3498db;
 }
 
 .text-success {

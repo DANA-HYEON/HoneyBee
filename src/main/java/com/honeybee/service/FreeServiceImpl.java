@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeVO;
-import com.honeybee.domain.MeetVO;
 import com.honeybee.mapper.FreeMapper;
 
 import lombok.AllArgsConstructor;
@@ -35,18 +35,23 @@ public class FreeServiceImpl implements FreeService {
 	}
 
 	@Override
-	public boolean remove(Long fno) {
-		return mapper.delete(fno) == 1;
+	public boolean remove(FreeVO vo) {
+		return mapper.delete(vo) == 1;
 	}
 
 	@Override
-	public List<FreeVO> getList() {
-		return mapper.getList();
+	public List<FreeVO> getList(Criteria cri) {
+		return mapper.getListWithPaging(cri);
 	}
 	
 	@Override
-	public List<FreeVO> getMyList(String id) {
+	public FreeVO getMyList(String id) {
 		return mapper.getMyList(id);
+	}
+
+	@Override
+	public int getTotal(Criteria cri) {
+		return mapper.getTotalCount(cri);
 	}
 
 

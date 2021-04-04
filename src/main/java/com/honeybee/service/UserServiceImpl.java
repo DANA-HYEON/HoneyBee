@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
 		return mapper.update(user) ==1;
 	}
 	
+	@Override
 	public boolean remove(String Id) {
 		
 		log.info("remove."+Id);
@@ -57,7 +58,11 @@ public class UserServiceImpl implements UserService {
 		return mapper.delete(Id)==1;
 	}
 	
-	
+	@Override
+	public UserVO getMyList(String id){
+		log.info("getlist.............");
+		return mapper.getMyList(id);
+	}
 	
 
 }

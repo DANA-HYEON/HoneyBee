@@ -24,5 +24,9 @@ public interface MeetMapper {
 	
 	public List<MeetVO>  getLsitWithPaging(Criteria cri); //페이징
 
+  public List<MeetVO> getListTest(String id);
+	
+	public List<MeetVO> getNick(String id);
+
 	public int getTotalCount(Criteria cri); //전체 게시물 갯수 가져오기
 }

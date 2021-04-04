@@ -34,6 +34,8 @@
 	]]>
 </select>
 
+
+
 <insert id="insert">
 	insert into meet(
 			MNO,
@@ -192,7 +194,6 @@
       MNO,
       CID,
       CID2,
-      ID,
       TITLE,
       SMRY,
       to_char(CONTENT) AS CONTENT,
@@ -218,7 +219,7 @@
   ]]>
 </select>
 
-<select id="getLsitWithPaging" resultType="com.honeybee.domain.MeetVO">
+<select id="getListWithPaging" resultType="com.honeybee.domain.MeetVO">
 	<![CDATA[
 		select
 		  MNO,
@@ -304,5 +305,42 @@
 <select id="getTotalCount" resultType="int">
 	select count(*) from meet where mno > 0
 </select>
+
+<select id="getListTest" resultType="com.honeybee.domain.MeetVO">
+  <![CDATA[
+    select 
+      MNO,
+      CID,
+      CID2,
+      TITLE,
+      SMRY,
+      to_char(CONTENT) AS CONTENT,
+      STARTDT,
+      ENDDT,
+      RECSDT,
+      RECEDT,
+      RECNO,
+      CURRNO,
+      CNCLNO,
+      HIT,
+      THUMB,
+      CHARGE,
+      ONOFF,
+      PLACE,
+      LINK,
+      IMG,
+      REGDT,
+      UPDDT,
+      DELDT
+      from MEET
+      where id = #{id}
+  ]]>
+</select>
+
+
+<select id="getNick" resultType="com.honeybee.domain.CodeTableVO">
+select code_table.cname from code_table, meet where (meet.cid=code_table.cid) and (id=#{id})
+</select>
+
 
 </mapper>

@@ -49,13 +49,12 @@ public class MeetServiceImpl implements MeetService {
 
 	@Override
 	public List<MeetVO> getList() {
-
 		log.info("getlist.............");
 		return mapper.getList();
 	}
 
 	@Override
-	public List<MeetVO> getMyList(String id) {
+	public MeetVO getMyList(String id) {
 		log.info("getlist.............");
 		return mapper.getMyList(id);
 	}
@@ -71,5 +70,18 @@ public class MeetServiceImpl implements MeetService {
 		log.info("get total count");
 		return mapper.getTotalCount(cri);
 	}
-
+	
+	@Override
+	public List<MeetVO> getListTest(String id) {
+		log.info("getlist.............");
+		return mapper.getListTest(id);
+	}
+	
+	@Override
+	public List<MeetVO> getNick(String id) {
+		log.info("getNick.............");
+		return mapper.getNick(id);
+	}
+	
+	
 }

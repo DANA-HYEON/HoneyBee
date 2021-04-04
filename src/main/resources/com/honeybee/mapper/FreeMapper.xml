@@ -6,7 +6,7 @@
 		<![CDATA[
 			select
 				FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, DELDT
-			from FREE where fno > 0
+			from FREE where FNO > 0 and DELDT is null
 		]]>
 	</select>
 
@@ -40,17 +40,19 @@
 	<update id="update">
 		update FREE
 		set id = #{id},
-		title = #{title},
-		content = #{content},
-		hit = #{hit},
-		thumb = #{thumb},
-		upddt = sysdate
+			title = #{title},
+			content = #{content},
+			hit = #{hit},
+			thumb = #{thumb},
+			upddt = sysdate
 		where fno = #{fno}
 	</update>
 
 	<!-- DELETE -->
 	<delete id="delete">
-		delete from FREE where fno = #{fno}
+		update FREE
+		set deldt = sysdate
+		where fno = #{fno}
 	</delete>
 
 </mapper>

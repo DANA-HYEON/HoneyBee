@@ -70,7 +70,7 @@ public class UserServiceTests {
 		if(user == null) {
 			return;
 		}
-    
+		
 		user.setCid("U00124");
 		log.info("MODIFY RESULT: " + service.modify(user));
 		
