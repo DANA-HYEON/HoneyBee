@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honeybee.mapper.ReplyMapper">
+
+<insert id="insert">
+	insert into meet_reply(MRNO,MNO,ID,MRNO2,REPLY,LAYER, BUNDLE,BUNORDER,NICK,REGDT,UPTDT)
+	values(seq_reply.nextval, #{mno}, #{id}, #{mRno2},#{reply}, #{layer}, #{bundle}, #{bunOrder}, (select nick from user_info where id = #{id}), sysdate, sysdate)
+</insert>
+
+
+<select id="read" resultType="com.honeybee.domain.ReplyVO">
+	select * from meet_reply where MRNO = #{mRno}
+</select>
+
+<update id="delete">
+	update meet_reply
+	set DELDT = sysdate
+	where MRNO = #{mRno}
+</update>
+
+<update id="update">
+	update meet_reply set reply = #{reply}, UPTDT = sysdate where MRNO = #{mRno}
+</update>
+
+<select id="getListWithPaging" resultType="com.honeybee.domain.ReplyVO">
+	select MRNO,MNO,ID,MRNO2,REPLY,LAYER, BUNDLE,BUNORDER,NICK,REGDT,UPTDT,DELDT
+	from meet_reply
+	where mno = #{mno} and DELDT is null
+	order by mno asc
+</select>
+</mapper>
