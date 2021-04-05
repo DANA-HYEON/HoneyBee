@@ -17,6 +17,30 @@
     <link rel="stylesheet" href="/resources/css/free/get.css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+     <style>
+      #modify {
+        position: absolute;
+            bottom: 3px;
+            right: 60px;
+    	}
+
+     #delete {
+        position: absolute;
+            bottom: 3px;
+            right: 110px;
+   	 }
+   	 
+   	 .replyList{
+   	 background-color:transparent;
+   	 border: none;
+   	 width : 500px;
+   	 }
+   	 
+   	 
+   	 input:focus {outline:none};
+
+    </style>
 </head>
 <body>
 
@@ -101,31 +125,19 @@
                 <div class="col-md-12">
                     <div class="blog-comment">
                         <h3 class="text-success">댓글</h3>
-                        <ul class="comments">
-                            <li class="clearfix">
+                         <ul class="comments t1">
+                            <!--  <li class="clearfix">
                                 <img src="https://bootdey.com/img/Content/user_1.jpg" class="avatar" alt="">
                                 <div class="post-comments">
                                     <p class="meta">
                                         <a href="#">김치국</a><small class="float-right">2021.03.25. 22:23:24</small>
-                                        <a class="btn thumb float-right"><i class="fa fa-thumbs-up"></i> 13</a>  <!-- 클릭하면 class=text-green 추가  -->
+                                        <a class="btn thumb float-right"><i class="fa fa-thumbs-up"></i> 13</a>  클릭하면 class=text-green 추가 
                                     </p>
                                     <span>김치국이냐 김칫국이냐 그것이 문제로다.</span>
                                     
                                     <a href="#"><small class="float-right">답글</small></a>
                                 </div>
-                                <ul class="comments">
-                                    <li class="clearfix">
-                                        <img src="https://bootdey.com/img/Content/user_3.jpg" class="avatar" alt="">
-                                        <div class="post-comments">
-                                            <p class="meta">
-                                                <a href="#">한글마춤뻡의정석</a> <small class="float-right">2021.03.25. 22:23:24</small>
-                                                <a class="btn float-right text-green"><i class="fa fa-thumbs-up"></i> 13</a>
-                                            </p>
-                                            <span>
-                                                김'칫'국이 올바른 표현입니다. 꼬우면 국립국어원에 물어보세요.
-                                            </span>
-                                            <a href="#"><small class="float-right">답글</small></a>
-                                        </div>
+                                
                                         
                                         <form>
                                             <ul class="comments">
@@ -134,19 +146,18 @@
                                                 <input type="submit" value="입력">
                                             </ul>
                                         </form>
-                                    </li>
-                                </ul>
+                                    </li>-->
+                                </ul>  
+                                
                                 <div class="write-repl">
-                                    <form>
-                                        <ul class="comments">
-                                            <h6>댓글 입력</h6>
-                                            <input type="text" class="reply">
-                                            <input type="submit" value="입력">
-                                        </ul>
-                                    </form>
+                                  <ul class="comments">
+                                      <h6>댓글 입력</h6>
+                                      <input type="text" class="reply" name="replyContent">
+                                      <input id="regReplyBtn" type="submit" value="입력">
+                                  </ul>
                                 </div>
-                            </li>
-                        </ul>
+                             <!-- </li>  -->
+                        <!--</ul> -->
                     </div>
                 </div>
             </div>
@@ -154,6 +165,180 @@
     </div>
     </div>
   
+  <script type="text/javascript" src="/resources/js/meetReply.js"></script>
+  
+  <script>
+  console.log("====================");
+  console.log("JS TEST");
+  
+  var mnoValue = '<c:out value="${meet.mno}"/>';
+  var replyUL = $(".t1");
+  
+  showList(1);
+  
+  function showList(page){
+	  replyService.getList({mno : mnoValue, page : page || 1}, function(list){
+		  var str = "";
+		  
+		  if(list == null || list.length == 0){
+			  replyUL.html("");
+			  
+			  return;
+		  }
+		  
+		  for(var i=0, len = list.length || 0; i<len; i++){
+			  
+		      str += "<li class='clearfix' data-mrno='"+list[i].mrno+"'>";
+		      str += "<img src='/resources/img/logo.png' class='avatar' alt=''>";
+              str += "<div class='post-comments'>";
+              str += "<p class='meta'>";
+              str += "닉네임 : " + list[i].nick +"<small class='float-right'>" + replyService.displayTime(list[i].regDt) + "</small>";     
+              str += "</p>";
+              str += "<input type='text' class='replyList' style='background-color:transparent;' id='"+ list[i].mrno + "'value='" + list[i].reply + "' readonly>";
+              str += "<a href='#'><small class='float-right' id='reply' data-mrno='"+list[i].mrno+"'>답글</small></a>";
+              str += "<a href='#'><small class='float-right' id='modify' data-mrno='"+list[i].mrno+"'>수정</small></a>";
+              str += "<a href='#'><small class='float-right' id='delete' data-mrno='"+list[i].mrno+"'>삭제</small></a>";
+              str += "</div>";
+              str += "</li>";    
+
+		  }
+		  
+		  replyUL.html(str);
+	  });
+	  
+  }
+  
+  //댓글 등록
+  var InputReply = $(".write-repl").find("input[name='replyContent']"); //댓글 입력창
+  var regReplyBtn = $("#regReplyBtn"); //댓글 입력 버튼
+  var regUpdateBtn = $("#modify"); // document.getElementById("modify");
+  var regDeleteBtn = $(".t1"); //댓글 삭제 버튼
+  
+  regReplyBtn.on("click", function(e){
+	  e.preventDefault();
+	  console.log(InputReply.val());
+
+	  var reply ={
+	  mno:mnoValue,
+	  id : "tony",
+	  reply : InputReply.val(),
+
+  };
+  
+  	replyService.add(reply, function(result){
+	  	alert(result);
+	  	InputReply.val('');
+	  	showList(1);
+  	});
+  });
+  
+
+  
+  //댓글 수정 이벤트 처리
+  $(document).on("click", "#modify", function(e){
+	  console.log("수정");
+	  e.preventDefault(); //기본 a태그 작동 멈추기
+	  var mrno = $(this).data("mrno");
+	  console.log(mrno);
+	  var text = $(this).text();
+	  
+	  if(text == '확인'){
+		  $('#'+mrno).prop('readonly',true);
+		  
+		  var reply = {mrno : mrno, reply : $('#'+mrno).val()};
+		  
+		  replyService.update(reply, function(result){
+			  alert(result);
+			  showList(1);
+		  });
+	  }else{
+		  $('#'+mrno).prop('readonly',false);
+		  $(this).text('확인');
+		  
+	  }
+  });
+  
+  //댓글 댓글 이벤트 처리
+   $(document).on("click", "#reply", function(e){
+	  console.log("대댓글");
+	  e.preventDefault(); //기본 a태그 작동 멈추기
+	  var mrno = $(this).data("mrno");
+	  console.log(mrno);
+	  
+	  var str ="";
+	  
+	  
+	  str += "<div class='write-repl' style='margin-bottom : 30px'>";
+	  str += "<ul class='comments'>";
+	  str += "<h6>댓글 입력</h6>";
+	  str += "<input type='text' class='reply' name='replyContent'>";
+	  str += "<input id='regReplyBtn' type='submit' value='입력'>";
+	  str += "</ul>";
+	  str += "</div>";
+	  
+      if($('#'+mrno).children(".write-repl").length == 0){
+		  $('#'+mrno).append(str);
+		  $("#reply").off();
+      }
+  }); 
+  
+  
+  //댓글 삭제 이벤트 
+  $(document).on("click", "#delete", function(e){
+	  console.log("삭제");
+	  e.preventDefault();
+	  var mrno = $(this).data("mrno");
+	  console.log(mrno);
+	  
+	  replyService.remove(mrno, function(result){
+		  alert(result);
+		  showList(1);
+	  });
+  });
+
+
+  //for replyService add test
+  /*
+  replyService.add(
+	  {reply: "TS TEST", id:"tony", mno:mnoValue}
+	  , 
+	  function(result){
+		  alert("result : " + result);
+  });
+	  
+  replyService.getList({mno:mnoValue, page:1}, function(list){
+	  for(var i=0, len = list.length||0; i<len; i++){
+		  console.log(list[i]);
+	  }
+  });
+  
+  
+  //댓글 삭제 테스트
+  replyService.remove(34, function(count){
+	  console.log("삭제 성공 : " + count);
+	  
+	  if(count === "success"){
+		  alert("removed");
+	  }
+  }, function(err){
+	  alert('error....');
+  })
+  
+  //35번댓글 수정
+  replyService.update({
+	  mrno : 35,
+	  mno : mnoValue,
+	  reply : "modified reply..........."
+  }, function(result){
+	  alert("수정완료...");ㄴ
+  });
+  
+  replyService.get(32, function(data){
+	  console.log(data);
+  });
+  */
+  
+  </script>
   
    <script type="text/javascript">
    $(document).ready(function(){
@@ -164,7 +349,6 @@
 			 e.preventDefault();
 			 
 			 operForm.attr("action", "/meet/modify").submit();
-			 
 
 		 });
 		 

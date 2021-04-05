@@ -3,8 +3,8 @@
 <mapper namespace="com.honeybee.mapper.ReplyMapper">
 
 <insert id="insert">
-	insert into meet_reply(MRNO,MNO,ID,MRNO2,REPLY,LAYER, BUNDLE,BUNORDER,NICK,REGDT,UPTDT)
-	values(seq_reply.nextval, #{mno}, #{id}, #{mRno2},#{reply}, #{layer}, #{bundle}, #{bunOrder}, (select nick from user_info where id = #{id}), sysdate, sysdate)
+	insert into meet_reply(MRNO,MNO,ID,REPLY,LAYER, BUNDLE,BUNORDER,NICK,REGDT,UPTDT)
+	values(seq_reply.nextval, #{mno}, #{id},#{reply}, #{layer}, #{bundle}, #{bunOrder}, (select nick from user_info where id = #{id}), sysdate, sysdate)
 </insert>
 
 

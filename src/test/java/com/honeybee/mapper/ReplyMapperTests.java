@@ -35,23 +35,20 @@ public class ReplyMapperTests {
 	@Test
 	public void testCreate() {
 		
-		IntStream.rangeClosed(1,10).forEach(i -> {
-			
 			ReplyVO vo = new ReplyVO();
 			
 			//게시물의번호
-			vo.setMno(mnoArr[i % 5]);
+			vo.setMno(mnoArr[0]);
 			vo.setId("tony");
 			
-			vo.setReply("이것은 댓글 내용입니다." + i);
-			vo.setMRno2(1L);
+			vo.setReply("이것은 댓글 내용입니다.");
+			//vo.setMRno2(1L);
 			vo.setLayer(1);
 			vo.setBundle(0);
 			vo.setBunOrder(0);
 			
 			
 			mapper.insert(vo);
-		});
 	}
 	
 	
