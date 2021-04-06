@@ -58,8 +58,10 @@
                             <li>모임장소<input type="text" name="place" value='<c:out value="${meet.place}"/>'></li>
                             <li>링크<input type="text" name="link" value='<c:out value="${meet.link}"/>'></li> 
                         </ul>
+                        <!-- 하드코딩 -->
                         <input type='hidden' name="cid2" value="RC002">
                         <input type='hidden' name="id" value="tony">
+                        
                     </div>
                     <div class="bot right">
                         <div class="thumb title">썸네일</div>
@@ -79,6 +81,7 @@
                 <input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
                 <input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
                 <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+                
             </div>
         </div>
     </div>
@@ -122,13 +125,14 @@
 				 var keywordTag = $("input[name='keyword']").clone();
 				 var typeTag = $("input[name='type']").clone();
 				 
+				 
 				 formObj.empty();
 				 
 				 formObj.append(pageNumTag);
 				 formObj.append(amountTag);
 				 formObj.append(keywordTag);
 				 formObj.append(typeTag);
-				 
+							 
 			 }
 			 
 			 formObj.submit();

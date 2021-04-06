@@ -28,5 +28,7 @@ public interface MeetMapper {
 
 	public int getTotalCount(Criteria cri); //전체 게시물 갯수 가져오기
 	
+	public int getTotalCountWithCat(Criteria cri); //카테고리 별 전체 게시물 갯수 가져오기
+	
 	public List<MeetVO> getListWithPagingAndCat(Criteria cri); //카테고리, 페이징한 리스트 가져오기
 }

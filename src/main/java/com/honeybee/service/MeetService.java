@@ -25,6 +25,8 @@ public interface MeetService {
 
 	public int getTotal(Criteria cri); //게시물 전체 갯수 가져오기(with criteria 페이징 조건)
 	
+	public int getTotalWithCat(Criteria cri); //게시물 전체 갯수 가져오기(with category)
+	
 	public List<MeetVO> getListTest(String id); //내가 속한 모임 리스트 가져오기
 	
 	public List<MeetVO> getNick(String id); //닉네임 가져오기

@@ -1,5 +1,7 @@
 package com.honeybee.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,33 +31,27 @@ public class MeetController {
 
 
 	@RequestMapping("/list")
-	public void list(MeetVO vo, Criteria cri, Model model) {
-		log.info("list");
-		//model.addAttribute("list", service.getList());
-
-		log.info("list : " + cri);
-		model.addAttribute("list", service.getList(cri)); //모임게시물 리스트 가져오기
+	public void list(@ModelAttribute("cri") Criteria cri, Model model, HttpServletRequest request) {
+		log.info("list total");
+		log.info("list total : " + cri);
+		System.out.println("category pick : " + cri.getCid());
 		
-		//model.addAttribute("list", service.getListWithCat(cri, vo.getCid())); //모임게시물 리스트 (페이징, 카테고리)가져오기
-		model.addAttribute("category", cService.getCatList());
+		//카테고리 미 선택시 리스트
+		if(cri.getCid() == null || cri.getCid().equals("카테고리") || cri.getCid().equals("M000")) {
+			
+			model.addAttribute("list", service.getList(cri)); //모임게시물 리스트 가져오기
+			model.addAttribute("category", cService.getCatList());
+			model.addAttribute("pickCat", "M000");
+			
+			int total = service.getTotal(cri);
+			log.info("total : " + total);
+			model.addAttribute("pageMaker", new PageDTO(cri, total));
+			return;
+		}
 		
-		System.out.println("pickCat : " + vo.getCid());
-		model.addAttribute("pickCat", vo.getCid());
-
-		int total = service.getTotal(cri);
-
-		log.info("total : " + total);
-
-		model.addAttribute("pageMaker", new PageDTO(cri, total));
-	}
-
-
-	@RequestMapping("/listcat")
-	public String listcat(Criteria cri, Model model) {
-		log.info("list");
-
-		log.info("list : " + cri);
-		//model.addAttribute("list", service.getList(cri)); //모임게시물 리스트 가져오기
+		//카테고리 선택 후 검색시 리스트 
+		log.info("list category");
+		log.info("list category : " + cri);
 		
 		model.addAttribute("list", service.getListWithCat(cri)); //모임게시물 리스트 (페이징, 카테고리)가져오기
 		model.addAttribute("category", cService.getCatList());
@@ -63,15 +59,37 @@ public class MeetController {
 		System.out.println("pickCat : " + cri.getCid());
 		model.addAttribute("pickCat", cri.getCid());
 
-		int total = service.getTotal(cri);
+		int total = service.getTotalWithCat(cri);
 
 		log.info("total : " + total);
 
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
-		
-		return "/meet/list";
+
 	}
 
+
+	/*
+	 * @RequestMapping("/listcat") public String listcat(Criteria cri, Model model)
+	 * { log.info("list");
+	 * 
+	 * log.info("list : " + cri); //model.addAttribute("list",
+	 * service.getList(cri)); //모임게시물 리스트 가져오기
+	 * 
+	 * model.addAttribute("list", service.getListWithCat(cri)); //모임게시물 리스트 (페이징,
+	 * 카테고리)가져오기 model.addAttribute("category", cService.getCatList());
+	 * 
+	 * System.out.println("pickCat : " + cri.getCid());
+	 * model.addAttribute("pickCat", cri.getCid());
+	 * 
+	 * int total = service.getTotalWithCat(cri);
+	 * 
+	 * log.info("total : " + total);
+	 * 
+	 * model.addAttribute("pageMaker", new PageDTO(cri, total));
+	 * 
+	 * return "/meet/list"; }
+	 */
+	
 	@PostMapping("/reg")
 	public String register(MeetVO meet, RedirectAttributes rttr) {
 		log.info("register : " + meet);
@@ -111,6 +129,7 @@ public class MeetController {
 		rttr.addAttribute("amount", cri.getAmount());
 		rttr.addAttribute("type", cri.getType());
 		rttr.addAttribute("keyword", cri.getKeyword());
+		rttr.addAttribute("category", cri.getCid());
 		
 		return "redirect:/meet/list";
 	}

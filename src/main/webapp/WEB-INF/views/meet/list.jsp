@@ -53,15 +53,15 @@
 
 
     <div class="search">
-    <form action="/meet/listcat" method="post">
-     <select class="cat" name="cid">
-     	<option>카테고리</option>
+    <form action="/meet/list" method="get">
+     <select class="cat" name="cid" id="cat">
         <c:forEach items="${category}" var="category">
         <option value="${category.CId}"><c:out value="${category.CName}"/></option>
         </c:forEach>
     </select>
 
-    <select class="cat" >
+
+    <select>
       <option>서울특별시</option>
       <option>스터디</option>
       <option>취미</option>
@@ -73,7 +73,7 @@
       <option>하이룽</option>
     </select>
     
-    <select class="cat" >
+    <select>
       <option>구</option>
       <option>스터디</option>
       <option>취미</option>
@@ -85,13 +85,13 @@
       <option>하이룽</option>
     </select>
 
-    <select class="cat" >
+    <select>
       <option>비용</option>
       <option>유료</option>
       <option>무료</option>
     </select>
 
-    <select class="cat" >
+    <select>
       <option>시간</option>
       <option>스터디</option>
       <option>취미</option>
@@ -194,8 +194,6 @@
      	   </form>
   </div>
   
-  
-  
 
 			<!-- Modal  추가 -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -284,6 +282,16 @@
 			 
 			 searchForm.submit();
 		 });
+		 
+				 
+		/* 카테코리 선택 검색 후 카테고리 유지 */
+		 
+		 console.log("${pickCat}");
+		 var pickCat = "${pickCat}";
+		 
+		 $("#cat").val(pickCat).prop("selected",true);
 	 });
+	 
+	 
  </script>
  
