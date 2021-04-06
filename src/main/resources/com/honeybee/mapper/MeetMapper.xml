@@ -293,7 +293,74 @@
 	      REGDT,
 	      UPDDT,
 	      DELDT
-	      from meet where]]>
+	      from meet where ]]>
+
+	      <include refid="criteria"></include>
+
+	      <![CDATA[
+	      rownum <= #{pageNum} * #{amount}
+	      )
+
+	      where rn > (#{pageNum}-1) * #{amount}
+		  ]]>
+</select>
+
+<select id="getListWithPagingAndCat" resultType="com.honeybee.domain.MeetVO">
+	<![CDATA[
+		select
+		  MNO,
+	      CID,
+	      CID2,
+	      ID,
+	      TITLE,
+	      SMRY,
+	      to_char(CONTENT) AS CONTENT,
+	      STARTDT,
+	      ENDDT,
+	      RECSDT,
+	      RECEDT,
+	      RECNO,
+	      CURRNO,
+	      CNCLNO,
+	      HIT,
+	      THUMB,
+	      CHARGE,
+	      ONOFF,
+	      PLACE,
+	      LINK,
+	      IMG,
+	      REGDT,
+	      UPDDT,
+	      DELDT
+
+	      from(
+	      select /*+index_desc(meet meet_pk)*/
+	      rownum rn,
+	      MNO,
+	      CID,
+	      CID2,
+	      ID,
+	      TITLE,
+	      SMRY,
+	      to_char(CONTENT) AS CONTENT,
+	      STARTDT,
+	      ENDDT,
+	      RECSDT,
+	      RECEDT,
+	      RECNO,
+	      CURRNO,
+	      CNCLNO,
+	      HIT,
+	      THUMB,
+	      CHARGE,
+	      ONOFF,
+	      PLACE,
+	      LINK,
+	      IMG,
+	      REGDT,
+	      UPDDT,
+	      DELDT
+	      from meet where (CID = #{cid}) and ]]>
 
 	      <include refid="criteria"></include>
 

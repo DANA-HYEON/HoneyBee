@@ -34,6 +34,17 @@ public class MeetReplyController {
 	public ResponseEntity<String> create(@RequestBody ReplyVO vo){
 		log.info("ReplyVO : " + vo);
 		
+		//대댓글 등록
+		if(vo.getLayer() == 1) {
+			int insertReplyCount = service.registerReply(vo);
+			
+			log.info("Reply Insert Count : " + insertReplyCount);
+			
+			return insertReplyCount == 1? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		
+		//댓글 등록
 		int insertCount = service.register(vo);
 		
 		log.info("Reply Insert Count : " + insertCount);
@@ -71,7 +82,7 @@ public class MeetReplyController {
 	//댓글 수정
 	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value="/{mrno}", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> modify(@RequestBody ReplyVO vo, @PathVariable("mrno") Long mrno){
-		vo.setMRno(mrno);;
+		vo.setMrno(mrno);;
 		
 		log.info("mno  : " + mrno);
 		

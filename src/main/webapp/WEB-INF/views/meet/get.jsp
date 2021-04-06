@@ -126,43 +126,20 @@
                     <div class="blog-comment">
                         <h3 class="text-success">댓글</h3>
                          <ul class="comments t1">
-                            <!--  <li class="clearfix">
-                                <img src="https://bootdey.com/img/Content/user_1.jpg" class="avatar" alt="">
-                                <div class="post-comments">
-                                    <p class="meta">
-                                        <a href="#">김치국</a><small class="float-right">2021.03.25. 22:23:24</small>
-                                        <a class="btn thumb float-right"><i class="fa fa-thumbs-up"></i> 13</a>  클릭하면 class=text-green 추가 
-                                    </p>
-                                    <span>김치국이냐 김칫국이냐 그것이 문제로다.</span>
-                                    
-                                    <a href="#"><small class="float-right">답글</small></a>
-                                </div>
+                         </ul>  
                                 
-                                        
-                                        <form>
-                                            <ul class="comments">
-                                                <i class="fa fa-reply" style=""></i>
-                                                <input type="text" class="reply">
-                                                <input type="submit" value="입력">
-                                            </ul>
-                                        </form>
-                                    </li>-->
-                                </ul>  
-                                
-                                <div class="write-repl">
-                                  <ul class="comments">
-                                      <h6>댓글 입력</h6>
-                                      <input type="text" class="reply" name="replyContent">
-                                      <input id="regReplyBtn" type="submit" value="입력">
-                                  </ul>
-                                </div>
-                             <!-- </li>  -->
-                        <!--</ul> -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                         <div class="write-repl">
+                           <ul class="comments">
+                               <h6>댓글 입력</h6>
+                               <input type="text" class="reply" name="replyContent">
+                               <input id="regReplyBtn" type="submit" value="입력">
+                           </ul>
+                         </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
     </div>
   
   <script type="text/javascript" src="/resources/js/meetReply.js"></script>
@@ -188,7 +165,7 @@
 		  
 		  for(var i=0, len = list.length || 0; i<len; i++){
 			  
-		      str += "<li class='clearfix' data-mrno='"+list[i].mrno+"'>";
+		      str += "<li class='clearfix " + list[i].mrno + "' data-mrno='"+list[i].mrno+"'>";
 		      str += "<img src='/resources/img/logo.png' class='avatar' alt=''>";
               str += "<div class='post-comments'>";
               str += "<p class='meta'>";
@@ -197,7 +174,7 @@
               str += "<input type='text' class='replyList' style='background-color:transparent;' id='"+ list[i].mrno + "'value='" + list[i].reply + "' readonly>";
               str += "<a href='#'><small class='float-right' id='reply' data-mrno='"+list[i].mrno+"'>답글</small></a>";
               str += "<a href='#'><small class='float-right' id='modify' data-mrno='"+list[i].mrno+"'>수정</small></a>";
-              str += "<a href='#'><small class='float-right' id='delete' data-mrno='"+list[i].mrno+"'>삭제</small></a>";
+              str += "<a href='#'><small class='float-right' id='delete' data-layer='" +list[i].layer+ "' data-mrno='"+list[i].mrno+"'>삭제</small></a>";
               str += "</div>";
               str += "</li>";    
 
@@ -221,8 +198,7 @@
 	  var reply ={
 	  mno:mnoValue,
 	  id : "tony",
-	  reply : InputReply.val(),
-
+	  reply : InputReply.val()
   };
   
   	replyService.add(reply, function(result){
@@ -258,28 +234,62 @@
 	  }
   });
   
-  //댓글 댓글 이벤트 처리
+  //대댓글 입력창 띄우기 이벤트 처리
    $(document).on("click", "#reply", function(e){
+	   $(".float-right").off();
 	  console.log("대댓글");
 	  e.preventDefault(); //기본 a태그 작동 멈추기
+	  var parentMrno = $()
 	  var mrno = $(this).data("mrno");
 	  console.log(mrno);
 	  
 	  var str ="";
 	  
 	  
-	  str += "<div class='write-repl' style='margin-bottom : 30px'>";
+	  str += "<div class='write-repl' id='reply_reply' style='margin-bottom : 30px'>";
 	  str += "<ul class='comments'>";
 	  str += "<h6>댓글 입력</h6>";
-	  str += "<input type='text' class='reply' name='replyContent'>";
-	  str += "<input id='regReplyBtn' type='submit' value='입력'>";
+	  str += "<input type='text' class='reply' name='replyR_Content'>";
+	  str += "<input id='regR_ReplyBtn' type='submit' value='입력'>";
+	  str += "<input id='canR_ReplyBtn' type='submit' value='취소'>";
 	  str += "</ul>";
 	  str += "</div>";
+ 
+       if($("."+mrno).children(".write-repl").length == 0){
+    	   $("."+mrno).append(str);
+    	   
+      } 
+      
+      
+	  //대댓글 등록 이벤트 처리
+	  $(document).on("click", "#regR_ReplyBtn", function(e){
+	  	  var InputR_Reply = $(".write-repl").find("input[name='replyR_Content']"); //댓글 입력창
+		  var par = $("#reply_reply").prev().children("input").attr("id");
+		  e.preventDefault();
+		  console.log(InputR_Reply.val());
+	
+		  var R_reply ={
+		  mno:mnoValue,
+		  id : "tony",
+		  reply : InputR_Reply.val(),
+		  layer : 1,
+		  bundle :par,
+		  bunOrder : par
+	  };
 	  
-      if($('#'+mrno).children(".write-repl").length == 0){
-		  $('#'+mrno).append(str);
-		  $("#reply").off();
-      }
+	  	replyService.add(R_reply, function(result){
+		  	alert(result);
+		  	InputR_Reply.val('');
+		  	showList(1);
+	  	});
+	  });
+	  
+	  //대댓글 입력 취소
+	  $(document).on("click", "#canR_ReplyBtn", function(e){
+		  e.preventDefault();
+		  console.log("대댓글 입력 취소");
+		  $("."+mrno).children("#reply_reply").remove();
+	  });
   }); 
   
   
@@ -288,6 +298,7 @@
 	  console.log("삭제");
 	  e.preventDefault();
 	  var mrno = $(this).data("mrno");
+	  var layer = $(this).data("layer");
 	  console.log(mrno);
 	  
 	  replyService.remove(mrno, function(result){

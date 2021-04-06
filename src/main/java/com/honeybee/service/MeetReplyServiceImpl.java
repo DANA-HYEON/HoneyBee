@@ -50,4 +50,10 @@ public class MeetReplyServiceImpl implements MeetReplyService {
 		return mapper.getListWithPaging(cri, mno);
 	}
 
+	@Override
+	public int registerReply(ReplyVO vo) {
+		log.info("register Reply..............");
+		return mapper.insertReply(vo);
+	}
+
 }

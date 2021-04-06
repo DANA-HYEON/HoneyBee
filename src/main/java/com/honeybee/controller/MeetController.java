@@ -29,14 +29,18 @@ public class MeetController {
 
 
 	@RequestMapping("/list")
-	public void list(@RequestParam(required=false) String cid, Criteria cri, Model model) {
+	public void list(MeetVO vo, Criteria cri, Model model) {
 		log.info("list");
-		model.addAttribute("list", service.getList());
+		//model.addAttribute("list", service.getList());
 
 		log.info("list : " + cri);
-		model.addAttribute("list", service.getList(cri));
+		model.addAttribute("list", service.getList(cri)); //모임게시물 리스트 가져오기
+		
+		//model.addAttribute("list", service.getListWithCat(cri, vo.getCid())); //모임게시물 리스트 (페이징, 카테고리)가져오기
 		model.addAttribute("category", cService.getCatList());
-		model.addAttribute("pickCat", cid);
+		
+		System.out.println("pickCat : " + vo.getCid());
+		model.addAttribute("pickCat", vo.getCid());
 
 		int total = service.getTotal(cri);
 
@@ -45,6 +49,28 @@ public class MeetController {
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 
+
+	@RequestMapping("/listcat")
+	public String listcat(Criteria cri, Model model) {
+		log.info("list");
+
+		log.info("list : " + cri);
+		//model.addAttribute("list", service.getList(cri)); //모임게시물 리스트 가져오기
+		
+		model.addAttribute("list", service.getListWithCat(cri)); //모임게시물 리스트 (페이징, 카테고리)가져오기
+		model.addAttribute("category", cService.getCatList());
+		
+		System.out.println("pickCat : " + cri.getCid());
+		model.addAttribute("pickCat", cri.getCid());
+
+		int total = service.getTotal(cri);
+
+		log.info("total : " + total);
+
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		
+		return "/meet/list";
+	}
 
 	@PostMapping("/reg")
 	public String register(MeetVO meet, RedirectAttributes rttr) {

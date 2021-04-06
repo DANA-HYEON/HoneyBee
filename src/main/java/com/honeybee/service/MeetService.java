@@ -20,6 +20,8 @@ public interface MeetService {
     //public MeetVO getMyList(String id); UserMapper참조
 
 	public List<MeetVO> getList(Criteria cri); //페이징 리스트 가져오기
+	
+	public List<MeetVO> getListWithCat(Criteria cri); //페이징, 카테고리 리스트 가져오기
 
 	public int getTotal(Criteria cri); //게시물 전체 갯수 가져오기(with criteria 페이징 조건)
 	

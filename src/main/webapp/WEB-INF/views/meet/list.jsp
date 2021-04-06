@@ -53,11 +53,11 @@
 
 
     <div class="search">
-    <form action="/meet/list" method="post">
-     <select class="cat" name='catTitle'>
+    <form action="/meet/listcat" method="post">
+     <select class="cat" name="cid">
      	<option>카테고리</option>
         <c:forEach items="${category}" var="category">
-        <option><c:out value="${category.CName}"/></option>
+        <option value="${category.CId}"><c:out value="${category.CName}"/></option>
         </c:forEach>
     </select>
 
@@ -104,7 +104,7 @@
      </select>
 
      <div class="checkedBox"> <input type="checkbox">마감된 모임 포함</div>
-    
+   
      <input type="submit" value="검색">
      </form>
      </div>
@@ -164,6 +164,7 @@
           <input type="text" name="keyword" value='<c:out value="${pageMaker.cri.keyword}"/>'/>
           <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
           <input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+          
           <button>Search</button>
       </form>
       <button class="meet_reg">모임 개설</button>

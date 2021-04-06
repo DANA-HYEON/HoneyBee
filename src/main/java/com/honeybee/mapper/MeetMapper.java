@@ -19,8 +19,6 @@ public interface MeetMapper {
 	public int delete(Long gno); //게시물 삭제
 
 	public int update(MeetVO meet); //게시물 수정
-
-	//public MeetVO getMyList(String id); UserMapper참조
 	
 	public List<MeetVO>  getListWithPaging(Criteria cri); //페이징
 
@@ -29,4 +27,6 @@ public interface MeetMapper {
 	public List<MeetVO> getNick(String id); //닉네임 가져오기
 
 	public int getTotalCount(Criteria cri); //전체 게시물 갯수 가져오기
+	
+	public List<MeetVO> getListWithPagingAndCat(Criteria cri); //카테고리, 페이징한 리스트 가져오기
 }

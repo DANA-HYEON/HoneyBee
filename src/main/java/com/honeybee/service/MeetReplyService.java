@@ -10,6 +10,8 @@ public interface MeetReplyService {
 	
 	public int register(ReplyVO vo); //댓글 등록
 	
+	public int registerReply(ReplyVO vo); //대댓글 등록
+	
 	public ReplyVO get(Long mRno); //댓글 가져오기
 	
 	public int modify(ReplyVO vo); //댓글 수정

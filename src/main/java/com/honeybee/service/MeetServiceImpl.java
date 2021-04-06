@@ -68,6 +68,13 @@ public class MeetServiceImpl implements MeetService {
 	}
 
 	@Override
+	public List<MeetVO> getListWithCat(Criteria cri) {
+		log.info("get List with Category and criteria : " + cri);
+		
+		return mapper.getListWithPagingAndCat(cri);
+	}
+	
+	@Override
 	public int getTotal(Criteria cri) {
 		log.info("get total count");
 		return mapper.getTotalCount(cri);
@@ -84,6 +91,6 @@ public class MeetServiceImpl implements MeetService {
 		log.info("getNick.............");
 		return mapper.getNick(id);
 	}
-	
+
 	
 }
