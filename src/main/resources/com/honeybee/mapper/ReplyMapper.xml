@@ -32,13 +32,13 @@
 </update>
 
 <update id="update">
-	update meet_reply set reply = #{reply}, UPTDT = sysdate where MRNO = #{mRno}
+	update meet_reply set reply = #{reply}, UPTDT = sysdate where MRNO = #{mrno}
 </update>
 
 <select id="getListWithPaging" resultType="com.honeybee.domain.ReplyVO">
 	select MRNO,MNO,ID,MRNO2,REPLY,LAYER,BUNDLE,BUNORDER,NICK,REGDT,UPTDT,DELDT
 	from meet_reply
 	where mno = #{mno} and DELDT is null
-	order by bundle asc
+	order by bundle asc, layer asc, regdt asc
 </select>
 </mapper>
