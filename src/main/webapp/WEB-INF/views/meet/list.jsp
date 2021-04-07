@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-   
+    
     <style>
 
         .navbar>.container, .navbar>.container-fluid, .navbar>.container-lg, .navbar>.container-md, .navbar>.container-sm, .navbar>.container-xl, .navbar>.container-xxl{
@@ -25,7 +25,7 @@
         }
 
         .bg-light{
-            background: transparent !important;
+            background: transparent  !important;
         }
 
         .search{
@@ -38,7 +38,7 @@
         }
 
     </style>
-    <link rel="stylesheet" href="/resources/css/meet/board.css">
+    <link rel="stylesheet" href="/resources/css/meet_board.css">
 </head>
 <body>
 
@@ -137,12 +137,12 @@
                   <td class="freeBno"><c:out value="${meet.mno}" /></td>
                   <td><img src="/resources/img/logo.png"></td>
                   <td class="title">
-                      <a  class='move' href='<c:out value="${meet.mno}"/>'>
+                      <a href='/meet/get?mno=<c:out value="${meet.mno}"/>'>
                       <c:out value="${meet.title}" /></a>
                   </td>
                   <td><c:out value="${meet.recsDt}" /> ~ <c:out value="${meet.receDt}" /></td>
                   <td><c:out value="${meet.startDt}" /></td>
-                   <td><c:out value="${meet.id}" /></td>
+                  <td><c:out value="${meet.id}" /></td>
                   <td><c:out value="${meet.recNo}" /></td>
                   <td><fmt:formatDate pattern="yyyy-MM-dd" value="${meet.regDt}" /></td>
                   <td><c:out value="${meet.hit}" /></td>

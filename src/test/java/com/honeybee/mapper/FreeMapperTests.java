@@ -79,7 +79,7 @@ public class FreeMapperTests {
 	public void testSearch() {
 		
 		Criteria cri = new Criteria();
-		cri.setKeyword("야구");
+		cri.setKeyword("헬로");
 		cri.setType("TC");
 		
 		List<FreeVO> list = mapper.getListWithPaging(cri);

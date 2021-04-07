@@ -32,6 +32,7 @@
             
            	<input type="hidden" name="fno" value="<c:out value='${free.fno}' />">
            	<input type="hidden" name="id" value="<c:out value='${free.id}' />">
+           	
            	<input type="hidden" name="hit" value="<c:out value='${free.hit}' />">
            	<input type="hidden" name="pageNum" value="<c:out value='${cri.pageNum}' />">
            	<input type="hidden" name="amount" value="<c:out value='${cri.amount}' />">
@@ -56,6 +57,7 @@
 			
 			if (operation === 'list') {
 				formObj.attr("action", "/free/list").attr("method", "get");
+				
 				var pageNumTag = $("input[name='pageNum']").clone();
 				var amountTag = $("input[name='amount']").clone();
 				var typeTag = $("input[name='type']").clone();

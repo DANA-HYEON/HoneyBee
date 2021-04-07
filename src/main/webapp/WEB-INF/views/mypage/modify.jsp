@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 
 <html>
@@ -151,11 +153,12 @@ a:hover {
 
 
 	<!--메뉴바 시작 -->
-	<div class="mypagemenubar">
-		<a href="mypagehome">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
-			href="mypost">내가 쓴 글 </a> <a href="myreply">내가 쓴 댓글 </a> <a
-			href="receivemsg">쪽지함 </a>
+<div class="mypagemenubar">
+		<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
+			href="posted">내가 쓴 글 </a> <a href="freply">내가 쓴 댓글 </a>
+		<a href="rcvmsg">쪽지함 </a>
 	</div>
+
 
 
 	<!--  Header 끝 -->
@@ -273,8 +276,7 @@ a:hover {
 
 
 
-					<br>
-					<br>
+					<br> <br>
 					<div style="width: 1000px; border-bottom: 1px solid black"></div>
 				</div>
 
@@ -337,11 +339,9 @@ a:hover {
 					<br> <br>
 					<div>탈퇴할 이메일 아이디를 확인해</div>
 					<div>wjeorjwpr@naweirnhwoiqr.com</div>
-					<br>
-					<br>
+					<br> <br>
 					<div>본인인증을 위해 어쩌고 저쩌고</div>
-					<input type="text" placeholder="내용을 입력해 주세요"><br>
-					<br>
+					<input type="text" placeholder="내용을 입력해 주세요"><br> <br>
 
 
 

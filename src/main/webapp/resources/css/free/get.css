@@ -111,24 +111,19 @@ a {
     padding-top: 40px;
 }
 
-.blog-comment h3,
-.blog-comment-form h3{
+.blog-comment h3 {
+	margin-top: 10px;
     margin-bottom: 40px;
     font-size: 26px;
     line-height: 30px;
     font-weight: 800;
+    color: rgb(48,27,1) !important;
 }
 
 .post-comments span {
     display: block;
     padding-bottom: 10px;
     margin-bottom: 10px;
-}
-
-.post-comments a small {
-    position: absolute;
-    bottom: 3px;
-    right: 10px;
 }
 
 .btn {
@@ -149,7 +144,7 @@ a {
 .reply {
     width: 90%;
     padding: 10px;
-    background-color: rgb(246, 218, 66);
+    background-color: #ddd;
     border: none;
     border-radius: 10px;
     outline: none;
@@ -160,17 +155,13 @@ a {
     margin-right: 10px;
 }
 
-h6 {
-    margin-top: 30px;
-}
-
-.modBtn, .delBtn {
+.modBtn, .delBtn, #repRegBtn, #regBtn {
 	margin-top: 20px;
 	outline: none;
 	border: none;
 }
 
-.modBtn:hover {
+.modBtn:hover, #repRegBtn:hover, #regBtn:hover {
 	cursor: pointer;
 	background-color: rgb(246, 218, 66);
 }
@@ -189,9 +180,52 @@ h6 {
 
 .lstBtn:hover {
 	cursor: pointer;
-  background-color: #3498db;
+	background-color: #3498db;
 }
 
-.text-success {
-	margin-top: 50px;
+li.clearfix {
+	position: relative;
+}
+
+li.clearfix > i.re {
+	position: absolute;
+	left: -30px;
+	top: 22px;
+}
+
+.write-cm {
+	margin-bottom: 20px;
+}
+
+.write-rp {
+	margin-bottom: 20px;
+}
+
+.repl, .modRep, .delRep {
+    position: absolute;
+    border: none;
+	background-color: transparent;
+	font-size: 13px;
+    bottom: 3px;
+}
+
+.repl {
+	right: 10px;
+}
+
+.repl:hover, .modRep:hover, .delRep:hover {
+	cursor: pointer;
+	color: #3498db;
+}
+
+.modRep {
+	right: 45px;
+}
+
+.delRep {
+	right: 80px;
+}
+
+button:focus {
+	outline: none;
 }

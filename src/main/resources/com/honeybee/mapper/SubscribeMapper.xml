@@ -6,6 +6,8 @@
 <mapper namespace="com.honeybee.mapper.SubscribeMapper">
 
 	<select id="getSubscribeList" resultType="com.honeybee.domain.UserVO">
-		select nick from user_info where id in (select id2 from subscribe_list where id=#{id})
+		select nick, id from user_info where id in (select id2 from subscribe_list where id=#{id})
 	</select>
+	
+	
 	</mapper>

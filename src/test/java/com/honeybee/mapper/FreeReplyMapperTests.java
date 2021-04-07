@@ -1,5 +1,6 @@
 package com.honeybee.mapper;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 import org.junit.Test;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeReplyVO;
 
 import lombok.Setter;
@@ -59,6 +61,13 @@ public class FreeReplyMapperTests {
 	public void testDelete() {
 		int cnt = mapper.delete(4L);
 		log.info("DELETE COUNT: " + cnt);
+	}
+	
+	@Test
+	public void testList() {
+		Criteria cri = new Criteria();
+		List<FreeReplyVO> list = mapper.getList(cri, fnoArr[0]);
+		list.forEach(reply -> log.info(reply));
 	}
 	
 }

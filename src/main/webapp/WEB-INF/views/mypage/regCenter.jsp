@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -226,9 +226,8 @@ body {
 
 <!--메뉴바 시작 -->
 <div class="mypagemenubar">
-	<a href="mypagehome">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
-		href="mypost">내가 쓴 글 </a> <a href="myreply">내가 쓴 댓글 </a> <a
-		href="receivemsg">쪽지함 </a>
+	<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a href="posted">내가
+		쓴 글 </a> <a href="freply">내가 쓴 댓글 </a> <a href="rcvmsg">쪽지함 </a>
 </div>
 
 
@@ -252,18 +251,12 @@ body {
 						<option>10개씩 보기</option>
 						<option>20개씩 보기</option>
 						<option>30개씩 보기</option>
-					</select> <select>
+					</select> 
+					<select id="cid">
 						<option>카테고리</option>
-						<option>스포츠</option>
-						<option>스터디/자기개발</option>
-						<option>독서/토론</option>
-						<option>게임</option>
-						<option>여행</option>
-						<option>문화/예술</option>
-						<option>봉사활동</option>
-						<option>패션/뷰티</option>
-						<option>반려동물</option>
-						<option>원데이클래스</option>
+					<c:forEach items="${code}" var="code">
+						<option value="${code.CId}">${code.CName}</option>
+						</c:forEach>
 					</select>
 				</div>
 				<div class="button">
@@ -289,22 +282,23 @@ body {
 					</tr>
 				</thead>
 				<tbody>
-				<c:forEach items="${meet}" var="meet" varStatus="status">
-					<tr>
-						<td><input type="checkbox"></td>
-						<td><c:out value="${nick[status.index].CName}"></c:out></td>
-						<td><a href="/free/list"><c:out value="${meet.title}"/></a></td>
-						<td><c:out value="${meet.currNo}"/></td>
-						<td><c:out value="${meet.cid2}"/></td>
-						<td>${meet.receDt}</td>
-						<td>${meet.startDt}</td>
-						<td><c:out value="${meet.endDt}"/></td>
-					</tr>
-				</c:forEach>
+					<c:forEach items="${meet}" var="meet" varStatus="status">
+						<tr>
+							<td><input type="checkbox"></td>
+							<td><c:out value="${nick[status.index].CName}"></c:out></td>
+							<td><a href="#" value="${meet.mno}"><c:out value="${meet.title}" /></a></td>
+							<td><c:out value="${meet.currNo}" /></td>
+							<td><c:out value="${meet.cid2}" /></td>
+							<td>${meet.receDt}</td>
+							<td>${meet.startDt}</td>
+							<td><c:out value="${meet.endDt}" /></td>
+							
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 			<div class="applylist">
-			<table>
+				<table>
 					<tr class="posttitle">
 						<th class="category">문의/신고번호</th>
 						<th class="meettitle">닉네임</th>
@@ -322,7 +316,7 @@ body {
 						<th class="meetenddate">상태변경</th>
 					</tr>
 				</table>
-			
+
 
 				<div class="applyexit">닫기</div>
 			</div>
@@ -336,7 +330,13 @@ body {
 			</div>
 		</div>
 	</div>
+<script>
+var target=document.getElementById("cid");
+target.onchange= function getproperty(e) {
+	location.href="/mypage/redirecttest?cid="+target.options[target.selectedIndex].value
+}
 
+</script>
 
 </body>
 <footer>

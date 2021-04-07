@@ -51,14 +51,14 @@ a {
     text-decoration: underline;
 }
 
-.paging {
+.container .paging {
     margin-top: 20px;
     margin-bottom: 20px;
     font-size: 0;
     text-align: right;
 }
 
-.paging a {
+.container .paging a {
     display: inline-block;
     margin-left: 10px;
     padding: 5px 10px;
@@ -66,21 +66,21 @@ a {
     font-size: 12px;
 }
 
-.paging a:first-child {
+.container .paging a:first-child {
     margin-left: 0;
 }
 
-.btn {
+.container .paging a.btn {
     border: 1px solid #eee;
     background: #eee;
 }
 
-.num {
+.container .paging a.num {
     border: 1px solid #ccc;
     font-weight: 600;
 }
 
-.on {
+.container .paging a.num.on {
     border: 1px solid rgb(246, 218, 66);
     background: rgb(246, 218, 66);
 }
@@ -107,8 +107,4 @@ a {
     display: flex;
     justify-content: space-between;
     font-size: 13px;
-}
-
-li {
-	display: inline;
 }

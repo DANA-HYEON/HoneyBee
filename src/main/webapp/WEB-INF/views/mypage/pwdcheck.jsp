@@ -109,10 +109,11 @@ li {
 
 <!--메뉴바 시작 -->
 <div class="mypagemenubar">
-	<a href="mypagehome">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
-		href="mypost">내가 쓴 글 </a> <a href="myreply">내가 쓴 댓글 </a> <a
-		href="receivemsg">쪽지함 </a>
-</div>
+		<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
+			href="posted">내가 쓴 글 </a> <a href="freply">내가 쓴 댓글 </a>
+		<a href="rcvmsg">쪽지함 </a>
+	</div>
+
 
 <!--  Header 끝 -->
 
@@ -132,7 +133,7 @@ li {
 		<input class="pwd" type:text>
 		<div class="col-4">
 			<button class="btn">
-				<a href="myinfomodify">확인 </a>
+				<a href="modify">확인 </a>
 			</button>
 		</div>
 	</div>

@@ -6,10 +6,10 @@
 <mapper namespace="com.honeybee.mapper.ThumbMapper">
 
 	<select id="getThumbList" resultType="com.honeybee.domain.MeetVO">
-		select title from meet where mno in (select mno from thumb_list where id=#{id})
+		select title, mno from meet where mno in (select mno from thumb_list where id=#{id})
 	</select>
 	
 	<select id="getThumbRegDate" resultType="com.honeybee.domain.MeetVO">
 		select regDt from meet where mno in (select mno from thumb_list where id=#{id})
-	</select>
+	</select> <!-- 두개 합치자 -->
 </mapper>

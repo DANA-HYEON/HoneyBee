@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -166,9 +168,8 @@ body {
 
 <!--메뉴바 시작 -->
 <div class="mypagemenubar">
-	<a href="mypagehome">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
-		href="mypost">내가 쓴 글 </a> <a href="myreply">내가 쓴 댓글 </a> <a
-		href="receivemsg">쪽지함 </a>
+	<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a href="posted">내가
+		쓴 글 </a> <a href="freply">내가 쓴 댓글 </a> <a href="rcvmsg">쪽지함 </a>
 </div>
 
 
@@ -177,88 +178,56 @@ body {
 
 
 </head>
-
-
 <body>
+
 	<div class="board">
 		<div class="select">
-			<a class="selectpost" href="mypost"> 내가 쓴 글 | </a> <a
-				class="selectreply"> 내가 쓴 댓글 </a>
+			<a class="selectpost" href="posted"> 내가 쓴 글 | </a> <a
+				class="selectreply" href="mreply"> 내가 쓴 모임게시물 댓글  |</a>
+				 <a class="selectreply" href="freply"> 내가 쓴 자유게시물 댓글  </a>
 
 		</div>
 
 
 		<div class="mypost">
+			<form action="replydelete" method="post">
+				<table class="post">
+					<thead>
+						<tr class="posttitle">
 
-			<table class="post">
+							<th class="innerposttitle">댓글</th>
+							<th class="poststatus">게시글 상태</th>
+							<th class="check"><input type="checkbox" id="selectall"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${replylist}" var="replylist" varStatus="status">
+							<tr>
+								<td class="innerposttitle"><c:out
+										value="${replylist.reply}" /></td>
+								<td class="poststatus"><c:out
+										value="${replystatus[status.index]}" /></td>
+								<td class="check"><input type="checkbox"
+									name="myreplycheck" value=1></td>
+							</tr>
+						</c:forEach>
 
-
-
-				<thead>
-					<tr class="posttitle">
-
-						<th class="innerposttitle">댓글</th>
-						<th class="poststatus">게시글 상태</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="viewnum">조회수</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+				<input type="submit">
+			</form>
 
 
 		</div>
 	</div>
-
+<script type="text/javascript">
+		let checkbox = document.getElementsByName('myreplycheck');
+		document.getElementById('selectall').onclick = function() {
+			for (let i = 0; i < checkbox.length; i++) {
+				checkbox[i].checked = !checkbox[i].checked;
+			}
+		}
+	</script>
 
 </body>
 <footer>

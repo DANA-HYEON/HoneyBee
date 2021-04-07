@@ -6,9 +6,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://code.jquery.com/jquery-3.6.0.js"
+<!--  <script src="https://code.jquery.com/jquery-3.6.0.js"
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-	crossorigin="anonymous"></script>
+	crossorigin="anonymous"></script> -->
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -162,10 +162,14 @@ li {
 
 <!--메뉴바 시작 -->
 <div class="mypagemenubar">
-	<a href="mypagehome">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
-		href="mypost">내가 쓴 글 </a> <a href="myreply">내가 쓴 댓글 </a> <a
-		href="receivemsg">쪽지함 </a>
+	<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a href="posted">내가
+		쓴 글 </a> <a href="reply">내가 쓴 댓글 </a> <a href="rcvmsg">쪽지함 </a>
 </div>
+
+
+
+
+
 
 
 <!--  Header 끝 -->
@@ -178,43 +182,73 @@ li {
 <body>
 	<div class="select">
 		<a class="selectpost"> 내가 쓴 글 | </a> <a class="selectreply"
-			href="myreply"> 내가 쓴 댓글 </a>
+			href="/mypage/freply"> 내가 쓴 댓글 </a>
 
 	</div>
 
 	<div class="board">
 		<div class="mypost">
+			<form action="modify" method="post">
+				<table class="post">
 
-			<table class="post">
 
-
-				<thead>
-					<tr class="posttitle">
-						<th class="num">게시번호</th>
-						<th class="innerposttitle">제목</th>
-						<th class="date">작성일</th>
-						<th class="viewnum">조회수</th>
-						<th class="status"><input type="checkbox"></th>
-					</tr>
-				</thead>
-				<tbody>
-						<c:forEach items="${list}" var="free">
-						<tr>
-							<td><c:out value="${free.fno}" /></td>
-							<td><c:out value="${free.title}" /></td>
-							<td><c:out value="${free.regdt}" /></td>
-							<td><c:out value="${free.hit}" /></td>
-							<td><input type="checkbox"></td>
+					<thead>
+						<tr class="posttitle">
+							<th class="num">게시번호</th>
+							<th class="innerposttitle">제목</th>
+							<th class="date">작성일</th>
+							<th class="viewnum">조회수</th>
+							<th class="status"><input type="checkbox" id="selectall"></th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+					
+
+
+						<c:forEach items="${list}" var="free">
+							<tr>
+								<td name="fno" value="${free.fno}"><c:out value="${free.fno}" /></td>
+								<td><a class='move' href='readcontent' name="mypost" />
+									<c:out value="${free.title}" /></a></td>
+								<td><fmt:formatDate pattern="yyyy-MM-dd"
+										value="${free.regdt}" /></td>
+								<td><c:out value="${free.hit}" /></td>
+								<td><input type="checkbox" name="mypostcheck"
+									value="${free.fno}"></td>
+							</tr>
+						</c:forEach>
+
+					</tbody>
+				</table>
+				<input type="submit">
+			</form>
+
 
 
 		</div>
 	</div>
+	<script> let testBtn = document.getElementById('selectall');
+	testBtn.onclick = function () { alert('Hello world1'); }; 
+		  </script>
 
 
+
+
+	<script type="text/javascript">
+		let checkbox = document.getElementsByName('mypostcheck');
+		document.getElementById('selectall').onclick = function() {
+			for (let i = 0; i < checkbox.length; i++) {
+				checkbox[i].checked = !checkbox[i].checked;
+			}
+		}
+		let fno = document.getElementsByName("fno");
+		let title = document.getElementsByName("mypost");
+		for(let i=0; i<fno.length; i++){
+		title[i].onclick = function stopDefault(e) {
+			e.preventDefault();
+			location.href="/free/get?fno="+fno[i].textContent
+		}}
+	</script>
 </body>
 <footer>
 	<div id="footer_box">

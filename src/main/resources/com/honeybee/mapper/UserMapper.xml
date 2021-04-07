@@ -64,7 +64,7 @@
 		where ID = #{id}
 	</update>
 	
-	
+		
 	
 	<select id="getMyList" resultType="com.honeybee.domain.UserVO">
 		select * from USER_INFO where id = #{id}

@@ -18,20 +18,20 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class MeetServiceTests {
-
+	
 	@Setter(onMethod_ = {@Autowired})
 	private MeetService service;
-
+	
 	@Test
 	public void testExist() {
 		log.info(service);
 		assertNotNull(service);
 	}
-
+	
 	@Test
 	public void testRegister() {
 		MeetVO meet = new MeetVO();
-
+		
 		meet.setCid("02");
 		meet.setCid2("01");
 		meet.setId("idididid");
@@ -52,33 +52,34 @@ public class MeetServiceTests {
 		meet.setPlace("���� ���� ȫ�� ��¼����¼��");
 		meet.setLink("www.naver.com");
 		meet.setImg("IMG");
-
+		
 		service.register(meet);
 		log.info("��� �Խù��� ��ȣ : " + meet.getMno());
 	}
-
+	
 	@Test
 	public void testGet() {
 		log.info(service.get(11L));
 	}
-
+	
 	@Test
 	public void testDelete() {
 		log.info("remove result : " + service.remove(23L));
 	}
-
+	
 	@Test
 	public void testUpdate() {
-
+		
 		MeetVO meet = service.get(21L);
-
+		
 		if(meet == null) {
 			return;
 		}
+		
 		meet.setTitle("���� ���������");
 		log.info("modify result : " + service.modify(meet));
 	}
-
+	
 	@Test
 	public void testGetList() {
 		service.getList().forEach(meet -> log.info(meet));

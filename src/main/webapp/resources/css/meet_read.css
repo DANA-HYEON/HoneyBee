@@ -14,16 +14,12 @@
 .total{
     width: 100%;
 }
-
-.wrapp{
-	width: 70%;
-    margin: 100px auto;
-    box-sizing: border-box;
-    height: auto;
-
+.wrap{
+    width: 70%;
+    height: 250px;
+    margin: auto;
     overflow: hidden;
 }
-
 
 .meet{
     float: left;
@@ -49,13 +45,10 @@
 
 .meet.top{
     width: 100%;
-    height: auto;
+    height: 25%;
     letter-spacing: 1.5px;
     text-align: left;
-    
 }
-
-
 
 .title p{
     margin-top: 30px;
@@ -78,7 +71,7 @@
 
 }
 
-.bottom{
+.meet.bottom{
     margin-top: 30px;
     margin-left: 10px;
     background-color: rgb(62,44,29);
@@ -101,14 +94,9 @@
     background-color: aqua;
 }
 
-
-.bottom li{
-    margin-bottom: 10px;
-}
-
 .content{
     width: 100%;
-    height: auto;
+    height: 100%;
     margin-top: 6%;
     letter-spacing: 2px;
     color: rgb(250, 176, 24);
@@ -116,7 +104,8 @@
 
 .mid{
     width: 70%;
-    margin: 100px auto;
+    margin: auto;
+    margin-top: 30px;
     box-sizing: border-box;
 }
 
@@ -148,7 +137,3 @@
     width: 100%;
     margin-top: 15px;
 }
-
-
-
-

@@ -17,8 +17,10 @@ public interface FreeService {
 	
 	public List<FreeVO> getList(Criteria cri);
 	
-	public FreeVO getMyList(String id);
+	public List<FreeVO> getMyList(String id);
 	
 	public int getTotal(Criteria cri);
-	
+
+	public void mypostremove(String fno);  //김세훈 테스트
+
 }

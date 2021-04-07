@@ -32,7 +32,7 @@
                 <tr>
                     <td class="freeBno"><c:out value="${free.fno}" /></td>
                     <td class="title">
-                        <a class='move' href='<c:out value="${free.fno}"/>'><c:out value="${free.title}" /></a>
+                        <a class='move' href='<c:out value="${free.fno}"/>'><c:out value="${free.title}"></c:out></a>
                     </td>
                     <td><c:out value="${free.id}"/></td>
                     <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${free.regdt}"/></td>
@@ -59,15 +59,15 @@
             <button id="reg" type="button">글쓰기</button>
         </div>
         <div class="paging">
-            <c:if test="${pageMaker.prev }">
-            	<li class="pageBtn prev"><a href="${ pageMaker.startPage -1 }" class="btn">&lt;</a></li>
-            </c:if>
-            <c:forEach var="num" begin="${ pageMaker.startPage }" end="${ pageMaker.endPage }">
-            	<li class='pageBtn page'><a href="${num}" class="num  ${pageMaker.cri.pageNum == num ? 'on' : '' }">${num}</a></li>
-            </c:forEach>
-            <c:if test="${pageMaker.next }">
-            	<li class="pageBtn next"><a href="${ pageMaker.endPage + 1 }" class="btn">&gt;</a></li>
-            </c:if>
+        	<ul class="pagination">
+        		<c:if test="${pageMaker.prev}"><li class="pageBtn prev"><a href="${pageMaker.startPage -1}" class="btn">&lt;</a></li></c:if>
+				<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+	            	<li class="pageBtn pages"><a href="${num}" class="num ${pageMaker.cri.pageNum == num ? 'on' : '' }">${num}</a></li>
+				</c:forEach>
+				<c:if test="${pageMaker.next}">
+					<li class="pageBtn next"><a href="${pageMaker.endPage +1}" class="btn">&gt;</a></li>
+				</c:if>
+            </ul>
         </div>
     </div>
     <%@include file="../include/footer.jsp" %>
@@ -115,7 +115,6 @@
 			e.preventDefault();
 			searchForm.submit();
 		});
-		
-		
+				
 	});
 </script>

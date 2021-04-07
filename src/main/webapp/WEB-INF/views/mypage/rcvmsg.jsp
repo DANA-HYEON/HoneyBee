@@ -1,9 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 	crossorigin="anonymous"></script>
@@ -174,14 +182,15 @@ body {
 
 <!--메뉴바 시작 -->
 <div class="mypagemenubar">
-	<a href="mypagehome">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a
-		href="mypost">내가 쓴 글 </a> <a href="myreply">내가 쓴 댓글 </a> <a
-		href="receivemsg">쪽지함 </a>
+	<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a href="posted">내가
+		쓴 글 </a> <a href="freply">내가 쓴 댓글 </a> <a href="rcvmsg">쪽지함 </a>
 </div>
 
 
 <!--  Header 끝 -->
-
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+	crossorigin="anonymous"></script>
 
 
 </head>
@@ -194,90 +203,60 @@ body {
 				href="sendmsg"> 발신함 </a>
 
 		</div>
+		<div id="ex2" class="modal">
+			수신인 <input type="text" class="receiverread" value="" /><br> <input
+				type="text" class="msgcontentread" height:40px;/><br> <a
+				href="#" rel="modal:close">닫기</a>
+		</div>
 
 
 		<div class="mypost">
+			<form action="rcvmsgdelete" method="post">
+				<table class="post">
+					<thead>
+						<tr class="posttitle">
+							<th class="innerposttitle">보낸사람</th>
+							<th class="poststatus">내용</th>
+							<th class="date">작성일</th>
+							<th class="check"><input type="checkbox" id="selectall"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<c:forEach items="${rcvmsg}" var="rcvmsg">
+								<td class="innerposttitle"><c:out value="${rcvmsg.id}" /></td>
+								<td class="poststatus"><a href="#ex2" rel="modal:open"
+									id="content"><c:out value="${rcvmsg.content}" /></a></td>
+								<td class="date"><fmt:formatDate pattern="yyyy-MM-dd"
+										value="${rcvmsg.regDt}" /></td>
+								<td><input type="checkbox" name="rcvmsgcheck"
+									value="${rcvmsg.msgno}"></td>
+						</tr>
+						</c:forEach>
 
-			<table class="post">
-
-
-
-				<thead>
-					<tr class="posttitle">
-
-						<th class="innerposttitle">보낸사람</th>
-						<th class="poststatus">내용</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="viewnum">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-					<tr>
-
-						<td class="innerposttitle">Ipsum</td>
-						<th class="poststatus">조회수</th>
-						<th class="date">작성일</th>
-						<th class="check"><input type="checkbox"></th>
-					</tr>
-
-				</tbody>
-			</table>
-			<button class="delete">삭제</button>
+					</tbody>
+				</table>
+				<input type="submit" class="delete">
+			</form>
 
 
 		</div>
 	</div>
+	<script type="text/javascript">
+		let checkbox = document.getElementsByName('rcvmsgcheck');
+		document.getElementById('selectall').onclick = function() {
+			for (let i = 0; i < checkbox.length; i++) {
+				checkbox[i].checked = !checkbox[i].checked;
+			}
+		}
 
+		$("td").on("click", "a", function() {
+			var msgcontent = $(this).text();
+			var receiverread = $(this).parent().prev().text();
+			$(".msgcontentread").val(msgcontent);
+			$(".receiverread").val(receiverread);
+		});
+	</script>
 
 </body>
 <footer>

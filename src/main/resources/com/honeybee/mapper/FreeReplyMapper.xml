@@ -3,25 +3,60 @@
 <mapper namespace="com.honeybee.mapper.FreeReplyMapper">
 
 	<insert id="insert">
-		insert into free_reply (frno, fno, id, reply)
-		values (seq_free_reply.nextval, #{fno}, #{id}, #{reply})
+		<selectKey keyProperty="frno" order="BEFORE" resultType="long">
+			select SEQ_FREE_REPLY.nextval from dual
+		</selectKey>
+		insert into FREE_REPLY (FRNO, FNO, ID, REPLY, BUNDLE)
+		values (#{frno}, #{fno}, #{id}, #{reply}, #{frno})
+	</insert>
+	
+	<insert id="insertAnswer">
+		<selectKey keyProperty="frno" order="BEFORE" resultType="long">
+			select SEQ_FREE_REPLY.nextval from dual
+		</selectKey>
+		
+		insert into FREE_REPLY (FRNO, FNO, ID, REPLY, LAYER, BUNDLE)
+		values (${frno}, #{fno}, #{id}, #{reply}, #{layer}, #{bundle})
 	</insert>
 
 	<select id="read" resultType="com.honeybee.domain.FreeReplyVO">
-		select * from free_reply where frno = #{frno}
+		select * from FREE_REPLY
+		where FRNO = #{frno} and DELDT is null
 	</select>
-	
+
 	<update id="update">
 		update FREE_REPLY
-		set reply = #{reply}
-		where frno = #{frno}
+		set REPLY = #{reply},
+			UPTDT = sysdate
+		where FRNO = #{frno}
 	</update>
-	
+
 	<delete id="delete">
-		delete from FREE_REPLY where frno = #{frno}
+		update FREE_REPLY
+		set DELDT = sysdate
+		where FRNO = #{frno}
 	</delete>
 	
+	<select id="getList" resultType="com.honeybee.domain.FreeReplyVO">
+		select FRNO, FNO, ID, FRNO2, REPLY, LAYER, BUNDLE, BUNORDER, NICK, THUMB, REGDT, UPTDT
+		from FREE_REPLY
+		where FNO = #{fno} and DELDT is null
+		order by BUNDLE, LAYER, REGDT asc
+	</select>
 	
-	
+	<select id="readmyfreereply"
+		resultType="com.honeybee.domain.FreeReplyVO">   <!--김세훈 내가 쓴 자유게시물 댓글 가져오는 SQL -->
+		select frno, fno, id, frno2, reply, layer, nick, regdt,
+		uptdt, deldt
+		from free_reply where id=#{id} and deldt is null order by regdt
+	</select>
+
+	<select id="getfreereplystatus"
+		resultType="com.honeybee.domain.FreeReplyVO">
+		select r.fno, f.deldt from free_reply r, free f where (r.id
+		=#{id}) and
+		(r.fno=f.fno) order by r.regdt
+	</select><!-- 김세훈 내가 쓴 댓글이 달린 자유 게시글의 상태 -->
+
 
 </mapper>

@@ -72,7 +72,7 @@
 
 
     <div class="total">
-    <div class="mid">
+    <div class="wrap">
       <div class="meet left">
         <img src="/resources/img/logo.png">
       </div>
@@ -81,24 +81,21 @@
         <div class="meet top">
           <div class="title"><p><c:out value="${meet.title}"/></p></div>
           <hr class="line" style="border:1px color= silver;" width="90%">
+
+
+        <div class="id">
+          <img class="id img" src="/resources/img/logo.png"><p class="id name">이다현님</p>
+        </div>
         </div>
 
 
         <div class="meet bottom">
           <div class="content">
             <ul>
-              <li>모집상태   <c:out value="${meet.cid2}"/></li>
               <li>모임일 <c:out value="${meet.startDt}"/> ~ <c:out value="${meet.endDt}"/></li>
               <li>모임장소 <c:out value="${meet.place}"/></li>
               <li>모임모집일 <c:out value="${meet.recsDt}"/> ~ <c:out value="${meet.receDt}"/></li>
               <li>모집인원   <c:out value="${meet.recNo}"/></li>
-              <li>현재인원   <c:out value="${meet.currNo}"/></li>
-              <li>유무료구분   <c:out value="${meet.charge}"/></li>
-              <li>온오프라인유무   <c:out value="${meet.onoff}"/></li>
-              <li>링크   <c:out value="${meet.link}"/></li>
-              <li>모임개설일자   <fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${meet.regDt}" /></li>
-              <li>찜수   <c:out value="${meet.thumb}"/></li>
-              <li>조회수   <c:out value="${meet.hit}"/></li>
             </ul>
           </div>
            <button id="inquiry">문의하기</button> <button id="wish">찜하기</button>
@@ -107,15 +104,10 @@
     </div>
 
     <div class="mid">
-      <div class="information">모임 상세 안내 </div>
+      <div class="information">모임 상세 안내</div>
       <hr class="first_line" style="border:1px color= silver;" width="90%">
-      <div>모임 요약 내용 : <c:out value="${meet.smry}"/></div>
       <div class="data">
-	        개설자 정보  
-	        <div>
-	        개설자 아이디 : 
-        <c:out value="${meet.id}"/>
-	        </div>
+        개설자 정보
       </div>
       <div class="text">
 

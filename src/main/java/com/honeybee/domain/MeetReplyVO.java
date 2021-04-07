@@ -20,5 +20,4 @@ public class MeetReplyVO {
 	private Date regDt; //댓글작성일자
 	private Date uptDt; //댓글수정일자
 	private Date delDt; //댓글삭제일자
-
 }

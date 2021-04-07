@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/resources/css/meet/reigster.css">
+<link rel="stylesheet" href="/resources/css/meet_reigster.css">
 </head>
 <body>
 <form role="form" action="/meet/reg" method="post">

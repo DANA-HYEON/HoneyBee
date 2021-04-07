@@ -15,5 +15,4 @@ public class HoneybeeController {
 		
 		log.info("basic...........");
 	}
-
 }
