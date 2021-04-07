@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/resources/css/free/get.css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
     
      <style>
       #modify {
@@ -101,7 +102,9 @@
 	        </div>
       </div>
       <div class="text">
-        <c:out value="${meet.content}"/>
+
+       <textarea rows="20" class="contents" name="content"  style="width:100%; height:auto; border: none;"  readonly><c:out value="${meet.content}"/></textarea>  
+
       </div>
 
       <hr class="second_line" style="border:1px color= silver;" width="90%">
@@ -380,4 +383,8 @@
    });
 	 
    </script>
+   
+   <script>
+	 autosize($("textarea"));
+	</script>
 <%@include file="../include/footer.jsp" %>
