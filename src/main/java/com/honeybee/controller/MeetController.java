@@ -1,7 +1,5 @@
 package com.honeybee.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +37,7 @@ public class MeetController {
 		//카테고리 미 선택시 리스트
 		if(cri.getCid() == null || cri.getCid().equals("카테고리") || cri.getCid().equals("M000")) {
 			
+			cri.setCid("M000");
 			model.addAttribute("list", service.getList(cri)); //모임게시물 리스트 가져오기
 			model.addAttribute("category", cService.getCatList());
 			model.addAttribute("pickCat", "M000");

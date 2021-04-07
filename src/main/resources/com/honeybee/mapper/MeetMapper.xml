@@ -303,7 +303,7 @@
 	      REGDT,
 	      UPDDT,
 	      DELDT
-	      from meet where ]]>
+	      from meet where (DELDT is null) and ]]>
 
 	      <include refid="criteria"></include>
 
@@ -372,7 +372,7 @@
 	      REGDT,
 	      UPDDT,
 	      DELDT
-	      from meet where (CID = #{cid}) and ]]>
+	      from meet where  (DELDT is null) and (CID = #{cid}) and ]]>
 
 	      <include refid="criteria"></include>
 
@@ -385,11 +385,11 @@
 </select>
 
 <select id="getTotalCount" resultType="int">
-	select count(*) from meet where <include refid="criteria"></include> mno > 0
+	select count(*) from meet where (delDt is null) and <include refid="criteria"></include> mno > 0
 </select>
 
 <select id="getTotalCountWithCat" resultType="int">
-	select count(*) from meet where (CID=#{cid}) and <include refid="criteria"></include> mno > 0
+	select count(*) from meet where (delDt is null) and (CID=#{cid}) and <include refid="criteria"></include> mno > 0
 </select>
 
 <select id="getListTest" resultType="com.honeybee.domain.MeetVO">

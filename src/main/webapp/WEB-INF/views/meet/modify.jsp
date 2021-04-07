@@ -85,6 +85,7 @@
                 <input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
                 <input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
                 <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+                <input type='hidden' name='cid' value='<c:out value="${cri.cid}"/>'>
                 
             </div>
         </div>
@@ -122,12 +123,14 @@
 			 
 			 if(operation === 'remove'){
 				 formObj.attr("action", "/meet/remove");
+				 
 			 }else if(operation === 'list'){
 				 formObj.attr("action", "/meet/list").attr("method", "get");
 				 var pageNumTag = $("input[name='pageNum']").clone();
 				 var amountTag = $("input[name='amount']").clone();
 				 var keywordTag = $("input[name='keyword']").clone();
 				 var typeTag = $("input[name='type']").clone();
+				 var cidTag = $("input[name='cid']").clone();
 				 
 				 formObj.empty();
 				 
@@ -135,6 +138,7 @@
 				 formObj.append(amountTag);
 				 formObj.append(keywordTag);
 				 formObj.append(typeTag);
+				 formObj.append(cidTag);
 							 
 			 }
 			 
@@ -145,7 +149,11 @@
 		/* 카테코리 선택 검색 후 카테고리 유지 */
 		 
 		  console.log("${pickedCat}");
+		
 		 var pickedCat = "${pickedCat}";
+		  if(pickedCat.length >= 1){
+			 pickedCat = pickedCat[1];
+		 } 
 		 
 		
 		 $(".cat").val(pickedCat).prop("selected",true);
