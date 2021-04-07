@@ -56,7 +56,24 @@
    	 
    	 
    	 input:focus {outline:none};
-
+   	 
+   	 .bottom{
+    	position: relative;
+	}
+	
+	#inquiry{
+	    position: absolute;
+	    bottom: 15px;
+	    right: 10px;
+	    background-color: aqua;
+	}
+	
+	#wish{
+	    position: absolute;
+	    bottom: 15px;
+	    right: 100px;
+	    background-color: aqua;
+	}
     </style>
 </head>
 <body>
@@ -102,6 +119,7 @@
               <li>조회수   <c:out value="${meet.hit}"/></li>
             </ul>
           </div>
+           <button id="inquiry">문의하기</button> <button id="wish">찜하기</button>
         </div>
       </div>
     </div>
