@@ -56,24 +56,6 @@
    	 
    	 
    	 input:focus {outline:none};
-   	 
-   	 .bottom{
-    	position: relative;
-	}
-	
-	#inquiry{
-	    position: absolute;
-	    bottom: 15px;
-	    right: 10px;
-	    background-color: aqua;
-	}
-	
-	#wish{
-	    position: absolute;
-	    bottom: 15px;
-	    right: 100px;
-	    background-color: aqua;
-	}
     </style>
 </head>
 <body>

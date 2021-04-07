@@ -84,6 +84,21 @@
     background-color: rgb(62,44,29);
     width: 100%;
     height: 500px;
+    position: relative;
+}
+
+#inquiry{
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+    background-color: aqua;
+}
+
+#wish{
+    position: absolute;
+    bottom: 15px;
+    right: 100px;
+    background-color: aqua;
 }
 
 

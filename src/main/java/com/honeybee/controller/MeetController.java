@@ -119,7 +119,7 @@ public class MeetController {
 
 
 	@RequestMapping("/remove")
-	public String remove(@RequestParam("mno") Long mno,@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+	public String remove(@RequestParam("mno") Long mno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("remove.............." + mno);
 
 		if(service.remove(mno)) {
