@@ -167,7 +167,7 @@
           <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
           <input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
           <input type='hidden' name='cid' value='${pageMaker.cri.cid}'>
-          
+
           
           <button>Search</button>
       </form>

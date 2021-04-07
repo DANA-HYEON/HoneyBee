@@ -112,7 +112,7 @@ public class MeetController {
 		rttr.addAttribute("type", cri.getType());
 		rttr.addAttribute("keyword", cri.getKeyword());
 		rttr.addAttribute("category", cri.getCid());
-		
+
 		
 		return "redirect:/meet/list";
 	}

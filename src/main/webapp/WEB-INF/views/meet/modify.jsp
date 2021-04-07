@@ -132,6 +132,7 @@
 				 var typeTag = $("input[name='type']").clone();
 				 var cidTag = $("input[name='cid']").clone();
 				 
+				 
 				 formObj.empty();
 				 
 				 formObj.append(pageNumTag);
@@ -139,7 +140,7 @@
 				 formObj.append(keywordTag);
 				 formObj.append(typeTag);
 				 formObj.append(cidTag);
-							 
+
 			 }
 			 
 			 formObj.submit();
