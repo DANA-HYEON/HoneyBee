@@ -131,6 +131,7 @@ public class MeetController {
 		rttr.addAttribute("amount", cri.getAmount());
 		rttr.addAttribute("type", cri.getType());
 		rttr.addAttribute("keyword", cri.getKeyword());
+		rttr.addAttribute("cid", cri.getCid());
 
 		return "redirect:/meet/list";
 	}

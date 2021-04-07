@@ -19,9 +19,10 @@
                 <div class="sub title">
                 
                     <select class="cat" name='cid'>
-                        <option>카테고리</option>
 				        <c:forEach items="${category}" var="category">
+				        	<c:if test="${category.CId != 'M000'}">
 				        	<option value='<c:out value="${category.CId}"/>'><c:out value="${category.CName}"/></option>
+				        	</c:if>
 				        </c:forEach>
                     </select>
                     
@@ -128,7 +129,6 @@
 				 var keywordTag = $("input[name='keyword']").clone();
 				 var typeTag = $("input[name='type']").clone();
 				 
-				 
 				 formObj.empty();
 				 
 				 formObj.append(pageNumTag);
@@ -147,6 +147,7 @@
 		  console.log("${pickedCat}");
 		 var pickedCat = "${pickedCat}";
 		 
+		
 		 $(".cat").val(pickedCat).prop("selected",true);
 	 });
  </script>
