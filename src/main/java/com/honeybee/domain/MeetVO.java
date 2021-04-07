@@ -10,6 +10,7 @@ public class MeetVO {
 	private long mno; //모임번호
 	private String cid; //모임카테고리
 	private String cid2; //모집상태
+	private String cid3; //모임카테고리명
 	private String id; //회원ID
 	private String title; //모임제목
 	private String smry; //모임요약내용

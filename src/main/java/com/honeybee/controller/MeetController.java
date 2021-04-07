@@ -31,7 +31,7 @@ public class MeetController {
 
 
 	@RequestMapping("/list")
-	public void list(@ModelAttribute("cri") Criteria cri, Model model, HttpServletRequest request) {
+	public void list(@ModelAttribute("cri") Criteria cri, Model model) {
 		log.info("list total");
 		log.info("list total : " + cri);
 		System.out.println("category pick : " + cri.getCid());
@@ -92,24 +92,28 @@ public class MeetController {
 		log.info("/get or /modify");
 		model.addAttribute("meet", service.get(mno));
 		model.addAttribute("category", cService.getCatList());
-		
+		model.addAttribute("pickedCat", service.get(mno).getCid());
 		model.addAttribute("categoryName", service.getCategoryName(mno)); //해당 모임게시물의 카테고리 이름 cname 보내기
 	}
 
 
 	@PostMapping("/modify")
-	public String modify(MeetVO meet, @ModelAttribute("cri") Criteria cri,  RedirectAttributes rttr) {
+	public String modify(MeetVO meet, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr, Model model) {
 		log.info("modify : " + meet);
 
 		if(service.modify(meet)) {
 			rttr.addFlashAttribute("result", "success");
 		}
 
+		//수정한 카테고리 값 
+		System.out.println("cid : " + meet.getCid());
+		
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
 		rttr.addAttribute("type", cri.getType());
 		rttr.addAttribute("keyword", cri.getKeyword());
 		rttr.addAttribute("category", cri.getCid());
+		
 		
 		return "redirect:/meet/list";
 	}

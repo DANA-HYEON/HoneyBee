@@ -17,12 +17,15 @@
             <div class="b top">
                 <div class="top title">모임 개설</div>
                 <div class="sub title">
+                
                     <select class="cat" name='cid'>
                         <option>카테고리</option>
 				        <c:forEach items="${category}" var="category">
-				        	<option value='<c:out value="${category.CName}"/>'><c:out value="${category.CName}"/></option>
+				        	<option value='<c:out value="${category.CId}"/>'><c:out value="${category.CName}"/></option>
 				        </c:forEach>
                     </select>
+                    
+                    
                     <input type="hidden" name="mno" value='<c:out value="${meet.mno}"/>'>
                     <input type="text" name="title" value='<c:out value="${meet.title}"/>'>
                 </div>
@@ -141,9 +144,9 @@
 		 
 		/* 카테코리 선택 검색 후 카테고리 유지 */
 		 
-		 console.log("${categoryName}");
-		 var categoryName = "${categoryName}";
+		  console.log("${pickedCat}");
+		 var pickedCat = "${pickedCat}";
 		 
-		 $(".cat").val(categoryName).prop("selected",true);
+		 $(".cat").val(pickedCat).prop("selected",true);
 	 });
  </script>
