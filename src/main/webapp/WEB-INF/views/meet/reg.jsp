@@ -54,6 +54,7 @@
                         </ul>
                         <input type='hidden' name="cid2" value="RC002">
                         <input type='hidden' name="id" value="tony">
+                        
                     </div>
                     <div class="bot right">
                         <div class="thumb title">썸네일</div>

@@ -99,6 +99,12 @@ public class MeetServiceImpl implements MeetService {
 		return mapper.getNick(id);
 	}
 
+	@Override
+	public String getCategoryName(Long mno) {
+		log.info("get category name ..............");
+		return mapper.getCategoryName(mno);
+	}
+
 
 	
 }

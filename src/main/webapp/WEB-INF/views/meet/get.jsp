@@ -50,7 +50,7 @@
           <span class="navbar-brand mb-0 h1" style="font-weight: bold;">모임게시판</span>
         </div>
         <div class="container-fluid" style="background: transparent;">
-            <span class="navbar-brand mb-0 h1" style="font-weight: bold; background-color: white;">모임카테고리 : ${meet.cid}</span>
+            <span class="navbar-brand mb-0 h1" style="font-weight: bold; background-color: white;">모임카테고리 : <c:out value="${categoryName}"/></span>
           </div>
     </nav>
 
@@ -116,6 +116,7 @@
 	  	<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
 	  	<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
 	  	<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
+	  	<input type='hidden' name='cid' value='<c:out value="${cri.cid}"/>'>
 	  </form>
         
         

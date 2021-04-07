@@ -221,6 +221,7 @@
 
  <script type="text/javascript">
 	 $(document).ready(function(){
+		 //게시물 수정, 삭제, 작성 시 게시물 번호 
 		 var result = '<c:out value="${result}"/>';
 		 
 		 checkModal(result);

@@ -416,5 +416,8 @@
 select code_table.cname from code_table, meet where (meet.cid=code_table.cid) and (id=#{id})
 </select>
 
+<select id="getCategoryName" resultType="String">
+select c.cname from meet m, code_table c where (m.cid = c.cid) and mno= #{mno}
+</select>
 
 </mapper>

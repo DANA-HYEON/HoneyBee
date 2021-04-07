@@ -22,7 +22,7 @@ public class HomeController {
 	private CodeTableService cService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home(Model model) {
 		
 		model.addAttribute("category", cService.getCatList());
 		

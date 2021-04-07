@@ -67,28 +67,6 @@ public class MeetController {
 
 	}
 
-
-	/*
-	 * @RequestMapping("/listcat") public String listcat(Criteria cri, Model model)
-	 * { log.info("list");
-	 * 
-	 * log.info("list : " + cri); //model.addAttribute("list",
-	 * service.getList(cri)); //모임게시물 리스트 가져오기
-	 * 
-	 * model.addAttribute("list", service.getListWithCat(cri)); //모임게시물 리스트 (페이징,
-	 * 카테고리)가져오기 model.addAttribute("category", cService.getCatList());
-	 * 
-	 * System.out.println("pickCat : " + cri.getCid());
-	 * model.addAttribute("pickCat", cri.getCid());
-	 * 
-	 * int total = service.getTotalWithCat(cri);
-	 * 
-	 * log.info("total : " + total);
-	 * 
-	 * model.addAttribute("pageMaker", new PageDTO(cri, total));
-	 * 
-	 * return "/meet/list"; }
-	 */
 	
 	@PostMapping("/reg")
 	public String register(MeetVO meet, RedirectAttributes rttr) {
@@ -114,6 +92,8 @@ public class MeetController {
 		log.info("/get or /modify");
 		model.addAttribute("meet", service.get(mno));
 		model.addAttribute("category", cService.getCatList());
+		
+		model.addAttribute("categoryName", service.getCategoryName(mno)); //해당 모임게시물의 카테고리 이름 cname 보내기
 	}
 
 
