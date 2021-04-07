@@ -82,7 +82,7 @@ public class MeetReplyController {
 	//댓글 수정
 	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value="/{mrno}", consumes="application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> modify(@RequestBody ReplyVO vo, @PathVariable("mrno") Long mrno){
-		vo.setMrno(mrno);;
+		vo.setMrno(mrno);
 		
 		log.info("mno  : " + mrno);
 		
