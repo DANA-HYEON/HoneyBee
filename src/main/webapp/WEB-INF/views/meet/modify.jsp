@@ -20,7 +20,7 @@
                     <select class="cat" name='cid'>
                         <option>카테고리</option>
 				        <c:forEach items="${category}" var="category">
-				        	<option value='<c:out value="${meet.mno}"/>'><c:out value="${category.CName}"/></option>
+				        	<option value='<c:out value="${category.CName}"/>'><c:out value="${category.CName}"/></option>
 				        </c:forEach>
                     </select>
                     <input type="hidden" name="mno" value='<c:out value="${meet.mno}"/>'>
@@ -137,5 +137,13 @@
 			 
 			 formObj.submit();
 		 });
+		 
+		 
+		/* 카테코리 선택 검색 후 카테고리 유지 */
+		 
+		 console.log("${categoryName}");
+		 var categoryName = "${categoryName}";
+		 
+		 $(".cat").val(categoryName).prop("selected",true);
 	 });
  </script>
