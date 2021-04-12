@@ -113,9 +113,9 @@
       <hr class="first_line" style="border:1px color= silver;" width="90%">
       <div>모임 요약 내용 : <c:out value="${meet.smry}"/></div>
       <div class="data">
-	        개설자 정보  
+	        개설자 정보
 	        <div>
-	        개설자 아이디 : 
+	        개설자 아이디 :
         <c:out value="${meet.id}"/>
 	        </div>
       </div>
@@ -296,9 +296,9 @@
     	   $("."+mrno).append(str);
     	   
       } 
-   
+
   }); 
-  
+
 	  //대댓글 등록 이벤트 처리
 	  $(document).on("click", "#regR_ReplyBtn", function(e){
 		  e.preventDefault();
@@ -338,13 +338,13 @@
 	  var layer = $(this).data("layer");
 	  var bundle = $(this).data("bundle");
 	  console.log("mrno : " + mrno + ", layer : " + layer + ", bundle : " + bundle);
-	  
-	  
+
+
 	  //댓글 삭제시 대댓글이 달려 있을 경우 문구 띄우기. true일 겨우 대댓글도 같이 삭제
 	 /*  var deleteResult = false;
 	  var bundleArr = new Array();
 	  var myMrnoArr = new Array();
-	  
+
 	  if(layer == 0){
 		 deleteResult = confirm("대댓글이 달려 있는 댓글입니다. 삭제 시 대댓글도 같이 삭제됩니다. 삭제하시겠습니까?");
 		 console.log(deleteResult);
@@ -353,34 +353,34 @@
 	  if(deleteResult){
 		  $('li[name="replyList"]').each(function(){
 			  var myBundle = $(this).data('bundle');
-			  
+
 			  bundleArr.push(myBundle);
 		  });
-		  
+
 		  console.log(bundleArr);
 	  }else{
-		  
+
 	  }
-	  
+
 		  for(var i = 0; i<bundleArr.length; i++){
 			  if(bundle == bundleArr[i]){
 				  console.log("같음");
 				  var multi = $('.' + bundle);
 				  var multi_array = [];
-				  
+
 				  $.each(multi, function(index, item){
 					  multi_array.push($(item).data("mrno"));
 				  });
-				  
+
 				  console.log(multi_array);
-				  
+
 				  for(var j=0; j<multi_array.length; j++){
 					  console.log(multi_array[j]);
 					  replyService.remove(multi_array[j], function(result){
 						  /* alert(result);
-						  showList(1); 
+						  showList(1);
 					  });
-					  
+
 				  }
 				  showList(1);
 				  return;
@@ -390,7 +390,7 @@
 	   replyService.remove(mrno, function(result){
 		  alert(result);
 		  showList(1);
-	  }); 
+	  });
   });
 
 

@@ -13,7 +13,10 @@
 	</select>
 
 	<select id="getMyList" resultType="com.honeybee.domain.FreeVO">
-	select  FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, DELDT from FREE where id = #{id} and DELDT IS NULL
+			select
+				FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, DELDT
+			from FREE
+			where id = #{id} and DELDT IS NULL
 	</select>
 
 	<!-- CREATE -->
@@ -41,9 +44,14 @@
 		set id = #{id},
 			title = #{title},
 			content = #{content},
-			hit = #{hit},
-			thumb = #{thumb},
 			upddt = sysdate
+		where fno = #{fno}
+	</update>
+
+	<!-- 조회수 업데이트 -->
+	<update id="updateHit">
+		update FREE
+		set hit = #{hit}
 		where fno = #{fno}
 	</update>
 
@@ -53,7 +61,7 @@
 		set deldt = sysdate
 		where fno = #{fno}
 	</delete>
-	
+
 	<sql id="criteria">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 			<foreach item='type' collection="typeArr">
@@ -73,33 +81,33 @@
 			</foreach>
 		</trim>
 	</sql>
-	
+
 	<select id="getListWithPaging" resultType="com.honeybee.domain.FreeVO">
 		<![CDATA[
 			select
-				fno, id, title, content, regdt, upddt
+				fno, id, title, content, hit, thumb, regdt, upddt
 			from (
 				select /*+INDEX_DESC(FREE pk_free) */
-					rownum rn, fno, id, title, content, regdt, upddt
+					rownum rn, fno, id, title, content, hit, thumb, regdt, upddt
 				from FREE
-				where 
+				where
 		]]>
-			
+
 		<include refid="criteria"></include>
-			
+
 		<![CDATA[
 				rownum <= #{pageNum} * #{amount} and DELDT is null
 			)
 			where rn > (#{pageNum} -1) * #{amount}
 		]]>
 	</select>
-	
+
 	<select id="getTotalCount" resultType="int">
 		select count(*) from FREE
-		where 
-		
+		where
+
 		<include refid="criteria"></include>
-		
+
 		FNO > 0 and DELDT is null
 	</select>
 
@@ -108,5 +116,5 @@
 		set deldt = sysdate
 		where fno = #{fno}
 	</update>
-	
+
 </mapper>

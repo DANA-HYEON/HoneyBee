@@ -92,9 +92,9 @@ public class MeetController {
 
 		log.info("/get or /modify");
 		model.addAttribute("meet", service.get(mno));
-		
+
 		MeetVO meet = service.get(mno);
-		
+
 		cri.setCid(meet.getCid());
 		log.info("cri : " + cri);
 		System.out.println("이 게시물의 카테고리번호는 ? " + service.get(mno).getCid3());
@@ -111,7 +111,7 @@ public class MeetController {
 
 
 	    System.out.println("meet.getCid() : " + meet.getCid());
-	    
+
 		if(service.modify(meet)) {
 			rttr.addFlashAttribute("result", "success");
 		}
@@ -124,7 +124,7 @@ public class MeetController {
 		rttr.addAttribute("type", cri.getType());
 		rttr.addAttribute("keyword", cri.getKeyword());
 		rttr.addAttribute("cid", cri.getCid());
-		
+
 		
 		return "redirect:/meet/list";
 	}

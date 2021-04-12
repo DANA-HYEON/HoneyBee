@@ -7,11 +7,11 @@ import lombok.Data;
 @Data
 public class FreeVO {
 	
-	private Long fno;
+	private long fno;
 	private String id;
 	private String title;
 	private String content;
-	private Long hit;
+	private long hit;
 	private int thumb;
 	private Date regdt;
 	private Date upddt;

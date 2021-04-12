@@ -58,22 +58,22 @@
         </style>
         <link href="/resources/css/styles.css" rel="stylesheet" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        
-        
+
+
         <script type="text/javascript">
         	$(document).ready(function(){
         		console.log("start");
-        		
+
         		$(document).on("click", ".dropdown-menu li", function(e){
         			e.preventDefault();
         			var categoryID = $(this).attr("id");
-        			
+
         			$(location).attr('href','/meet/list?cid=' + categoryID);
         		});
         	});
         </script>
     </head>
-    
+
     <body id="page-top">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -90,7 +90,7 @@
                               카테고리
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <c:forEach items="${category}" var="category"> 
+                            <c:forEach items="${category}" var="category">
                               <li id="${category.CId}"><a class="dropdown-item" href="/meet/list"><c:out value="${category.CName}" /></a></li>
                             </c:forEach>
                               <!-- <li><hr class="dropdown-divider"></li> --> <!-- 라인 -->

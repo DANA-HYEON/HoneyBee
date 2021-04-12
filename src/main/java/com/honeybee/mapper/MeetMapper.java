@@ -7,8 +7,8 @@ import com.honeybee.domain.MeetVO;
 
 public interface MeetMapper {
 
-	public List<MeetVO> getList(); 
-	
+	public List<MeetVO> getList();
+
 	public void insert(MeetVO meet); //PK값 없는거
 
 	public void insertSelectKey(MeetVO meet); //PK값 있는거

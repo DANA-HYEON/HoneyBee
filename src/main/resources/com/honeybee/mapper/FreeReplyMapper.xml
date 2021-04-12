@@ -6,17 +6,17 @@
 		<selectKey keyProperty="frno" order="BEFORE" resultType="long">
 			select SEQ_FREE_REPLY.nextval from dual
 		</selectKey>
-		insert into FREE_REPLY (FRNO, FNO, ID, REPLY, BUNDLE)
-		values (#{frno}, #{fno}, #{id}, #{reply}, #{frno})
+		insert into FREE_REPLY (FRNO, FNO, ID, REPLY, BUNDLE, BUNORDER)
+		values (#{frno}, #{fno}, #{id}, #{reply}, #{frno}, #{frno})
 	</insert>
-	
+
 	<insert id="insertAnswer">
 		<selectKey keyProperty="frno" order="BEFORE" resultType="long">
 			select SEQ_FREE_REPLY.nextval from dual
 		</selectKey>
-		
-		insert into FREE_REPLY (FRNO, FNO, ID, REPLY, LAYER, BUNDLE)
-		values (${frno}, #{fno}, #{id}, #{reply}, #{layer}, #{bundle})
+
+		insert into FREE_REPLY (FRNO, FNO, ID, REPLY, LAYER, BUNDLE, BUNORDER)
+		values (${frno}, #{fno}, #{id}, #{reply}, #{layer}, #{bundle}, #{bunorder})
 	</insert>
 
 	<select id="read" resultType="com.honeybee.domain.FreeReplyVO">
@@ -41,9 +41,9 @@
 		select FRNO, FNO, ID, FRNO2, REPLY, LAYER, BUNDLE, BUNORDER, NICK, THUMB, REGDT, UPTDT
 		from FREE_REPLY
 		where FNO = #{fno} and DELDT is null
-		order by BUNDLE, LAYER, REGDT asc
+		order by BUNDLE, BUNORDER, LAYER, REGDT asc
 	</select>
-	
+
 	<select id="readmyfreereply"
 		resultType="com.honeybee.domain.FreeReplyVO">   <!--김세훈 내가 쓴 자유게시물 댓글 가져오는 SQL -->
 		select frno, fno, id, frno2, reply, layer, nick, regdt,

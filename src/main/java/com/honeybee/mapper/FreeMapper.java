@@ -17,6 +17,7 @@ public interface FreeMapper {
 	
 	// UPDATE
 	public int update(FreeVO vo);
+	public int updateHit(FreeVO vo);
 	
 	// DELETE
 	public int delete(FreeVO vo);

@@ -18,5 +18,7 @@ public interface UserService {
 	
 	public UserVO getMyList(String id);
 	
+	public boolean checkId(String id);
+	
 	
 }

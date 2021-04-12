@@ -32,7 +32,7 @@
                 <tr>
                     <td class="freeBno"><c:out value="${free.fno}" /></td>
                     <td class="title">
-                        <a class='move' href='<c:out value="${free.fno}"/>'><c:out value="${free.title}"></c:out></a>
+                        <a class='move' href='<c:out value="${free.fno}"/>'><c:out value="${free.title}" /></a>
                     </td>
                     <td><c:out value="${free.id}"/></td>
                     <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${free.regdt}"/></td>
@@ -40,8 +40,8 @@
                     <td><c:out value="${free.thumb}"/></td>
                 </tr>
             </c:forEach>
-
         </table>
+
         <div class="bottom-line">
             <form id="searchForm" action="/free/list" method="get">
                 <select name='type'>
@@ -115,6 +115,14 @@
 			e.preventDefault();
 			searchForm.submit();
 		});
-				
+		
+		// 조회수
+		$(document).on("click", ".move", function(e) {
+			e.preventDefault();
+			let fno = parseInt($(this).attr("href"));
+
+
+		});
+
 	});
 </script>

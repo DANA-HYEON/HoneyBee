@@ -48,7 +48,7 @@
                             <li>모임종료일자 <input type="text" name="endDt" value='<c:out value="${meet.endDt}"/>'></li>
                             <li>모임모집시작일자 <input type="text" name="recsDt" value='<c:out value="${meet.recsDt}"/>'></li>
                             <li>모임모집종료일자 <input type="text" name="receDt" value='<c:out value="${meet.receDt}"/>'></li>
-                            <li>모집인원 <input type="text" name="recNo" value='<c:out value="${meet.recNo}"/>'></li>                  
+                            <li>모집인원 <input type="text" name="recNo" value='<c:out value="${meet.recNo}"/>'></li>
                             <li>비용 <input id="free" type="radio" name="charge" value="N">무료<input id="charge" type="radio" name="charge" value="Y" >유료</li>
                             <li>온오프라인유무 <input id="ON" type="radio" name=onoff value="ON">온라인<input id="OFF" type="radio" name="onoff" value="OFF">오프라인</li>
                             <li>모임장소<input type="text" name="place" value='<c:out value="${meet.place}"/>'></li>
@@ -71,7 +71,7 @@
                 <button type="submit" data-oper='modify'>모임 수정</button>
                 <button type="reset" data-oper='remove'>모임 삭제</button>
                 <button type="submit" data-oper='list'>목록으로 가기</button>
-                
+
                 <!-- 추가 -->
                 <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
                 <input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
@@ -104,12 +104,12 @@
 			 $("input:radio[id=OFF]").prop("checked", true);
 		 }
 		 
-		 
-		 
-		 
-		 
-		 
-		 
+
+
+
+
+
+
 		 var formObj = $("form");
 		 
 		 $('button').on("click", function(e){
@@ -124,14 +124,14 @@
 				 
 			 }else if(operation === 'list'){
 				 formObj.attr("action", "/meet/list").attr("method", "get");
-				 
-				 
+
+
 				 var pageNumTag = $("input[name='pageNum']").clone();
 				 var amountTag = $("input[name='amount']").clone();
 				 var keywordTag = $("input[name='keyword']").clone();
 				 var typeTag = $("input[name='type']").clone();
 				 var cidTag = $("input[name='cid']").clone();
-				 
+
 				 formObj.empty();
 				 
 				 formObj.append(pageNumTag);
@@ -139,7 +139,7 @@
 				 formObj.append(keywordTag);
 				 formObj.append(typeTag);
 				 formObj.append(cidTag);
-							 
+
 			 }
 			 
 			 formObj.submit();

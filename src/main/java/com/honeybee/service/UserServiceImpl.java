@@ -63,6 +63,13 @@ public class UserServiceImpl implements UserService {
 		log.info("getlist.............");
 		return mapper.getMyList(id);
 	}
+
+
+	@Override
+	public boolean checkId(String id) {
+		
+		return mapper.checkId(id) != null;
+	}
 	
 
 }

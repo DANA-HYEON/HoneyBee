@@ -11,13 +11,15 @@ public interface UserMapper {
 	
 	public void insert(UserVO user);
 	
-	public UserVO read(String ID);
+	public UserVO read(String id);
 	
-	public int delete(String ID);
+	public int delete(String id);
 	
 	public int update(UserVO user);
 	
 	public UserVO getMyList(String id);
+	
+	public String checkId(String id);
 	
 	
 }

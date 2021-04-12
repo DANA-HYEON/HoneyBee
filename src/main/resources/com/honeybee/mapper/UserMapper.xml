@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	<mapper namespace="com.honeybee.mapper.UserMapper">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.honeybee.mapper.UserMapper">
 	
 	
 	<select id="getList" resultType="com.honeybee.domain.UserVO">
@@ -10,31 +8,10 @@
 	</select>
 	
 	<insert id="insert">
-		insert into USER_INFO (
-		ID,
-		PWD,
-		NAME,
-		BIRTH,
-		SEX,
-		EMAIL,
-		TELNO,
-		URL,
-		RCVYN,
-		NICK,
-		SCOR,
-		IMG)
-		values(#{id},
-		#{pwd},
-		#{name},
-		#{birth},
-		#{sex},
-		#{email},
-		#{telno},
-		#{url},
-		#{rcvyn},
-		#{nick},
-		#{scor},
-		#{img})
+		insert into USER_INFO (ID, PWD, NAME, BIRTH, SEX, EMAIL, TELNO, NICK)
+		<!-- RCVYN, -->
+		values( #{id}, #{pwd}, #{name}, #{birth}, #{sex}, #{email}, #{telno}, #{nick})
+		<!-- #{rcvyn}, -->
 	</insert>
 	
 	<select id="read" resultType="com.honeybee.domain.UserVO">
@@ -42,7 +19,10 @@
 	</select>
 	
 	<delete id="delete">
-		delete from USER_INFO where ID=#{id}
+		<!-- delete from USER_INFO where ID=#{id} -->
+		update USER_INFO
+		set DELDT = sysdate
+		where ID = #{id}
 	</delete>
 	
 	<update id="update">
@@ -63,11 +43,13 @@
 		UPDDT=sysdate
 		where ID = #{id}
 	</update>
-	
-		
-	
+
 	<select id="getMyList" resultType="com.honeybee.domain.UserVO">
 		select * from USER_INFO where id = #{id}
 	</select>
-	
-	</mapper>
+
+	<select id="checkId" resultType="boolean">
+		select ID from USER_INFO where ID = #{id}
+	</select>
+
+</mapper>
