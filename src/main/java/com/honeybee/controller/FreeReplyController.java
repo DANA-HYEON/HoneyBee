@@ -40,7 +40,7 @@ public class FreeReplyController {
 	
 	@GetMapping(value = "/pages/{fno}/{page}", produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<List<FreeReplyVO>> getList(@PathVariable("page") int page, @PathVariable("fno") Long fno) {
-		Criteria cri = new Criteria(page, 10);
+		Criteria cri = new Criteria(page, 10, "latest");
 		
 		return new ResponseEntity<>(service.getList(cri, fno), HttpStatus.OK);
 	}

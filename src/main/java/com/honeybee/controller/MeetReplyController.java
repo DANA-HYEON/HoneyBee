@@ -57,7 +57,7 @@ public class MeetReplyController {
 	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("page") int page, @PathVariable("mno") Long mno){
 		log.info("getList...................");
 		
-		Criteria cri = new Criteria(page, 10);
+		Criteria cri = new Criteria(page, 10, "latest");
 		log.info(cri);
 		
 		return new ResponseEntity<>(service.getList(cri, mno), HttpStatus.OK);

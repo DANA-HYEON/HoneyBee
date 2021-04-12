@@ -53,6 +53,9 @@ public class MeetServiceImpl implements MeetService {
 		return mapper.getList();
 	}
 
+
+	
+	//내가 개설한 모임을 카테고리별로 가져오기
 	@Override
 	public List<MeetVO> getList(Criteria cri) {
 		log.info("get List with criteria : " + cri);
@@ -101,6 +104,7 @@ public class MeetServiceImpl implements MeetService {
 	public List<MeetVO> getListWithCategory(String cid){
 		log.info("getListWithCategory...............");
 		return mapper.getListWithCategory(cid);
-	}//내가 개설한 모임을 카테고리별로 가져오기
+	}
+
 
 }

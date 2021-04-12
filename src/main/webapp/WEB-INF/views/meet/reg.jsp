@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/resources/css/meet_reigster.css">
+<link rel="stylesheet" href="/resources/css/meet/register.css">
 </head>
 <body>
 <form role="form" action="/meet/reg" method="post">
@@ -17,9 +17,10 @@
                 <div class="top title">모임 개설</div>
                 <div class="sub title">
                     <select class="cat" name='cid'>
-                        <option>카테고리</option>
-				        <c:forEach items="${category}" var="category">
-				        	<option value="${category.CId}"><c:out value="${category.CName}"/></option>
+                        <c:forEach items="${category}" var="category">
+				        	<c:if test="${category.CId != 'M000'}">
+				        	<option value='<c:out value="${category.CId}"/>'><c:out value="${category.CName}"/></option>
+				        	</c:if>
 				        </c:forEach>
                     </select>
                     <input type="text" name="title" value='<c:out value="${meet.mno}"/>'>

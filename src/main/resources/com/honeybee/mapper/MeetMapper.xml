@@ -31,10 +31,9 @@
 			UPDDT,
 			DELDT
 			from MEET
-			where mno >0
+			where mno >0 order by regdt desc
 	]]>
 </select>
-
 
 
 <insert id="insert">
@@ -67,7 +66,7 @@
 			#{cid},
 			#{cid2},
 			(select cname from code_table where cid = #{cid}),
-			#{id},
+			#{id}, 
 			#{title},
 			#{smry},
 			#{content},
@@ -180,6 +179,7 @@
 			TITLE = #{title},
 			SMRY = #{smry},
 			CID = #{cid},
+			CID3 = (select cname from code_table where cid = #{cid}),
 			CONTENT = #{content},
 			STARTDT = #{startDt},
 			ENDDT = #{endDt},
@@ -246,6 +246,8 @@
       	</foreach>
       </trim>
 </sql>
+
+
 <select id="getListWithPaging" resultType="com.honeybee.domain.MeetVO">
 	<![CDATA[
 		select
@@ -274,9 +276,15 @@
 	      REGDT,
 	      UPDDT,
 	      DELDT
+	      
 
-	      from(
-	      select /*+index_desc(meet meet_pk)*/
+	      from( select ]]>
+	      
+	      <if test='order == "latest"'>
+	      /*+index_desc(meet meet_pk)*/
+	      </if>
+	      
+	      <![CDATA[
 	      rownum rn,
 	      MNO,
 	      CID,
@@ -303,17 +311,58 @@
 	      REGDT,
 	      UPDDT,
 	      DELDT
-	      from meet where (DELDT is null) and ]]>
+	      from ]]> 
+	      
+	      
+	       <trim prefix="(" suffix=")">
+	       <choose>
+	       	<when test='order == "popul"'>
+	        select
+			  MNO,
+		      CID,
+		      CID2,
+		      CID3,
+		      ID,
+		      TITLE,
+		      SMRY,
+		      to_char(CONTENT) AS CONTENT,
+		      STARTDT,
+		      ENDDT,
+		      RECSDT,
+		      RECEDT,
+		      RECNO,
+		      CURRNO,
+		      CNCLNO,
+		      HIT,
+		      THUMB,
+		      CHARGE,
+		      ONOFF,
+		      PLACE,
+		      LINK,
+		      IMG,
+		      REGDT,
+		      UPDDT,
+		      DELDT from meet where DELDT is null order by thumb desc, hit desc, regdt desc
+	       	</when>
+	       	<when test='order == "latest"'>
+	       	 meet
+	       	</when>
+	       </choose>
+		   </trim>
+
+	      
+	      <![CDATA[ where (DELDT is null) and ]]>
 
 	      <include refid="criteria"></include>
 
 	      <![CDATA[
-	      rownum <= #{pageNum} * #{amount}
+	       rownum <= #{pageNum} * #{amount}
 	      )
 
 	      where rn > (#{pageNum}-1) * #{amount}
 		  ]]>
 </select>
+
 
 <select id="getListWithPagingAndCat" resultType="com.honeybee.domain.MeetVO">
 	<![CDATA[
@@ -394,7 +443,7 @@
 
 <select id="getListTest" resultType="com.honeybee.domain.MeetVO">
   <![CDATA[
-    select
+    select 
       MNO,
       CID,
       CID2,
@@ -424,16 +473,9 @@
   ]]>
 </select>
 
+
 <select id="getNick" resultType="com.honeybee.domain.CodeTableVO">
 	select code_table.cname from code_table, meet where (meet.cid=code_table.cid) and (id=#{id})
-</select>
-
-<select id="getCategoryName" resultType="String">
-	select c.cname from meet m, code_table c where (m.cid = c.cid) and mno= #{mno}
-</select>
-
-<select id="getListWithCategory" resultType="com.honeybee.domain.MeetVO">
-select * from meet where cid=#{cid}
 </select>
 
 <select id="getCategoryName" resultType="String">

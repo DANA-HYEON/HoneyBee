@@ -53,9 +53,11 @@
    	 border: none;
    	 width : 500px;
    	 }
-   	 
-   	 
-   	 input:focus {outline:none};
+
+
+   	 /* input:focus {outline:none};
+   	 textarea:focus {outline: none}; */
+   	 input:focus, select:focus, option:focus, textarea:focus, button:focus{outline: none};
     </style>
 </head>
 <body>
@@ -66,13 +68,13 @@
           <span class="navbar-brand mb-0 h1" style="font-weight: bold;">모임게시판</span>
         </div>
         <div class="container-fluid" style="background: transparent;">
-            <span class="navbar-brand mb-0 h1" style="font-weight: bold; background-color: white;">모임카테고리 : <c:out value="${categoryName}"/></span>
+            <span class="navbar-brand mb-0 h1" style="font-weight: bold; background-color: white;">모임카테고리 : <c:out value="${meet.cid3}"/></span>
           </div>
     </nav>
 
 
     <div class="total">
-    <div class="wrap">
+    <div class="mid">
       <div class="meet left">
         <img src="/resources/img/logo.png">
       </div>
@@ -81,21 +83,24 @@
         <div class="meet top">
           <div class="title"><p><c:out value="${meet.title}"/></p></div>
           <hr class="line" style="border:1px color= silver;" width="90%">
-
-
-        <div class="id">
-          <img class="id img" src="/resources/img/logo.png"><p class="id name">이다현님</p>
-        </div>
         </div>
 
 
         <div class="meet bottom">
           <div class="content">
             <ul>
+              <li>모집상태   <c:out value="${meet.cid2}"/></li>
               <li>모임일 <c:out value="${meet.startDt}"/> ~ <c:out value="${meet.endDt}"/></li>
               <li>모임장소 <c:out value="${meet.place}"/></li>
               <li>모임모집일 <c:out value="${meet.recsDt}"/> ~ <c:out value="${meet.receDt}"/></li>
               <li>모집인원   <c:out value="${meet.recNo}"/></li>
+              <li>현재인원   <c:out value="${meet.currNo}"/></li>
+              <li>유무료구분   <c:out value="${meet.charge}"/></li>
+              <li>온오프라인유무   <c:out value="${meet.onoff}"/></li>
+              <li>링크   <c:out value="${meet.link}"/></li>
+              <li>모임개설일자   <fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${meet.regDt}" /></li>
+              <li>찜수   <c:out value="${meet.thumb}"/></li>
+              <li>조회수   <c:out value="${meet.hit}"/></li>
             </ul>
           </div>
            <button id="inquiry">문의하기</button> <button id="wish">찜하기</button>
@@ -104,10 +109,15 @@
     </div>
 
     <div class="mid">
-      <div class="information">모임 상세 안내</div>
+      <div class="information">모임 상세 안내 </div>
       <hr class="first_line" style="border:1px color= silver;" width="90%">
+      <div>모임 요약 내용 : <c:out value="${meet.smry}"/></div>
       <div class="data">
-        개설자 정보
+	        개설자 정보  
+	        <div>
+	        개설자 아이디 : 
+        <c:out value="${meet.id}"/>
+	        </div>
       </div>
       <div class="text">
 
@@ -127,8 +137,8 @@
 	  	<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
 	  	<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
 	  	<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
-	  	<input type='hidden' name='cid' value='<c:out value="${meet.cid}"/>'>
-
+	  	<input type='hidden' name='cid' value='<c:out value="${cri.cid}"/>'>
+		<input type='hidden' name='order' value='<c:out value="${cri.order}"/>'>
 	  </form>
         
         
@@ -178,7 +188,7 @@
 		  
 		  for(var i=0, len = list.length || 0; i<len; i++){
 			  
-		      str += "<li class='clearfix " + list[i].mrno + "' data-mrno='"+list[i].mrno+"' style='margin-left : " + list[i].layer * 7 + "%'>";
+		      str += "<li name='replyList' class='clearfix " + list[i].bundle + "' data-layer= '" + list[i].layer +"' data-bundle='" + list[i].bundle +"' data-mrno='"+list[i].mrno+"' style='margin-left : " + list[i].layer * 7 + "%'>";
 		      str += "<img src='/resources/img/logo.png' class='avatar' alt=''>";
               str += "<div class='post-comments'>";
               
@@ -197,7 +207,7 @@
               };
               
               str += "<a href='#'><small class='float-right' id='modify' data-mrno='"+list[i].mrno+"'>수정</small></a>";
-              str += "<a href='#'><small class='float-right' id='delete' data-layer='" +list[i].layer+ "' data-mrno='"+list[i].mrno+"'>삭제</small></a>";
+              str += "<a href='#'><small class='float-right' id='delete' data-bundle='" + list[i].bundle +"' data-layer='" +list[i].layer+ "' data-mrno='"+list[i].mrno+"'>삭제</small></a>";
               str += "</div>";
               str += "</li>";    
 
@@ -286,9 +296,9 @@
     	   $("."+mrno).append(str);
     	   
       } 
-      
-      
+   
   }); 
+  
 	  //대댓글 등록 이벤트 처리
 	  $(document).on("click", "#regR_ReplyBtn", function(e){
 		  e.preventDefault();
@@ -316,7 +326,7 @@
 	  $(document).on("click", "#canR_ReplyBtn", function(e){
 		  e.preventDefault();
 		  console.log("대댓글 입력 취소");
-		  $("."+mrno).children("#reply_reply").remove();
+		  $(this).parents(".write-repl").remove();
 	  });
   
   
@@ -326,12 +336,61 @@
 	  e.preventDefault();
 	  var mrno = $(this).data("mrno");
 	  var layer = $(this).data("layer");
-	  console.log(mrno);
+	  var bundle = $(this).data("bundle");
+	  console.log("mrno : " + mrno + ", layer : " + layer + ", bundle : " + bundle);
 	  
-	  replyService.remove(mrno, function(result){
+	  
+	  //댓글 삭제시 대댓글이 달려 있을 경우 문구 띄우기. true일 겨우 대댓글도 같이 삭제
+	 /*  var deleteResult = false;
+	  var bundleArr = new Array();
+	  var myMrnoArr = new Array();
+	  
+	  if(layer == 0){
+		 deleteResult = confirm("대댓글이 달려 있는 댓글입니다. 삭제 시 대댓글도 같이 삭제됩니다. 삭제하시겠습니까?");
+		 console.log(deleteResult);
+	  }
+
+	  if(deleteResult){
+		  $('li[name="replyList"]').each(function(){
+			  var myBundle = $(this).data('bundle');
+			  
+			  bundleArr.push(myBundle);
+		  });
+		  
+		  console.log(bundleArr);
+	  }else{
+		  
+	  }
+	  
+		  for(var i = 0; i<bundleArr.length; i++){
+			  if(bundle == bundleArr[i]){
+				  console.log("같음");
+				  var multi = $('.' + bundle);
+				  var multi_array = [];
+				  
+				  $.each(multi, function(index, item){
+					  multi_array.push($(item).data("mrno"));
+				  });
+				  
+				  console.log(multi_array);
+				  
+				  for(var j=0; j<multi_array.length; j++){
+					  console.log(multi_array[j]);
+					  replyService.remove(multi_array[j], function(result){
+						  /* alert(result);
+						  showList(1); 
+					  });
+					  
+				  }
+				  showList(1);
+				  return;
+			  }
+		  } */
+	  
+	   replyService.remove(mrno, function(result){
 		  alert(result);
 		  showList(1);
-	  });
+	  }); 
   });
 
 
@@ -409,5 +468,5 @@
    
    <script>
 	 autosize($("textarea"));
-	</script>
+   </script>
 <%@include file="../include/footer.jsp" %>

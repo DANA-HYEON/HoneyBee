@@ -15,7 +15,7 @@ public interface MeetService {
 
 	public boolean remove(Long mno); //게시물 삭제
 
-	public List<MeetVO> getList(); //게시물 전체 갯수 가져오기
+	public List<MeetVO> getList(); //게시물 전체 갯수 가져오기	
 
     //public MeetVO getMyList(String id); UserMapper참조
 

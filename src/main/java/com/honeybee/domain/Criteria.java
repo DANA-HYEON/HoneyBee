@@ -17,18 +17,22 @@ public class Criteria {
 	
 	//카테고리
     private String cid;
+    
+    //정렬기준
+    private String order;
 	
 	public Criteria() {
-		this(1, 10);
+		this(1, 10, "latest");
 	}
 	
-	public Criteria(int pageNum, int amount) {
+	public Criteria(int pageNum, int amount, String order) {
 		this.pageNum = pageNum;
 		this.amount = amount;
+		this.order = order;
 	}
 	
 	public String[] getTypeArr() {
-		return type == null ? new String[] {} : type.split("");
+		return type == null? new String[] {} : type.split("");
 	}
 	
 	public String getListLink() {

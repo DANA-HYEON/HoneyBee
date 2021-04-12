@@ -38,7 +38,7 @@
         }
 
     </style>
-    <link rel="stylesheet" href="/resources/css/meet_board.css">
+    <link rel="stylesheet" href="/resources/css/meet/board.css">
 </head>
 <body>
 
@@ -112,12 +112,13 @@
      
 
     <div class="board_list_wrap">
-      <div class="box"><a href="#">최신순</a></div>
-      <div class="box"><a href="#">인기순</a></div>
+      <div class="box"><a class="latest" href="/meet/list">최신순</a></div>
+      <div class="box"><a class="Popularity" href="/meet/list?order=popul" >인기순</a></div>
       <table class="board_list">
           <caption>게시판 목록</caption>
           <thead>
               <tr>
+              	  <th>카테고리</th>
                   <th>번호</th>
                   <th id="thumb">썸네일</th>
                   <th id="title">모임명</th>
@@ -134,17 +135,18 @@
               <c:forEach items="${list}" var="meet">
               <c:if test="${meet.delDt == null}">
               <tr>
+              	  <td><c:out value="${meet.cid3}" /></td>
                   <td class="freeBno"><c:out value="${meet.mno}" /></td>
                   <td><img src="/resources/img/logo.png"></td>
                   <td class="title">
-                      <a href='/meet/get?mno=<c:out value="${meet.mno}"/>'>
+                      <a class='move' href='<c:out value="${meet.mno}"/>'>
                       <c:out value="${meet.title}" /></a>
                   </td>
                   <td><c:out value="${meet.recsDt}" /> ~ <c:out value="${meet.receDt}" /></td>
                   <td><c:out value="${meet.startDt}" /></td>
                   <td><c:out value="${meet.id}" /></td>
                   <td><c:out value="${meet.recNo}" /></td>
-                  <td><fmt:formatDate pattern="yyyy-MM-dd" value="${meet.regDt}" /></td>
+                  <td><fmt:formatDate pattern="yyyy-MM-dd[E] a hh:mm:ss" value="${meet.regDt}" /></td>
                   <td><c:out value="${meet.hit}" /></td>
                   <td><c:out value="${meet.thumb}" /></td>
               </tr>
@@ -196,7 +198,7 @@
      	   	<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type}"/>'>
      	   	<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
      	   	<input type='hidden' name='cid' value='<c:out value="${pageMaker.cri.cid}"/>'>
-     	   	
+     	   	<input type='hidden' name='order' value='<c:out value="${pageMaker.cri.order}"/>'>
      	   </form>
   </div>
   
@@ -297,6 +299,10 @@
 		 var pickCat = "${pickCat}";
 		 
 		 $("#cat").val(pickCat).prop("selected",true);
+		 
+		 
+		 
+		 //최신순 인기순
 	 });
 	 
 	 
