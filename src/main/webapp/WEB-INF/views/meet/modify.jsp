@@ -152,7 +152,7 @@
 		  console.log("${meet.cid}");
 		  console.log("${cri.cid}");
 		  console.log($("#cat option:selected").val());
-		  var pickedCat = "${meet.cid3}";
+		  var pickedCat = "${cri.cid3}";
 
 		 $(".cat").val(pickedCat).prop("selected",true);
 

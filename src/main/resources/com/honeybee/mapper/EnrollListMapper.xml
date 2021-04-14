@@ -24,6 +24,17 @@
 		select title from meet where mno in (select mno from enroll_list where id=#{id})
 	]]>
 	</select>
+	
+	<insert id="insert">
+		insert into enroll_list(ENO,ID,CID,MNO)
+		values(#{id}||#{mno}, #{id}, (select cid from meet where mno = #{mno}), #{mno})
+	</insert>
 
-
+	<select id="checkApplyList" resultType ="com.honeybee.domain.EnrollListVO">
+		select * from ENROLL_LIST where CNCLDT is null and ENO = #{eno}
+	</select>
+	
+	<delete id="delete">
+		delete from ENROLL_LIST where ENO = #{id}||#{mno}
+	</delete>
 </mapper>

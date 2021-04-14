@@ -339,8 +339,8 @@ a:hover {
 							value="${thumbRegDate[status.index].regDt}" /></th>
 					<tr>
 						<!-- 두번째 줄 시작 -->
-						<th colspan="3"><a href="#" value="${thumbList.mno}"><c:out
-									value="${thumbList.title}" /></a> <br></th>
+						<td colspan="3"><a href="#" value="${thumbList.mno}"><c:out
+									value="${thumbList.title}" /></a> <br></td>
 					</tr>
 				</c:forEach>
 				<!-- 두번째 줄 끝 -->
@@ -449,7 +449,7 @@ a:hover {
 				"a",
 				function(e) {
 					e.preventDefault();
-					location.href = "http://localhost:8080/meet/get?mno="
+					location.href = "http://localhost/meet/get?mno="
 							+ $(this).attr("value");
 				});
 
@@ -458,7 +458,7 @@ a:hover {
 				"a",
 				function(e) {
 					e.preventDefault();
-					location.href = "http://localhost:8080/mypage/posted?id="
+					location.href = "http://localhost/mypage/posted?id="
 							+ $(this).attr("value");
 				});
 	</script>

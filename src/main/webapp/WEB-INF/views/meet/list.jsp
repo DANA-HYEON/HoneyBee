@@ -124,7 +124,7 @@
                   <th id="title">모임명</th>
                   <th>모집기간</th>
                   <th>모임일</th>
-                  <th>작성자</th>
+                  <th>작성자아이디</th>
                   <th>마감인원</th>
                   <th>작성일</th>
                   <th>조회수</th>
@@ -295,8 +295,8 @@
 				 
 		/* 카테코리 선택 검색 후 카테고리 유지 */
 		 
-		 console.log("${pickCat}");
-		 var pickCat = "${pickCat}";
+		 console.log("카테고리 : " + "${pageMaker.cri.cid}");
+		 var pickCat = "${pageMaker.cri.cid}";
 		 
 		 $("#cat").val(pickCat).prop("selected",true);
 

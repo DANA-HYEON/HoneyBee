@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class EnrollListVO {
 	
+	private String eno; //id + mno pk
 	private String id;  //회원 id
 	private String cid; //모임카테고리
 	private String cid2; // 신청상태

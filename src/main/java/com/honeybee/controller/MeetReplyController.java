@@ -57,7 +57,7 @@ public class MeetReplyController {
 	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("page") int page, @PathVariable("mno") Long mno){
 		log.info("getList...................");
 		
-		Criteria cri = new Criteria(page, 10, "latest");
+		Criteria cri = new Criteria(page, 10);
 		log.info(cri);
 		
 		return new ResponseEntity<>(service.getList(cri, mno), HttpStatus.OK);
@@ -85,7 +85,6 @@ public class MeetReplyController {
 		vo.setMrno(mrno);
 		
 		log.info("mno  : " + mrno);
-		
 		log.info("modify : " + vo);
 		
 		return service.modify(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

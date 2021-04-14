@@ -3,7 +3,9 @@ package com.honeybee.service;
 import java.util.List;
 
 import com.honeybee.domain.Criteria;
+import com.honeybee.domain.EnrollListVO;
 import com.honeybee.domain.MeetVO;
+import com.honeybee.domain.ThumbVO;
 
 public interface MeetService {
 
@@ -34,5 +36,18 @@ public interface MeetService {
 	public String getCategoryName(Long mno); //해당 모임게시물의 카테고리 이름 가져오기
 	
 	public List<MeetVO> getListWithCategory(String cid); //내가 개설한 모임을 카테고리별로 가져오기
-
+	
+	public boolean views(Long mno); //조회수 카운팅
+	
+	public boolean thumbs(ThumbVO vo); // 찜수 카운팅
+	
+	public void insertThumbList(ThumbVO vo); //table thumb_list insert
+	
+	public boolean deleteThumbList(ThumbVO vo); 
+	
+	public ThumbVO checkThumbList(String thumbno); //찜 되어있는지 체크
+	
+	public int applyUpdate(Long mno);//모임게시물에서 신청하면 신청인원 update
+	
+	public int deleteUpdate(EnrollListVO vo);
 }

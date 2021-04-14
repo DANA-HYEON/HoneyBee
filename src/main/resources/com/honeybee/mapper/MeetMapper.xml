@@ -482,4 +482,31 @@
 	select c.cname from meet m, code_table c where (m.cid = c.cid) and mno= #{mno}
 </select>
 
+<update id="countViews">
+	update meet set hit = hit + 1 where mno = #{mno}
+</update>
+
+<update id="countThumbs">
+	update meet set THUMB = (select count(*) from thumb_list where mno = #{mno}) where mno = #{mno}
+</update>
+
+<insert id="insertThumbList">
+	insert into THUMB_LIST(THUMBNO,ID,MNO) values(#{id}||#{mno}, #{id}, #{mno})
+</insert>
+
+<delete id="deleteThumbList">
+	delete from THUMB_LIST where THUMBNO = #{id}||#{mno}
+</delete>
+
+<select id="checkThumbList" resultType ="com.honeybee.domain.ThumbVO">
+	select * from THUMB_LIST where THUMBNO = #{thumbno}
+</select>
+
+<update id="applyUpdate">
+	update meet set currno = currno+1 where mno = #{mno}
+</update>
+
+<update id="deleteUpdate">
+	update meet set (currno, CNCLNO) = (select currno-1,CNCLNO+1 from meet where mno = #{mno}) where mno = #{mno}
+</update>
 </mapper>

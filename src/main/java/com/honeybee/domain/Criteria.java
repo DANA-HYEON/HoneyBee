@@ -25,6 +25,11 @@ public class Criteria {
 		this(1, 10, "latest");
 	}
 	
+	public Criteria(int pageNum, int amount) {
+		this.pageNum = pageNum;
+		this.amount = amount;
+	}
+	
 	public Criteria(int pageNum, int amount, String order) {
 		this.pageNum = pageNum;
 		this.amount = amount;

@@ -82,7 +82,7 @@
       <div class="meet right">
         <div class="meet top">
           <div class="title"><p><c:out value="${meet.title}"/></p></div>
-          <hr class="line" style="border:1px color= silver;" width="90%">
+          <hr class="line" style="border:1px solid silver;" width="90%">
         </div>
 
 
@@ -95,6 +95,7 @@
               <li>모임모집일 <c:out value="${meet.recsDt}"/> ~ <c:out value="${meet.receDt}"/></li>
               <li>모집인원   <c:out value="${meet.recNo}"/></li>
               <li>현재인원   <c:out value="${meet.currNo}"/></li>
+              <li>취소인원   <c:out value="${meet.cnclNo}"/></li>
               <li>유무료구분   <c:out value="${meet.charge}"/></li>
               <li>온오프라인유무   <c:out value="${meet.onoff}"/></li>
               <li>링크   <c:out value="${meet.link}"/></li>
@@ -103,7 +104,7 @@
               <li>조회수   <c:out value="${meet.hit}"/></li>
             </ul>
           </div>
-           <button id="inquiry">문의하기</button> <button id="wish">찜하기</button>
+           <button id="inquiry">문의하기</button> <button id="wish">찜하기</button> <button id="apply">신청하기</button>
         </div>
       </div>
     </div>
@@ -147,13 +148,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="blog-comment">
-                        <h3 class="text-success">댓글</h3>
+                        <h3 class="text-success">문의하기</h3>
                          <ul class="comments t1">
                          </ul>  
                                 
                          <div class="write-repl">
                            <ul class="comments">
-                               <h6>댓글 입력</h6>
+                               <h6>문의 입력</h6>
                                <input type="text" class="reply" name="replyContent">
                                <input id="regReplyBtn" type="submit" value="입력">
                            </ul>
@@ -166,6 +167,139 @@
     </div>
   
   <script type="text/javascript" src="/resources/js/meetReply.js"></script>
+  <script type="text/javascript" src="/resources/js/meetThumb.js"></script>
+  <script type="text/javascript" src="/resources/js/meetApply.js"></script>
+  
+  
+  <script>
+  var mnoValue = '<c:out value="${meet.mno}"/>';
+  var eno = "HOHO995@naver.com" + mnoValue;
+  var applyBtn = $("#apply");
+ 
+  console.log("test : " + eno);
+  
+  
+  function autoApplyCheck(){
+	  meetApply.applyGet(eno, function(data){
+		  console.log( "신청 되어있는 데이터 : " + data);
+		  
+		  if(data != ''){
+			  applyBtn.css("background-color" , "gray");
+		  }else{
+			  applyBtn.css("background-color" , "aqua");
+		  }
+	  });
+  }
+  
+	//신청하기
+	  $(document).on("click", "#apply", function(e){
+		  e.preventDefault();
+		  console.log("eno : " + eno);
+		  
+		  meetApply.applyGet(eno, function(data){
+			  console.log("신청 되어있는 데이터 : " + data);
+			  
+			  if(data == ''){
+				  applyBtn.css("background-color" , "gray");
+				  var eno = {
+						  id:"HOHO995@naver.com",
+						  mno:mnoValue 
+				  };
+				  
+				  meetApply.add(eno, function(result){
+					  alert("신청 되었습니다.");
+					  location.reload();
+				  });
+			  }
+			  
+			  if(data != ''){
+				  var result = confirm("이미 신청 되어있는 게시물입니다. 신청 취소 하시겠습니까?");
+				  
+				  if(result){
+					  applyBtn.css("background-color" , "aqua");
+					  var eno = {
+							  id:"HOHO995@naver.com",
+							  mno:mnoValue 
+					  };
+					  
+					  meetApply.removeApply(eno, function(result){
+						  alert("신청 취소 완료");
+						  //location.reload();
+					  });
+					  location.reload();
+				  }
+			  }
+		  });
+	  });
+  </script>
+
+
+  
+  <script>
+  var mnoValue = '<c:out value="${meet.mno}"/>';
+  var thumbno = "HOHO995@naver.com" + mnoValue;
+  var thumbsBtn = $("#wish");
+  
+  
+  $(document).ready(function(){
+	  autoThumbCheck();
+	  autoApplyCheck();
+  });
+  
+  function autoThumbCheck(){
+	  meetService.getThumb(thumbno, function(data){
+		  console.log("찜 추가되어있는 데이터 : " + data);
+		  
+		  if(data != ''){
+			  thumbsBtn.css("background-color" , "gray");
+		  }else{
+			  thumbsBtn.css("background-color" , "aqua");
+		  }
+	  });
+  }
+  
+  //찜하기
+  $(document).on("click", "#wish", function(e){
+	  e.preventDefault();
+	  console.log("thumbbno : " + thumbno);
+	  
+	  meetService.getThumb(thumbno, function(data){
+		  console.log("찜 추가되어있는 데이터 : " + data);
+		  
+		  if(data == ''){
+			  thumbsBtn.css("background-color" , "gray");
+			  var thumb = {
+					  id:"HOHO995@naver.com",
+					  mno:mnoValue 
+			  };
+			  
+			  meetService.add(thumb, function(result){
+				  alert("찜 추가 되었습니다.");
+				  location.reload();
+			  });
+		  }
+		  
+		  if(data != ''){
+			  var result = confirm("이미 찜 되어있는 게시물입니다. 찜 취소 하시겠습니까?");
+			  
+			  if(result){
+				  thumbsBtn.css("background-color" , "aqua");
+				  var thumb = {
+						  id:"HOHO995@naver.com",
+						  mno:mnoValue 
+				  };
+				  
+				  meetService.remove(thumb, function(result){
+					  alert("찜 취소 완료");
+					  location.reload();
+				  });  
+			  }
+			  
+		  }
+	  });
+  });
+  </script>
+  
   
   <script>
   console.log("====================");
@@ -176,6 +310,7 @@
   
   showList(1);
   
+
   function showList(page){
 	  replyService.getList({mno : mnoValue, page : page || 1}, function(list){
 		  var str = "";
@@ -224,6 +359,7 @@
   var regUpdateBtn = $("#modify"); // document.getElementById("modify");
   var regDeleteBtn = $(".t1"); //댓글 삭제 버튼
   
+  
   regReplyBtn.on("click", function(e){
 	  e.preventDefault();
 	  console.log(InputReply.val());
@@ -240,8 +376,6 @@
 	  	showList(1);
   	});
   });
-  
-
   
   //댓글 수정 이벤트 처리
   $(document).on("click", "#modify", function(e){
@@ -387,7 +521,7 @@
 			  }
 		  } */
 	  
-	   replyService.remove(mrno, function(result){
+	  replyService.remove(mrno, function(result){
 		  alert(result);
 		  showList(1);
 	  });
@@ -453,6 +587,7 @@
 			
 			 operForm.find("#mno").remove();
 			 operForm.attr("action", "/meet/list");
+			 console.log("${cri.cid}");
 			 operForm.submit();
 		 });
 		 
@@ -468,5 +603,5 @@
    
    <script>
 	 autosize($("textarea"));
-   </script>
+	</script>
 <%@include file="../include/footer.jsp" %>

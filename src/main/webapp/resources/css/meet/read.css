@@ -101,6 +101,13 @@
     background-color: aqua;
 }
 
+#apply{
+	position: absolute;
+    bottom: 15px;
+    right: 190px;
+    background-color: aqua;
+}
+
 
 .bottom li{
     margin-bottom: 10px;

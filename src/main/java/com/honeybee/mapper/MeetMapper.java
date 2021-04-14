@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.honeybee.domain.Criteria;
 import com.honeybee.domain.MeetVO;
+import com.honeybee.domain.ThumbVO;
 
 public interface MeetMapper {
 
@@ -34,6 +35,18 @@ public interface MeetMapper {
 	public String getCategoryName(Long mno); //모임 게시물 카테고리 cid에 따라 코드테이블의 cname가져오기
 
 	public List<MeetVO> getListWithCategory(String cid); //내가 개설한 모임을 카테고리별로 가져오기
-
-
+	
+	public int countViews(Long mno); //조회수 
+	
+	public int countThumbs(Long mno); //찜수
+	
+	public void insertThumbList(ThumbVO vo); //찜할 경우 table Thumb_List insert
+	
+	public void deleteThumbList(ThumbVO vo);
+	
+	public ThumbVO checkThumbList(String thumbno); //이미 찜했는지 안했는지 체크 
+	
+	public int applyUpdate(Long mno); //모임게시판에서 신청하기 누르면 신청인원 +
+	
+	public int deleteUpdate(Long mno); //모임게시판에서 신청취소 누르면 신청인원- 취소인원+
 }

@@ -1,20 +1,29 @@
 package com.honeybee.controller;
 
 import javax.servlet.http.HttpServletRequest;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.honeybee.domain.Criteria;
+import com.honeybee.domain.EnrollListVO;
 import com.honeybee.domain.MeetVO;
 import com.honeybee.domain.PageDTO;
+import com.honeybee.domain.ReplyVO;
+import com.honeybee.domain.ThumbVO;
 import com.honeybee.service.CodeTableService;
+import com.honeybee.service.EnrollListService;
 import com.honeybee.service.MeetService;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +37,8 @@ public class MeetController {
 
 	private MeetService service;
 	private CodeTableService cService;
-
+	private EnrollListService eService;
+	
 
 	@RequestMapping("/list")
 	public void list(@ModelAttribute("cri") Criteria cri, Model model) {
@@ -91,16 +101,15 @@ public class MeetController {
 	public void get(@RequestParam("mno") Long mno, @ModelAttribute("cri") Criteria cri, Model model) {
 
 		log.info("/get or /modify");
-		model.addAttribute("meet", service.get(mno));
+		log.info("GetMapping get cri : " + cri.getCid());
+		
+		MeetVO vo = service.get(mno);
+		model.addAttribute("meet", vo);
 
-		MeetVO meet = service.get(mno);
 
-		cri.setCid(meet.getCid());
 		log.info("cri : " + cri);
-		System.out.println("이 게시물의 카테고리번호는 ? " + service.get(mno).getCid3());
-		System.out.println("이 게시물의 카테고리번호는 ? " + service.get(mno).getCid());
 		model.addAttribute("category", cService.getCatList());
-		model.addAttribute("pickedCat", service.get(mno).getCid());
+		model.addAttribute("pickedCat", vo.getCid());
 		model.addAttribute("categoryName", service.getCategoryName(mno)); //해당 모임게시물의 카테고리 이름 cname 보내기
 	}
 
@@ -147,5 +156,53 @@ public class MeetController {
 		return "redirect:/meet/list";
 	}
 	
+	
+	//찜 추가
+	@PostMapping(value = "/thumb", consumes = "application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> thumbs(@RequestBody ThumbVO vo){
+		log.info("ThumbVO vo : " + vo);
+
+		return service.thumbs(vo) == true? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	//찜 취소
+	@DeleteMapping(value="/removeThumb", produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> remove(@RequestBody ThumbVO vo){
+		log.info("remove : " + vo);
+		
+		return service.deleteThumbList(vo) == true ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	//찜 조회
+	@GetMapping(value="/{thumbno}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<ThumbVO> get(@PathVariable("thumbno") String thumbno){
+		log.info("get thumbno : " + thumbno);
+		
+		return new ResponseEntity<>(service.checkThumbList(thumbno), HttpStatus.OK);
+	}
+
+	//모임게시물 신청하기
+		@PostMapping(value = "/apply", consumes = "application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
+		public ResponseEntity<String> apply(@RequestBody EnrollListVO vo){
+			log.info("EnrollListVO vo : " + vo);
+
+			return eService.insert(vo) == 1? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+		
+	//신청 되어있는지 조회
+	@GetMapping(value="/mApply/{eno}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<EnrollListVO> applyGet(@PathVariable("eno") String eno){
+		log.info("get eno : " + eno);
+		
+		return new ResponseEntity<>(eService.checkApplyList(eno), HttpStatus.OK);
+	}	
+	
+	//모임 취소
+	@DeleteMapping(value="/removeApply", produces= {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> removeApply(@RequestBody EnrollListVO vo){
+		log.info("EnrollListVO vo : " + vo);
+		
+		return eService.delete(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }
 
