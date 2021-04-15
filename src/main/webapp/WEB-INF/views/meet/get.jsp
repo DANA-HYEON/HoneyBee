@@ -19,6 +19,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
     
+    <!-- sweetAlert -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
      <style>
       #modify {
         position: absolute;
@@ -121,8 +123,8 @@
 	        </div>
       </div>
       <div class="text">
-
-       <textarea rows="20" class="contents" name="content"  style="width:100%; height:auto; border: none;"  readonly><c:out value="${meet.content}"/></textarea>  
+      ${meet.content}
+      <!-- <textarea rows="20" class="contents" name="content" style="width:100%; height:auto; border: none;" readonly></textarea> -->
 
       </div>
 
@@ -207,8 +209,9 @@
 				  };
 				  
 				  meetApply.add(eno, function(result){
-					  alert("신청 되었습니다.");
-					  location.reload();
+					  //alert("신청 되었습니다.");
+					  swal("신청 되었습니다.", "해당 버튼을 한 번 더 클릭하면 취소 할 수 있습니다.", "success").then((value)=>location.reload());
+					  //location.reload();
 				  });
 			  }
 			  
@@ -223,10 +226,11 @@
 					  };
 					  
 					  meetApply.removeApply(eno, function(result){
-						  alert("신청 취소 완료");
+						  //alert("신청 취소 완료");
+						  swal("신청 취소 완료").then((value)=>location.reload());
 						  //location.reload();
 					  });
-					  location.reload();
+					  //location.reload();
 				  }
 			  }
 		  });
@@ -274,8 +278,8 @@
 			  };
 			  
 			  meetService.add(thumb, function(result){
-				  alert("찜 추가 되었습니다.");
-				  location.reload();
+				  swal("찜 추가 되었습니다.", "해당 버튼을 한 번 더 클릭하면 취소 할 수 있습니다.", "success").then((value)=>location.reload());
+				  //location.reload();
 			  });
 		  }
 		  
@@ -290,8 +294,8 @@
 				  };
 				  
 				  meetService.remove(thumb, function(result){
-					  alert("찜 취소 완료");
-					  location.reload();
+					  swal("찜 취소 완료").then((value)=>location.reload());
+					  //location.reload();
 				  });  
 			  }
 			  
@@ -561,7 +565,7 @@
 	  mno : mnoValue,
 	  reply : "modified reply..........."
   }, function(result){
-	  alert("수정완료...");ㄴ
+	  alert("수정완료...");
   });
   
   replyService.get(32, function(data){
@@ -601,6 +605,16 @@
 	 
    </script>
    
+   <script>
+   $(document).ready(function($) {
+
+	   var scrollPosition = $(".text-success").offset().top;
+       $("#inquiry").click(function(event){            
+               event.preventDefault();
+               $('html,body').animate({scrollTop:scrollPosition},700);
+       });
+});
+   </script>
    <script>
 	 autosize($("textarea"));
 	</script>

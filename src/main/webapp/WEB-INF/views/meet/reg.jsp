@@ -8,6 +8,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/resources/css/meet/register.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- smartEditor -->
+<script type="text/javascript" src="/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<!-- sweetAlert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
 <form role="form" action="/meet/reg" method="post">
@@ -27,13 +32,14 @@
                 </div>
                 <div class="content">
                 	<textarea rows="1" placeholder="모임 요약내용을 입력해주세요." name="smry"></textarea>
-                    <textarea rows="20" placeholder=" 내용을 입력해주세요." name="content"></textarea>
+                    <!-- <textarea rows="20" placeholder=" 내용을 입력해주세요." name="content"></textarea> -->
+                    <textarea name="ir1" id="ir1" rows="10" cols="100"></textarea>
                 </div>
                 <div class="control">
                     <ul>
                         <li class="list +">+</li>
                         <li class="list -">-</li>
-                        <li class="btn"><button value="첨부파일">첨부파일</button></li>
+                        <li class="btn"><input type="file" name="uploadFile" multiple>첨부파일</li>
                     </ul>
                 </div>
             </div>
@@ -71,6 +77,65 @@
         </div>
     </div>
   </form>
+  
+  
+ <script type="text/javascript">
+	var oEditors = [];
+	nhn.husky.EZCreator.createInIFrame({
+	 oAppRef: oEditors,
+	 elPlaceHolder: "ir1",
+	 sSkinURI: "/resources/se2/SmartEditor2Skin.html",
+	 fCreator: "createSEditor2"
+	});
+</script>
+
+<script>
+
+var elClickedObj = $("button[type='submit']");
+elClickedObj.on("click", function(e){
+		e.preventDefault();
+		console.log("submit clicked"); 
+		 swal({
+			  title: "정말 모임을 게시하시겠습니까?",
+			  text: "잘 못 입력한 부분은 없는지 확인해주세요!",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+					oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+					
+				    swal("게시물 작성이 완료되었습니다!", {
+				      icon: "success",
+				    });
+				    setTimeout(function(){
+					    $("form").submit();
+				    },1000);
+			  } else {
+			    swal("게시물 게시가 취소되었습니다!");
+			  }
+			});
+		
+		// ‘저장’ 버튼을 누르는 등 저장을 위한 액션을 했을 때 submitContents가 호출된다고 가정한다.
+		function submitContents(elClickedObj) {
+		 // 에디터의 내용이 textarea에 적용된다.
+		 oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+
+		 // 에디터의 내용에 대한 값 검증은 이곳에서
+		 // document.getElementById("ir1").value를 이용해서 처리한다.
+
+		 console.log(document.getElementById("ir1").value);
+		 try {
+		     elClickedObj.form.submit();
+		 } catch(e) {}
+		}
+	});
+</script>
+ 
+ <script>
+
+ </script>
 </body>
 </html>
 

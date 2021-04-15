@@ -80,9 +80,9 @@ public class MeetController {
 
 	
 	@PostMapping("/reg")
-	public String register(MeetVO meet, RedirectAttributes rttr) {
+	public String register(MeetVO meet, HttpServletRequest request, RedirectAttributes rttr) {
 		log.info("register : " + meet);
-
+		meet.setContent(request.getParameter("ir1"));
 		service.register(meet);
 
 		rttr.addFlashAttribute("result", meet.getMno());
