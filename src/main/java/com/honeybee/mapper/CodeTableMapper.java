@@ -6,5 +6,9 @@ import com.honeybee.domain.CodeTableVO;
 
 public interface CodeTableMapper {
 	
-	public List<CodeTableVO> getCatList(); //Ä«Å×°í¸® ¸®½ºÆ® °¡Á®¿À±â
+	public List<CodeTableVO> getCatList(); //ì¹´í…Œê³ ë¦¬ ê°€ì ¸ì˜¤ê¸°
+	
+	public List<CodeTableVO> upperregion(); //ì‹œ,ë„ ê°€ì ¸ì˜¤ê¸°
+	
+	public List<CodeTableVO> detailregion(String cid); //ì„¸ë¶€ ì§€ì—­ ê°€ì ¸ì˜¤ê¸°
 }

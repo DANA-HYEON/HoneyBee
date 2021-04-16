@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.honeybee.mapper.UserMapper">
-	
-	
+
+
 	<select id="getList" resultType="com.honeybee.domain.UserVO">
-	select * from USER_INFO
+		select * from USER_INFO
 	</select>
-	
+
 	<insert id="insert">
 		insert into USER_INFO (ID, PWD, NAME, BIRTH, SEX, EMAIL, TELNO, NICK)
 		<!-- RCVYN, -->
 		values( #{id}, #{pwd}, #{name}, #{birth}, #{sex}, #{email}, #{telno}, #{nick})
 		<!-- #{rcvyn}, -->
 	</insert>
-	
+
 	<select id="read" resultType="com.honeybee.domain.UserVO">
 		select * from USER_INFO where ID=#{id}
 	</select>
@@ -45,7 +45,37 @@
 	</update>
 
 	<select id="getMyList" resultType="com.honeybee.domain.UserVO">
-		select * from USER_INFO where id = #{id}
+		select * from USER_INFO where
+		id = #{id} and deldt is null
+	</select>
+
+	<update id="updateimg">
+		update user_info set img=#{img},upddt=sysdate where id=#{id}
+	</update>
+
+	<select id="getimg" resultType="com.honeybee.domain.UserVO">
+		select img from user_info where id=#{id}
+	</select>
+
+	<update id="infomodify"> <!--회원정보 수정 -->
+		update USER_INFO
+		set
+		BIRTH=#{birth},
+		SEX=#{sex},
+		UPDDT=sysdate
+		where ID = #{id}
+	</update>
+
+	<update id="nickmodify"> <!--회원닉네임 수정 -->
+		update USER_INFO
+		set
+		NICK=#{nick},
+		UPDDT=sysdate
+		where ID = #{id}
+	</update>
+
+	<select id="nickChk" resultType="int"> <!-- 회원 닉네임 중복 체크  -->
+	select count(*) from user_info where nick=#{nick}
 	</select>
 
 	<select id="checkId" resultType="boolean">

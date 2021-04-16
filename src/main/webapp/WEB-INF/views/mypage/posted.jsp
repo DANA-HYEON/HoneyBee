@@ -163,7 +163,7 @@ li {
 <!--메뉴바 시작 -->
 <div class="mypagemenubar">
 	<a href="home">마이페이지</a> <a href="pwdcheck">회원정보수정</a> <a href="posted">내가
-		쓴 글 </a> <a href="reply">내가 쓴 댓글 </a> <a href="rcvmsg">쪽지함 </a>
+		쓴 글 </a> <a href="freply">내가 쓴 댓글 </a> <a href="rcvmsg">쪽지함 </a>
 </div>
 
 
@@ -181,14 +181,15 @@ li {
 
 <body>
 	<div class="select">
-		<a class="selectpost"> 내가 쓴 글 | </a> <a class="selectreply"
-			href="/mypage/freply"> 내가 쓴 댓글 </a>
+		<a class="selectpost" href="posted"> 내가 쓴 글 | </a> <a
+				class="selectreply" href="mreply"> 내가 쓴 모임게시물 댓글 |</a> <a
+				class="selectreply" href="freply"> 내가 쓴 자유게시물 댓글 </a>
 
 	</div>
 
 	<div class="board">
 		<div class="mypost">
-			<form action="modify" method="post">
+			<form action="mypostdelete" method="post">
 				<table class="post">
 
 

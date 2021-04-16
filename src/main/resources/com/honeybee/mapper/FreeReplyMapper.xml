@@ -6,8 +6,8 @@
 		<selectKey keyProperty="frno" order="BEFORE" resultType="long">
 			select SEQ_FREE_REPLY.nextval from dual
 		</selectKey>
-		insert into FREE_REPLY (FRNO, FNO, ID, REPLY, BUNDLE, BUNORDER)
-		values (#{frno}, #{fno}, #{id}, #{reply}, #{frno}, #{frno})
+		insert into FREE_REPLY (FRNO, FNO, ID, REPLY, BUNDLE)
+		values (#{frno}, #{fno}, #{id}, #{reply}, #{frno})
 	</insert>
 
 	<insert id="insertAnswer">
@@ -36,19 +36,24 @@
 		set DELDT = sysdate
 		where FRNO = #{frno}
 	</delete>
-	
+
 	<select id="getList" resultType="com.honeybee.domain.FreeReplyVO">
-		select FRNO, FNO, ID, FRNO2, REPLY, LAYER, BUNDLE, BUNORDER, NICK, THUMB, REGDT, UPTDT
+		select
+			FRNO, FNO, ID, REPLY, LAYER, BUNDLE, BUNORDER, NICK, THUMB, REGDT, UPTDT
 		from FREE_REPLY
 		where FNO = #{fno} and DELDT is null
-		order by BUNDLE, BUNORDER, LAYER, REGDT asc
+		start with bunorder is null
+		connect by prior frno = bunorder
+		<!-- order by BUNDLE, BUNORDER, LAYER, REGDT asc -->
 	</select>
 
 	<select id="readmyfreereply"
 		resultType="com.honeybee.domain.FreeReplyVO">   <!--김세훈 내가 쓴 자유게시물 댓글 가져오는 SQL -->
-		select frno, fno, id, frno2, reply, layer, nick, regdt,
-		uptdt, deldt
-		from free_reply where id=#{id} and deldt is null order by regdt
+		select
+			frno, fno, id, frno2, reply, layer, nick, regdt, uptdt, deldt
+		from free_reply
+		where id=#{id} and deldt is null
+		order by regdt
 	</select>
 
 	<select id="getfreereplystatus"
@@ -57,6 +62,35 @@
 		=#{id}) and
 		(r.fno=f.fno) order by r.regdt
 	</select><!-- 김세훈 내가 쓴 댓글이 달린 자유 게시글의 상태 -->
+	
+	<insert id="thumbUp">
+		insert into THUMBED (THUMBNO, ID, FRNO)
+		values (#{id}||#{frno}||'R', #{id}, #{frno})
+	</insert>
+	
+	<delete id="cancelThumbUp">
+		delete from THUMBED
+		where THUMBNO = #{id}||#{frno}||'R'
+	</delete>
+	
+	<select id="checkThumbed" resultType="com.honeybee.domain.ThumbVO">
+		select ID, FRNO
+		from THUMBED
+		where THUMBNO = #{id}||#{frno}||'R'
+	</select>
+	
+	<update id="updateThumbCnt">
+		update FREE_REPLY
+		set THUMB = THUMB + #{amount}
+		where FRNO = #{frno}
+	</update>
+	
+	<select id="checkReply" resultType="com.honeybee.domain.FreeReplyVO">
+		<!-- 답글이 존재하는지 체크하기 위한 SQL 구문 -->
+		<!-- SELF JOIN 사용해야 할까...? -->
+		select FRNO
+		
+	</select>
 
 
 </mapper>

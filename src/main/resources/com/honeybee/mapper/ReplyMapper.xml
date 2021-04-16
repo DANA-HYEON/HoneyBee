@@ -6,7 +6,7 @@
 <selectKey keyProperty="mrno" order="BEFORE" resultType="long">
 		select seq_reply.nextval from dual
 	</selectKey>
-	
+
 	insert into meet_reply(MRNO,MNO,ID,REPLY,LAYER, BUNDLE,BUNORDER,NICK,REGDT,UPTDT)
 	values(#{mrno}, #{mno}, #{id},#{reply}, #{layer}, #{mrno}, #{mrno}, (select nick from user_info where id = #{id}), sysdate, sysdate)
 </insert>
@@ -15,7 +15,7 @@
 <selectKey keyProperty="mrno" order="BEFORE" resultType="long">
 		select seq_reply.nextval from dual
 	</selectKey>
-	
+
 	insert into meet_reply(MRNO,MNO,ID,REPLY,LAYER, BUNDLE,BUNORDER,NICK,REGDT,UPTDT)
 	values(#{mrno}, #{mno}, #{id},#{reply}, #{layer}, #{bundle}, #{bunOrder}, (select nick from user_info where id = #{id}), sysdate, sysdate)
 </insert>
@@ -41,4 +41,29 @@
 	where mno = #{mno} and DELDT is null
 	order by bundle asc, layer asc, regdt asc
 </select>
+
+<select id="readmymeetreply"
+		resultType="com.honeybee.domain.ReplyVO">  <!--세훈 내가 모임 게시물에 작성한 댓글-->
+	select mrno, mno, id, mrno2, reply, layer, nick, regdt,
+	uptdt, deldt
+	from
+	meet_reply where id=#{id} and DELDT is null order by regdt
+</select>
+
+<select id="getmeetreplystatus"
+		resultType="com.honeybee.domain.ReplyVO">  <!--세훈 내가 댓글 단 모임게시물의 상태 -->
+	select r.mno, m.deldt from meet_reply r, meet m where (r.id
+	=#{id}) and
+	(r.mno=m.mno) and r.deldt is null order by r.regdt
+</select>
+
+
+<update id="mreplyremove">  <!-- 세훈 / 나의 모임게시물 댓글 삭제 -->
+	update MEET_REPLY
+	set deldt = sysdate
+	where mrno = #{mrno}
+</update>
+
+
+
 </mapper>

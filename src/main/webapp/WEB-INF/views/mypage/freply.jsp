@@ -183,14 +183,14 @@ body {
 	<div class="board">
 		<div class="select">
 			<a class="selectpost" href="posted"> 내가 쓴 글 | </a> <a
-				class="selectreply" href="mreply"> 내가 쓴 모임게시물 댓글  |</a>
-				 <a class="selectreply" href="freply"> 내가 쓴 자유게시물 댓글  </a>
+				class="selectreply" href="mreply"> 내가 쓴 모임게시물 댓글 |</a> <a
+				class="selectreply" href="freply"> 내가 쓴 자유게시물 댓글 </a>
 
 		</div>
 
 
 		<div class="mypost">
-			<form action="mreplydelete" method="post">
+			<form action="freplydelete" method="post">
 				<table class="post">
 					<thead>
 						<tr class="posttitle">
@@ -203,11 +203,13 @@ body {
 					<tbody>
 						<c:forEach items="${replylist}" var="replylist" varStatus="status">
 							<tr>
-								<td class="innerposttitle"><c:out value="${replylist.reply}" /></td>
-								<td class="poststatus"><a href="#"><c:out
-										value="${replystatus[status.index]}" /></a></td>
+								<td class="innerposttitle"><c:out
+										value="${replylist.reply}" /></td>
+								<td class="poststatus" name="${replystatus[status.index]}"
+									value="${replylist.fno}"><c:out
+										value="${replystatus[status.index]}" /></td>
 								<td class="check"><input type="checkbox"
-									name="myreplycheck" value="${replylist.mrno}"></td>
+									name="myreplycheck" value="${replylist.frno}"></td>
 							</tr>
 						</c:forEach>
 
@@ -219,22 +221,21 @@ body {
 
 		</div>
 	</div>
-<script type="text/javascript">
+	<script type="text/javascript">
 		let checkbox = document.getElementsByName('myreplycheck');
 		document.getElementById('selectall').onclick = function() {
 			for (let i = 0; i < checkbox.length; i++) {
 				checkbox[i].checked = !checkbox[i].checked;
 			}
-		}	
-		
+		}
+
 		$(".poststatus").on(
 				"click",
 				function(e) {
 					if ($(this).attr("name") == "원글 보기▶") {
-						location.href = "http://localhost:8080/meet/get?mno="
+						location.href = "http://localhost:8080/free/get?fno="
 								+ $(this).attr("value");}
 				});
-	
 	</script>
 
 </body>

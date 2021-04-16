@@ -336,6 +336,14 @@ target.onchange= function getproperty(e) {
 	location.href="/mypage/redirecttest?cid="+target.options[target.selectedIndex].value
 }
 
+$("td").on(
+		"click",
+		"a",
+		function(e) {
+			e.preventDefault();
+			location.href = "http://localhost:8080/meet/get?mno="
+					+ $(this).attr("value");
+		});
 </script>
 
 </body>

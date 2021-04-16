@@ -108,7 +108,7 @@ public class MeetServiceImpl implements MeetService {
 	public List<MeetVO> getListWithCategory(String cid){
 		log.info("getListWithCategory...............");
 		return mapper.getListWithCategory(cid);
-	}
+	}//내가 개설한 모임을 카테고리별로 가져오기
 
 	@Override
 	public boolean views(Long mno) {
@@ -131,6 +131,29 @@ public class MeetServiceImpl implements MeetService {
 		mapper.insertThumbList(vo);
 	}
 
+
+	@Override
+	public boolean views(Long mno) {
+		log.info("counting views.............");
+		return mapper.countViews(mno) == 1;
+	}
+
+	@Transactional
+	@Override
+	public boolean thumbs(ThumbVO vo) {
+		log.info("counting thumbs............");
+
+		insertThumbList(vo);
+		return mapper.countThumbs(vo.getMno()) == 1;
+	}
+
+	@Override
+	public void insertThumbList(ThumbVO vo) {
+		log.info("insert into thumb_list...........");
+		mapper.insertThumbList(vo);
+	}
+
+
 	@Transactional
 	@Override
 	public boolean deleteThumbList(ThumbVO vo) {
@@ -145,6 +168,7 @@ public class MeetServiceImpl implements MeetService {
 		return mapper.checkThumbList(thumbno);
 	}
 
+
 	@Override
 	public int applyUpdate(Long mno) {
 		log.info("updaet meet CURRNO...........");
@@ -156,5 +180,18 @@ public class MeetServiceImpl implements MeetService {
 		log.info("update meet currRno-1 and CNCLNO+1..........");
 		return mapper.deleteUpdate(vo.getMno());
 	}
-	
+
+
+	@Override
+	public int applyUpdate(Long mno) {
+		log.info("updaet meet CURRNO...........");
+		return mapper.applyUpdate(mno);
+	}
+
+	@Override
+	public int deleteUpdate(EnrollListVO vo) {
+		log.info("update meet currRno-1 and CNCLNO+1..........");
+		return mapper.deleteUpdate(vo.getMno());
+	}
+
 }

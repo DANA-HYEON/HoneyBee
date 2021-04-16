@@ -24,8 +24,7 @@
 	
 	<context:component-scan base-package="com.honeybee.controller" />
 	
-	<beans:bean id="multipartResolver"
-	class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
 	</beans:bean>
 	
 	

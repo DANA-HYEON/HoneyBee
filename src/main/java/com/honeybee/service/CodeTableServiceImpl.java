@@ -26,5 +26,18 @@ public class CodeTableServiceImpl implements CodeTableService{
 		log.info("Service getCategoryList..............");
 		return cMapper.getCatList();
 	}
+	
+	@Override
+	public List<CodeTableVO> upperregion(){
+		log.info("Service getUpperregion..............");
+		return cMapper.upperregion();
+	}
+	
+	@Override
+	public List<CodeTableVO> detailregion(String cid){
+		log.info("Service getdetailregion..............");
+		return cMapper.detailregion(cid);
+	}
+	
 
 }

@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class FreeReplyVO { // 자유게시물 댓글
 	
-	private long frno; // 댓글번호
-	private long frno2; // 답글 대상이 되는 댓글번호
-	private long fno; // 댓글이 달린 자유게시물 번호
+	private Long frno; // 댓글번호
+	private Long frno2; // 답글 대상이 되는 댓글번호
+	private Long fno; // 댓글이 달린 자유게시물 번호
 	
 	private String id; // 댓글 작성자
 	private String nick; // 댓글 작성자 닉네임

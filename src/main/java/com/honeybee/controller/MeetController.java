@@ -53,35 +53,35 @@ public class MeetController {
 	private MeetService service;
 	private CodeTableService cService;
 	private EnrollListService eService;
-	
+
 
 	@RequestMapping("/list")
 	public void list(@ModelAttribute("cri") Criteria cri, Model model) {
 		log.info("list total");
 		log.info("list total : " + cri);
 		System.out.println("category pick : " + cri.getCid());
-		
+
 		//카테고리 미 선택시 리스트
 		if(cri.getCid() == null || cri.getCid().equals("카테고리") || cri.getCid().equals("M000")) {
-			
+
 			cri.setCid("M000");
 			model.addAttribute("list", service.getList(cri)); //모임게시물 리스트 가져오기
 			model.addAttribute("category", cService.getCatList());
 			model.addAttribute("pickCat", "M000");
-			
+
 			int total = service.getTotal(cri);
 			log.info("total : " + total);
 			model.addAttribute("pageMaker", new PageDTO(cri, total));
 			return;
 		}
-		
-		//카테고리 선택 후 검색시 리스트 
+
+		//카테고리 선택 후 검색시 리스트
 		log.info("list category");
 		log.info("list category : " + cri);
-		
+
 		model.addAttribute("list", service.getListWithCat(cri)); //모임게시물 리스트 (페이징, 카테고리)가져오기
 		model.addAttribute("category", cService.getCatList());
-		
+
 		System.out.println("pickCat : " + cri.getCid());
 		model.addAttribute("pickCat", cri.getCid());
 
@@ -93,7 +93,7 @@ public class MeetController {
 
 	}
 
-	
+
 	@PostMapping("/reg")
 	public String register(MeetVO meet, HttpServletRequest request, RedirectAttributes rttr) {
 		log.info("register : " + meet);
@@ -117,7 +117,7 @@ public class MeetController {
 
 		log.info("/get or /modify");
 		log.info("GetMapping get cri : " + cri.getCid());
-		
+
 		MeetVO vo = service.get(mno);
 		model.addAttribute("meet", vo);
 
@@ -140,16 +140,16 @@ public class MeetController {
 			rttr.addFlashAttribute("result", "success");
 		}
 
-		//수정한 카테고리 값 
+		//수정한 카테고리 값
 		System.out.println("cid : " + meet.getCid());
-		
+
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
 		rttr.addAttribute("type", cri.getType());
 		rttr.addAttribute("keyword", cri.getKeyword());
 		rttr.addAttribute("cid", cri.getCid());
 
-		
+
 		return "redirect:/meet/list";
 	}
 
@@ -170,8 +170,8 @@ public class MeetController {
 
 		return "redirect:/meet/list";
 	}
-	
-	
+
+
 	//찜 추가
 	@PostMapping(value = "/thumb", consumes = "application/json", produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> thumbs(@RequestBody ThumbVO vo){
@@ -179,20 +179,22 @@ public class MeetController {
 
 		return service.thumbs(vo) == true? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
 	//찜 취소
 	@DeleteMapping(value="/removeThumb", produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> remove(@RequestBody ThumbVO vo){
 		log.info("remove : " + vo);
-		
+
+
 		return service.deleteThumbList(vo) == true ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
+
 	//찜 조회
 	@GetMapping(value="/{thumbno}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<ThumbVO> get(@PathVariable("thumbno") String thumbno){
 		log.info("get thumbno : " + thumbno);
-		
+
 		return new ResponseEntity<>(service.checkThumbList(thumbno), HttpStatus.OK);
 	}
 
@@ -203,91 +205,93 @@ public class MeetController {
 
 			return eService.insert(vo) == 1? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-		
+
 	//신청 되어있는지 조회
 	@GetMapping(value="/mApply/{eno}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<EnrollListVO> applyGet(@PathVariable("eno") String eno){
 		log.info("get eno : " + eno);
-		
+
+
 		return new ResponseEntity<>(eService.checkApplyList(eno), HttpStatus.OK);
-	}	
-	
+	}
+
+
 	//모임 취소
 	@DeleteMapping(value="/removeApply", produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> removeApply(@RequestBody EnrollListVO vo){
 		log.info("EnrollListVO vo : " + vo);
-		
+
+
 		return eService.delete(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	
-	@RequestMapping("/file_uploader_html5") 
+	@RequestMapping("/file_uploader_html5")
 	public void file_uploader_html5(HttpServletRequest request, HttpServletResponse response){
-		try { 
-			//파일정보 
-			String sFileInfo = ""; 
-			//파일명을 받는다 - 일반 원본파일명 
-			String filename = request.getHeader("file-name"); 
-			//파일 확장자 
-			String filename_ext = filename.substring(filename.lastIndexOf(".")+1); 
+		try {
+			//파일정보
+			String sFileInfo = "";
+			//파일명을 받는다 - 일반 원본파일명
+			String filename = request.getHeader("file-name");
+			//파일 확장자
+			String filename_ext = filename.substring(filename.lastIndexOf(".")+1);
 			//확장자를소문자로 변경
-			filename_ext = filename_ext.toLowerCase(); 
-			//이미지 검증 배열변수 
-			String[] allow_file = {"jpg","png","bmp","gif"}; 
-			//돌리면서 확장자가 이미지인지 
+			filename_ext = filename_ext.toLowerCase();
+			//이미지 검증 배열변수
+			String[] allow_file = {"jpg","png","bmp","gif"};
+			//돌리면서 확장자가 이미지인지
 			int cnt = 0; for(int i=0; i<allow_file.length; i++) {
-				if(filename_ext.equals(allow_file[i])){ cnt++; } 
-				} 
-			//이미지가 아님 
-			if(cnt == 0) { 
+				if(filename_ext.equals(allow_file[i])){ cnt++; }
+				}
+			//이미지가 아님
+			if(cnt == 0) {
 				PrintWriter print = response.getWriter();
 				print.print("NOTALLOW_"+filename);
-				print.flush(); 
-				print.close(); 
-				}else{ 
-					//이미지이므로 신규 파일로 디렉토리 설정 및 업로드 
-					//파일 기본경로 
-					String dftFilePath = request.getSession().getServletContext().getRealPath("/"); 
-					//파일 기본경로 _ 상세경로 
-					String filePath = dftFilePath + "resources" + File.separator + "editor" + File.separator +"multiupload" + File.separator; 
-					File file = new File(filePath); 
-					if(!file.exists()) { 
-						file.mkdirs(); 
-						} 
-					String realFileNm = ""; 
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss"); 
-					String today= formatter.format(new java.util.Date()); 
-					realFileNm = today+UUID.randomUUID().toString() + filename.substring(filename.lastIndexOf(".")); 
-					String rlFileNm = filePath + realFileNm; 
-					
+				print.flush();
+				print.close();
+				}else{
+					//이미지이므로 신규 파일로 디렉토리 설정 및 업로드
+					//파일 기본경로
+					String dftFilePath = request.getSession().getServletContext().getRealPath("/");
+					//파일 기본경로 _ 상세경로
+					String filePath = dftFilePath + "resources" + File.separator + "editor" + File.separator +"multiupload" + File.separator;
+					File file = new File(filePath);
+					if(!file.exists()) {
+						file.mkdirs();
+						}
+					String realFileNm = "";
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+					String today= formatter.format(new java.util.Date());
+					realFileNm = today+UUID.randomUUID().toString() + filename.substring(filename.lastIndexOf("."));
+					String rlFileNm = filePath + realFileNm;
+
 					log.info("rlFileNm = " + rlFileNm);
-					///////////////// 서버에 파일쓰기 ///////////////// 
-					InputStream is = request.getInputStream(); 
-					OutputStream os=new FileOutputStream(rlFileNm); 
-					int numRead; byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))]; 
-					while((numRead = is.read(b,0,b.length)) != -1){ 
-						os.write(b,0,numRead); 
-						} 
-					if(is != null) { 
+					///////////////// 서버에 파일쓰기 /////////////////
+					InputStream is = request.getInputStream();
+					OutputStream os=new FileOutputStream(rlFileNm);
+					int numRead; byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
+					while((numRead = is.read(b,0,b.length)) != -1){
+						os.write(b,0,numRead);
+						}
+					if(is != null) {
 						is.close();
-						} 
-					os.flush(); 
+						}
+					os.flush();
 					os.close();
-					
-					///////////////// 서버에 파일쓰기 ///////////////// 
-					// 정보 출력 
-					sFileInfo += "&bNewLine=true"; 
-					// img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함 
+
+					///////////////// 서버에 파일쓰기 /////////////////
+					// 정보 출력
+					sFileInfo += "&bNewLine=true";
+					// img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 					sFileInfo += "&sFileName="+ filename;
-					sFileInfo += "&sFileURL="+"/resources/editor/multiupload/"+realFileNm; 
-					PrintWriter print = response.getWriter(); 
-					print.print(sFileInfo); 
-					print.flush(); 
-					print.close(); 
-					} 
-			} catch (Exception e) { 
+					sFileInfo += "&sFileURL="+"/resources/editor/multiupload/"+realFileNm;
+					PrintWriter print = response.getWriter();
+					print.print(sFileInfo);
+					print.flush();
+					print.close();
+					}
+			} catch (Exception e) {
 				e.printStackTrace();
-				} 
+				}
+
 			}
 	}
-

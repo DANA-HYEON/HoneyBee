@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../include/header.jsp" %>
 <!DOCTYPE html>
@@ -10,15 +10,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/resources/css/meet/read.css">
-    
+
     <!-- 희승 댓글 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/resources/css/free/get.css">
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
-    
+
     <!-- sweetAlert -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
      <style>
@@ -33,23 +33,23 @@
             bottom: 3px;
             right: 60px;
    	 }
-   	 
+
    	 #reply {
    		position: absolute;
             bottom: 3px;
             right: 110px;
    	 }
-   	 
+
    	 .post-comments {
    	  position : relative;
    	 }
-   	 
+
    	 i {
    	  position : absolute;
    	  left : -105px;
    	  top : 30px;
    	 }
-   	 
+
    	 .replyList{
    	 background-color:transparent;
    	 border: none;
@@ -129,11 +129,11 @@
       </div>
 
       <hr class="second_line" style="border:1px color= silver;" width="90%">
-      
+
       <button data-oper='modify' class="btn btn-default" >수정하기</button>
       <button type="reset" data-oper='remove'>모임 삭제</button>
 	  <button data-oper='list' class="btn btn-info">목록으로 돌아가기</button>
-	  
+
 	  <form id='operForm' action="/meet/modify" method="get">
 	  	<input type='hidden' id='mno' name='mno' value='<c:out value="${meet.mno}"/>'>
 	  	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
@@ -143,8 +143,8 @@
 	  	<input type='hidden' name='cid' value='<c:out value="${cri.cid}"/>'>
 		<input type='hidden' name='order' value='<c:out value="${cri.order}"/>'>
 	  </form>
-        
-        
+
+
         <!-- 댓글 읽기 창 -->
         <div class="bootstrap snippets bootdey">
             <div class="row">
@@ -152,8 +152,8 @@
                     <div class="blog-comment">
                         <h3 class="text-success">문의하기</h3>
                          <ul class="comments t1">
-                         </ul>  
-                                
+                         </ul>
+
                          <div class="write-repl">
                            <ul class="comments">
                                <h6>문의 입력</h6>
@@ -167,24 +167,25 @@
 	        </div>
 	    </div>
     </div>
-  
+
   <script type="text/javascript" src="/resources/js/meetReply.js"></script>
   <script type="text/javascript" src="/resources/js/meetThumb.js"></script>
   <script type="text/javascript" src="/resources/js/meetApply.js"></script>
-  
-  
+
   <script>
   var mnoValue = '<c:out value="${meet.mno}"/>';
   var eno = "HOHO995@naver.com" + mnoValue;
   var applyBtn = $("#apply");
- 
+
+
   console.log("test : " + eno);
-  
-  
+
+
   function autoApplyCheck(){
 	  meetApply.applyGet(eno, function(data){
 		  console.log( "신청 되어있는 데이터 : " + data);
-		  
+
+
 		  if(data != ''){
 			  applyBtn.css("background-color" , "gray");
 		  }else{
@@ -192,39 +193,43 @@
 		  }
 	  });
   }
-  
+
 	//신청하기
 	  $(document).on("click", "#apply", function(e){
 		  e.preventDefault();
 		  console.log("eno : " + eno);
-		  
+
+
 		  meetApply.applyGet(eno, function(data){
 			  console.log("신청 되어있는 데이터 : " + data);
-			  
+
+
 			  if(data == ''){
 				  applyBtn.css("background-color" , "gray");
 				  var eno = {
 						  id:"HOHO995@naver.com",
-						  mno:mnoValue 
+
+						  mno:mnoValue
 				  };
-				  
+
+
 				  meetApply.add(eno, function(result){
 					  //alert("신청 되었습니다.");
 					  swal("신청 되었습니다.", "해당 버튼을 한 번 더 클릭하면 취소 할 수 있습니다.", "success").then((value)=>location.reload());
 					  //location.reload();
 				  });
 			  }
-			  
+
 			  if(data != ''){
 				  var result = confirm("이미 신청 되어있는 게시물입니다. 신청 취소 하시겠습니까?");
-				  
+
 				  if(result){
 					  applyBtn.css("background-color" , "aqua");
 					  var eno = {
 							  id:"HOHO995@naver.com",
-							  mno:mnoValue 
+							  mno:mnoValue
 					  };
-					  
+
 					  meetApply.removeApply(eno, function(result){
 						  //alert("신청 취소 완료");
 						  swal("신청 취소 완료").then((value)=>location.reload());
@@ -238,22 +243,22 @@
   </script>
 
 
-  
+
   <script>
   var mnoValue = '<c:out value="${meet.mno}"/>';
   var thumbno = "HOHO995@naver.com" + mnoValue;
   var thumbsBtn = $("#wish");
-  
-  
+
+
   $(document).ready(function(){
 	  autoThumbCheck();
 	  autoApplyCheck();
   });
-  
+
   function autoThumbCheck(){
 	  meetService.getThumb(thumbno, function(data){
 		  console.log("찜 추가되어있는 데이터 : " + data);
-		  
+
 		  if(data != ''){
 			  thumbsBtn.css("background-color" , "gray");
 		  }else{
@@ -261,109 +266,109 @@
 		  }
 	  });
   }
-  
+
   //찜하기
   $(document).on("click", "#wish", function(e){
 	  e.preventDefault();
 	  console.log("thumbbno : " + thumbno);
-	  
+
 	  meetService.getThumb(thumbno, function(data){
 		  console.log("찜 추가되어있는 데이터 : " + data);
-		  
+
 		  if(data == ''){
 			  thumbsBtn.css("background-color" , "gray");
 			  var thumb = {
 					  id:"HOHO995@naver.com",
-					  mno:mnoValue 
+					  mno:mnoValue
 			  };
-			  
+
 			  meetService.add(thumb, function(result){
 				  swal("찜 추가 되었습니다.", "해당 버튼을 한 번 더 클릭하면 취소 할 수 있습니다.", "success").then((value)=>location.reload());
 				  //location.reload();
 			  });
 		  }
-		  
+
 		  if(data != ''){
 			  var result = confirm("이미 찜 되어있는 게시물입니다. 찜 취소 하시겠습니까?");
-			  
+
 			  if(result){
 				  thumbsBtn.css("background-color" , "aqua");
 				  var thumb = {
 						  id:"HOHO995@naver.com",
-						  mno:mnoValue 
+						  mno:mnoValue
 				  };
-				  
+
 				  meetService.remove(thumb, function(result){
 					  swal("찜 취소 완료").then((value)=>location.reload());
 					  //location.reload();
-				  });  
+				  });
 			  }
-			  
+
 		  }
 	  });
   });
   </script>
-  
-  
+
+
   <script>
   console.log("====================");
   console.log("JS TEST");
-  
+
   var mnoValue = '<c:out value="${meet.mno}"/>';
   var replyUL = $(".t1");
-  
+
   showList(1);
-  
+
 
   function showList(page){
 	  replyService.getList({mno : mnoValue, page : page || 1}, function(list){
 		  var str = "";
-		  
+
 		  if(list == null || list.length == 0){
 			  replyUL.html("");
-			  
+
 			  return;
 		  }
-		  
+
 		  for(var i=0, len = list.length || 0; i<len; i++){
-			  
+
 		      str += "<li name='replyList' class='clearfix " + list[i].bundle + "' data-layer= '" + list[i].layer +"' data-bundle='" + list[i].bundle +"' data-mrno='"+list[i].mrno+"' style='margin-left : " + list[i].layer * 7 + "%'>";
 		      str += "<img src='/resources/img/logo.png' class='avatar' alt=''>";
               str += "<div class='post-comments'>";
-              
+
 		      if(list[i].layer == 1){
 		      	str += "<i class='fa fa-share fa-flip-vertical re'></i>";
 		      }
-		      
+
               str += "<p class='meta'>";
-              str += "닉네임 : " + list[i].nick +"<small class='float-right'>" + replyService.displayTime(list[i].regDt) + "</small>";     
+              str += "닉네임 : " + list[i].nick +"<small class='float-right'>" + replyService.displayTime(list[i].regDt) + "</small>";
               str += "</p>";
               str += "<input type='text' class='replyList' style='background-color:transparent;' id='"+ list[i].mrno + "'value='" + list[i].reply + "' readonly>";
-              
+
               if(list[i].layer != 1){
-            	  
+
               str += "<a href='#'><small class='float-right' id='reply' data-mrno='"+list[i].mrno+"'>답글</small></a>";
               };
-              
+
               str += "<a href='#'><small class='float-right' id='modify' data-mrno='"+list[i].mrno+"'>수정</small></a>";
               str += "<a href='#'><small class='float-right' id='delete' data-bundle='" + list[i].bundle +"' data-layer='" +list[i].layer+ "' data-mrno='"+list[i].mrno+"'>삭제</small></a>";
               str += "</div>";
-              str += "</li>";    
+              str += "</li>";
 
 		  }
-		  
+
 		  replyUL.html(str);
 	  });
-	  
+
   }
-  
+
   //댓글 등록
   var InputReply = $(".write-repl").find("input[name='replyContent']"); //댓글 입력창
   var regReplyBtn = $("#regReplyBtn"); //댓글 입력 버튼
   var regUpdateBtn = $("#modify"); // document.getElementById("modify");
   var regDeleteBtn = $(".t1"); //댓글 삭제 버튼
-  
-  
+
+
   regReplyBtn.on("click", function(e){
 	  e.preventDefault();
 	  console.log(InputReply.val());
@@ -373,14 +378,14 @@
 	  id : "tony",
 	  reply : InputReply.val()
   };
-  
+
   	replyService.add(reply, function(result){
 	  	alert(result);
 	  	InputReply.val('');
 	  	showList(1);
   	});
   });
-  
+
   //댓글 수정 이벤트 처리
   $(document).on("click", "#modify", function(e){
 	  console.log("수정");
@@ -388,15 +393,15 @@
 	  var mrno = $(this).data("mrno");
 	  console.log(mrno);
 	  var text = $(this).text();
-	  
+
 	  console.log(text);
-	  
+
 	  if(text == '확인'){
 		  $('#'+mrno).prop('readonly',true);
-		  
+
 		  var reply = {mrno : mrno, reply : $('#'+mrno).val()};
 		  $(this).text('수정');
-		  
+
 		  replyService.update(reply, function(result){
 			  alert(result);
 			  showList(1);
@@ -404,10 +409,10 @@
 	  }else{
 		  $('#'+mrno).prop('readonly',false);
 		  $(this).text('확인');
-		  
+
 	  }
   });
-  
+
   //대댓글 입력창 띄우기 이벤트 처리
    $(document).on("click", "#reply", function(e){
 	   $(".float-right").off();
@@ -416,10 +421,10 @@
 	  var parentMrno = $()
 	  var mrno = $(this).data("mrno");
 	  console.log(mrno);
-	  
+
 	  var str ="";
-	  
-	  
+
+
 	  str += "<div class='write-repl' id='reply_reply' style='margin-bottom : 30px'>";
 	  str += "<ul class='comments'>";
 	  //str += "<i class='fa fa-share fa-flip-vertical re'></i>";
@@ -429,13 +434,13 @@
 	  str += "<input id='canR_ReplyBtn' type='submit' value='취소'>";
 	  str += "</ul>";
 	  str += "</div>";
- 
+
        if($("."+mrno).children(".write-repl").length == 0){
     	   $("."+mrno).append(str);
-    	   
-      } 
 
-  }); 
+      }
+
+  });
 
 	  //대댓글 등록 이벤트 처리
 	  $(document).on("click", "#regR_ReplyBtn", function(e){
@@ -443,7 +448,7 @@
 	  	  var InputR_Reply = $(".write-repl").find("input[name='replyR_Content']"); //댓글 입력창
 		  var par = $("#reply_reply").prev().children("input").attr("id");
 		  console.log("내용 : " + InputR_Reply.val() + "mrno : " + par);
-	
+
 		  var R_reply ={
 		  mno:mnoValue,
 		  id : "tony",
@@ -452,23 +457,23 @@
 		  bundle :par,
 		  bunOrder : par
 	  };
-	  
+
 	  	replyService.add(R_reply, function(result){
 		  	alert(result);
 		  	InputR_Reply.val('');
 		  	showList(1);
 	  	});
 	  });
-	  
+
 	  //대댓글 입력 취소
 	  $(document).on("click", "#canR_ReplyBtn", function(e){
 		  e.preventDefault();
 		  console.log("대댓글 입력 취소");
 		  $(this).parents(".write-repl").remove();
 	  });
-  
-  
-  //댓글 삭제 이벤트 
+
+
+  //댓글 삭제 이벤트
   $(document).on("click", "#delete", function(e){
 	  console.log("삭제");
 	  e.preventDefault();
@@ -524,7 +529,7 @@
 				  return;
 			  }
 		  } */
-	  
+
 	  replyService.remove(mrno, function(result){
 		  alert(result);
 		  showList(1);
@@ -536,29 +541,29 @@
   /*
   replyService.add(
 	  {reply: "TS TEST", id:"tony", mno:mnoValue}
-	  , 
+	  ,
 	  function(result){
 		  alert("result : " + result);
   });
-	  
+
   replyService.getList({mno:mnoValue, page:1}, function(list){
 	  for(var i=0, len = list.length||0; i<len; i++){
 		  console.log(list[i]);
 	  }
   });
-  
-  
+
+
   //댓글 삭제 테스트
   replyService.remove(34, function(count){
 	  console.log("삭제 성공 : " + count);
-	  
+
 	  if(count === "success"){
 		  alert("removed");
 	  }
   }, function(err){
 	  alert('error....');
   })
-  
+
   //35번댓글 수정
   replyService.update({
 	  mrno : 35,
@@ -567,49 +572,49 @@
   }, function(result){
 	  alert("수정완료...");
   });
-  
+
   replyService.get(32, function(data){
 	  console.log(data);
   });
   */
-  
+
   </script>
-  
+
    <script type="text/javascript">
    $(document).ready(function(){
-	   
+
 		 var operForm = $("#operForm");
-		 
+
 		 $("button[data-oper='modify']").on("click", function(e){
 			 e.preventDefault();
-			 
+
 			 operForm.attr("action", "/meet/modify").submit();
 
 		 });
-		 
+
 		 $("button[data-oper='list']").on("click", function(e){
-			
+
 			 operForm.find("#mno").remove();
 			 operForm.attr("action", "/meet/list");
 			 console.log("${cri.cid}");
 			 operForm.submit();
 		 });
-		 
-		 
+
+
 		 $("button[data-oper='remove']").on("click", function(e){
 			 e.preventDefault();
 			 operForm.attr("action", "/meet/remove");
 			 operForm.submit();
 		 });
    });
-	 
+
    </script>
-   
+
    <script>
    $(document).ready(function($) {
 
 	   var scrollPosition = $(".text-success").offset().top;
-       $("#inquiry").click(function(event){            
+       $("#inquiry").click(function(event){
                event.preventDefault();
                $('html,body').animate({scrollTop:scrollPosition},700);
        });

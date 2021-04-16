@@ -33,9 +33,9 @@
 	<!-- READ -->
 	<select id="read" resultType="com.honeybee.domain.FreeVO">
 		select
-		FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT,
-		DELDT
-		from FREE where fno = #{fno}
+			FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, DELDT
+		from FREE
+		where FNO = #{fno}
 	</select>
 
 	<!-- UPDATE -->
@@ -45,13 +45,6 @@
 			title = #{title},
 			content = #{content},
 			upddt = sysdate
-		where fno = #{fno}
-	</update>
-
-	<!-- 조회수 업데이트 -->
-	<update id="updateHit">
-		update FREE
-		set hit = #{hit}
 		where fno = #{fno}
 	</update>
 
@@ -65,19 +58,19 @@
 	<sql id="criteria">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 			<foreach item='type' collection="typeArr">
-				<trim prefix="OR">
-					<choose>
-						<when test="type == 'T'.toString()">
-							title like '%' || #{keyword} || '%'
-						</when>
-						<when test="type == 'C'.toString()">
-							content like '%' || #{keyword} || '%'
-						</when>
-						<when test="type == 'W'.toString()">
-							id like '%' || #{keyword} || '%'
-						</when>
-					</choose>
-				</trim>
+				<!-- <trim prefix="OR"> -->
+				<choose>
+					<when test="type == 'T'.toString()">
+						title like '%' || #{keyword} || '%'
+					</when>
+					<when test="type == 'C'.toString()">
+						content like '%' || #{keyword} || '%'
+					</when>
+					<when test="type == 'W'.toString()">
+						id like '%' || #{keyword} || '%'
+					</when>
+				</choose>
+				<!-- </trim> -->
 			</foreach>
 		</trim>
 	</sql>
@@ -85,12 +78,12 @@
 	<select id="getListWithPaging" resultType="com.honeybee.domain.FreeVO">
 		<![CDATA[
 			select
-				fno, id, title, content, hit, thumb, regdt, upddt
+				fno, id, title, content, hit, thumb, regdt, upddt, replycnt
 			from (
 				select /*+INDEX_DESC(FREE pk_free) */
-					rownum rn, fno, id, title, content, hit, thumb, regdt, upddt
+					rownum rn, fno, id, title, content, hit, thumb, regdt, upddt, replycnt
 				from FREE
-				where
+				where 
 		]]>
 
 		<include refid="criteria"></include>
@@ -116,5 +109,46 @@
 		set deldt = sysdate
 		where fno = #{fno}
 	</update>
+
+	<!-- 게시물에 입력된 댓글 개수 -->
+	<update id="updateReplyCnt">
+		update FREE
+		set replycnt = replycnt + #{amount}
+		where fno = #{fno}
+	</update>
+
+	<!--  게시물 조회수 + 1 -->
+	<update id="hitup">
+		update FREE
+		set hit = hit + #{amount}
+		where fno = #{fno}
+	</update>
+
+	<!--  게시물 좋아요  -->
+	<insert id="thumbUp">
+		insert into THUMBED (THUMBNO, ID, FNO)
+		values (#{id}||#{fno}||'F', #{id}, #{fno})
+	</insert>
+
+	<!-- 게시물 좋아요 취소 -->
+	<delete id="cancelThumbUp">
+		delete from THUMBED
+		where THUMBNO = #{id}||#{fno}||'F'
+	</delete>
+
+	<!-- 특정 회원이 게시물 좋아요 했는지 여부 확인 -->
+	<select id="checkThumbed" resultType="com.honeybee.domain.ThumbVO">
+		select ID, FNO
+		from THUMBED
+		where THUMBNO = #{id}||#{fno}||'F'
+	</select>
+
+	<update id="updateThumbCnt">
+		update FREE
+		set THUMB = THUMB + #{amount}
+		where FNO = #{fno}
+	</update>
+
+
 
 </mapper>

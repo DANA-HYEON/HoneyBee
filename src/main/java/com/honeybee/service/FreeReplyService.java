@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeReplyVO;
+import com.honeybee.domain.ThumbVO;
 
 public interface FreeReplyService {
 	
@@ -23,6 +24,14 @@ public interface FreeReplyService {
 	
 	public List<FreeReplyVO> getfreereplystatus(String id); //내가 자유게시물에 쓴 댓글이 달린 게시글 상태 조회
 	
-	
-	
+	public int thumbUp(ThumbVO vo);
+
+	public int cancelThumbUp(ThumbVO vo);
+
+	public boolean check(String id, Long frno);
+
+	public void freplyremove(Long mrno); // 내가 자유게시물에 쓴 댓글 삭제
+
+
+
 }

@@ -16,7 +16,7 @@ import lombok.extern.log4j.Log4j;
 @Service
 @Log4j
 public class MeetReplyServiceImpl implements MeetReplyService {
-	
+
 	@Setter(onMethod_ =@Autowired)
 	private ReplyMapper mapper;
 
@@ -56,4 +56,21 @@ public class MeetReplyServiceImpl implements MeetReplyService {
 		return mapper.insertReply(vo);
 	}
 
+	@Override // 세훈 내가 자유게시물에 쓴 댓글 목록 가져오기
+	public List<ReplyVO> readmymeetreply(String id) {
+		log.info("readmymeetreply...................");
+		return mapper.readmymeetreply(id);
+	}
+
+	@Override // 세훈 내가 댓글 달았던 자유 게시물의 스테이터스 가져오기
+	public List<ReplyVO> getmeetreplystatus(String id) {
+		log.info("getmeetreplystatus................");
+		return mapper.getmeetreplystatus(id);
+	}
+
+	@Override // 내가 모임게시물에 쓴 댓글 삭제
+	public void mreplyremove(Long mrno) {
+		log.info("mreplyremove................");
+		mapper.mreplyremove(mrno);
+	}
 }

@@ -17,12 +17,12 @@
             <div class="b top">
                 <div class="top title">모임 개설</div>
                 <div class="sub title">
-                
+
                     <select id="cat" class="cat" >
 				        <option><c:out value="${meet.cid3}"/></option>
                     </select>
-                    
-                    
+
+
                     <input type="hidden" name="mno" value='<c:out value="${meet.mno}"/>'>
                     <input type="text" name="title" value='<c:out value="${meet.title}"/>'>
                 </div>
@@ -57,7 +57,7 @@
                         <!-- 하드코딩 -->
                         <input type='hidden' name="cid2" value="RC002">
                         <input type='hidden' name="id" value="tony">
-                        
+
                     </div>
                     <div class="bot right">
                         <div class="thumb title">썸네일</div>
@@ -78,7 +78,7 @@
                 <input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
                 <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
                 <input type='hidden' name='cid' value='<c:out value="${cri.cid}"/>'>
-                
+
             </div>
         </div>
     </div>
@@ -121,7 +121,7 @@
 			 
 			 if(operation === 'remove'){
 				 formObj.attr("action", "/meet/remove");
-				 
+
 			 }else if(operation === 'list'){
 				 formObj.attr("action", "/meet/list").attr("method", "get");
 
@@ -133,7 +133,7 @@
 				 var cidTag = $("input[name='cid']").clone();
 
 				 formObj.empty();
-				 
+
 				 formObj.append(pageNumTag);
 				 formObj.append(amountTag);
 				 formObj.append(keywordTag);
@@ -144,8 +144,8 @@
 			 
 			 formObj.submit();
 		 });
-		 
-		 
+
+
 
 
 		/* 카테코리 선택 검색 후 카테고리 유지 */

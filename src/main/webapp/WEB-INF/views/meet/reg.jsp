@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../include/header.jsp" %>
 <!DOCTYPE html>
@@ -54,7 +54,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="b bottom">
                 <div class="bottom title">모임 상세</div>
                 <div class="bottom_box">
@@ -68,18 +68,18 @@
                             <li>비용 <input type="checkbox" name="charge" value="N">무료 <input type="checkbox" name="charge" value="Y">유료</li>
                             <li>온오프라인유무 <input type="checkbox" name=onoff value="ON">온라인 <input type="checkbox" name="onoff" value="OFF">오프라인</li>
                             <li>모임장소<input type="text" name="place" placeholder="내용을 입력해주세요."></li>
-                            <li>링크<input type="text" name="link" placeholder="대표 링크를 입력해주세요"></li> 
+                            <li>링크<input type="text" name="link" placeholder="대표 링크를 입력해주세요"></li>
                         </ul>
                         <input type='hidden' name="cid2" value="RC002">
                         <input type='hidden' name="id" value="tony">
-                        
+
                     </div>
                     <div class="bot right">
                         <div class="thumb title">썸네일</div>
                         <button value="첨부파일">첨부파일</button>
                         <div class="img"><img src="/resources/img/logo.png"></div>
                     </div>
-                    
+
                 </div>
                 <div class="map" id="map" style="width:100%;height:500px;"></div>
 
@@ -89,15 +89,15 @@
         </div>
     </div>
   </form>
- 
- 
- 
+
+
+
 <script>
 //datepicker
   $( function() {
     $( ".datepicker").datepicker();
   } );
-  
+
   $.datepicker.setDefaults({
       dateFormat: 'yy-mm-dd',
       prevText: '이전 달',
@@ -154,7 +154,7 @@ naver.maps.Event.addListener(marker, "click", function(e) {
 });
 
 infowindow.open(map, marker);
-</script> 
+</script>
 
  <script type="text/javascript">
  //naver smartEditor
@@ -172,7 +172,7 @@ infowindow.open(map, marker);
 var elClickedObj = $("button[type='submit']");
 elClickedObj.on("click", function(e){
 		e.preventDefault();
-		console.log("submit clicked"); 
+		console.log("submit clicked");
 		 swal({
 			  title: "정말 모임을 게시하시겠습니까?",
 			  text: "잘못 입력한 부분은 없는지 확인해주세요!",
@@ -183,7 +183,7 @@ elClickedObj.on("click", function(e){
 			.then((willDelete) => {
 			  if (willDelete) {
 					oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
-					
+
 				    swal("게시물 작성이 완료되었습니다!", {
 				      icon: "success",
 				    });
@@ -194,7 +194,7 @@ elClickedObj.on("click", function(e){
 			    swal("게시물 게시가 취소되었습니다!");
 			  }
 			});
-		
+
 		// ‘저장’ 버튼을 누르는 등 저장을 위한 액션을 했을 때 submitContents가 호출된다고 가정한다.
 		function submitContents(elClickedObj) {
 		 // 에디터의 내용이 textarea에 적용된다.
@@ -210,7 +210,7 @@ elClickedObj.on("click", function(e){
 		}
 	});
 </script>
- 
+
  <script>
 
  </script>

@@ -66,7 +66,7 @@
 			#{cid},
 			#{cid2},
 			(select cname from code_table where cid = #{cid}),
-			#{id}, 
+			#{id},
 			#{title},
 			#{smry},
 			#{content},
@@ -276,14 +276,14 @@
 	      REGDT,
 	      UPDDT,
 	      DELDT
-	      
+
 
 	      from( select ]]>
-	      
+
 	      <if test='order == "latest"'>
 	      /*+index_desc(meet meet_pk)*/
 	      </if>
-	      
+
 	      <![CDATA[
 	      rownum rn,
 	      MNO,
@@ -311,9 +311,9 @@
 	      REGDT,
 	      UPDDT,
 	      DELDT
-	      from ]]> 
-	      
-	      
+	      from ]]>
+
+
 	       <trim prefix="(" suffix=")">
 	       <choose>
 	       	<when test='order == "popul"'>
@@ -350,7 +350,7 @@
 	       </choose>
 		   </trim>
 
-	      
+
 	      <![CDATA[ where (DELDT is null) and ]]>
 
 	      <include refid="criteria"></include>
@@ -443,7 +443,7 @@
 
 <select id="getListTest" resultType="com.honeybee.domain.MeetVO">
   <![CDATA[
-    select 
+    select
       MNO,
       CID,
       CID2,
@@ -469,7 +469,7 @@
       UPDDT,
       DELDT
       from MEET
-      where id = #{id}
+      where id = #{id} and deldt is null
   ]]>
 </select>
 
@@ -501,6 +501,28 @@
 <select id="checkThumbList" resultType ="com.honeybee.domain.ThumbVO">
 	select * from THUMB_LIST where THUMBNO = #{thumbno}
 </select>
+
+
+<update id="countViews">
+	update meet set hit = hit + 1 where mno = #{mno}
+</update>
+
+<update id="countThumbs">
+	update meet set THUMB = (select count(*) from thumb_list where mno = #{mno}) where mno = #{mno}
+</update>
+
+<insert id="insertThumbList">
+	insert into THUMB_LIST(THUMBNO,ID,MNO) values(#{id}||#{mno}, #{id}, #{mno})
+</insert>
+
+<delete id="deleteThumbList">
+	delete from THUMB_LIST where THUMBNO = #{id}||#{mno}
+</delete>
+
+<select id="checkThumbList" resultType ="com.honeybee.domain.ThumbVO">
+	select * from THUMB_LIST where THUMBNO = #{thumbno}
+</select>
+
 
 <update id="applyUpdate">
 	update meet set currno = currno+1 where mno = #{mno}

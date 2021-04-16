@@ -19,5 +19,7 @@ public class ReplyVO {
 	private int bunOrder; //댓글그룹순서
 	private Date regDt; //댓글작성일자
 	private Date uptDt; //댓글수정일자
-	private Date DelDt; //댓글삭제일자
+	private Date delDt; //댓글삭제일자
+
+	//deldt로 수정했습니다
 }

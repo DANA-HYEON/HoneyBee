@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
 </head>
 <style>
     .header{
@@ -54,7 +55,7 @@
                 
         <!-- 우측 마이페이지 알림 포인트샵 메뉴-->
         <div>
-            <img class="icon" src="/resources/img/mypage.PNG" onclick="console.log('마이페이지로 연결')">
+            <img class="icon" src="/resources/img/mypage.PNG"/> <a href=http://localhost:8080/mypage/home>
             <img class="icon" src="/resources/img/alram.PNG" onclick="console.log('클릭시 새알림 창으로 새페이지 띄워지지않고 연결')">
             <img class="icon" src="/resources/img/shop.PNG" onclick="console.log('포인트샵으로 연결')">
         </div>

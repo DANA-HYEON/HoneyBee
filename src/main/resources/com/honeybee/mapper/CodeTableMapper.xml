@@ -2,9 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.honeybee.mapper.CodeTableMapper">
 
-<select id="getCatList" resultType="com.honeybee.domain.CodeTableVO">
+	<select id="getCatList"
+		resultType="com.honeybee.domain.CodeTableVO">
 	<![CDATA[
 		select * from code_table where ctype='모임게시판'
 	]]>
-</select>
+	</select>
+
+	<select id="upperregion"
+		resultType="com.honeybee.domain.CodeTableVO">
+		SELECT * FROM CODE_TABLE WHERE CTYPE='시도'
+	</select>
+	
+	<select id="detailregion"
+	resultType="com.honeybee.domain.CodeTableVO">
+	select cname from code_table where (substr(cid,0) like  #{cid} || '%') and cid != #{cid}
+	</select>
 </mapper>

@@ -160,17 +160,22 @@ a {
     margin-right: 10px;
 }
 
+
 h6 {
     margin-top: 30px;
 }
 
-.modBtn, .delBtn {
+
+.modBtn, .delBtn, #repRegBtn, #regBtn, .reportBtn {
+
 	margin-top: 20px;
 	outline: none;
 	border: none;
 }
 
-.modBtn:hover {
+
+.modBtn:hover, #repRegBtn:hover, #regBtn:hover, .reportBtn:hover {
+
 	cursor: pointer;
 	background-color: rgb(246, 218, 66);
 }
@@ -189,9 +194,71 @@ h6 {
 
 .lstBtn:hover {
 	cursor: pointer;
-  background-color: #3498db;
+
+	background-color: #3498db;
+}
+
+li.clearfix {
+	position: relative;
+}
+
+li.clearfix > i.re {
+	position: absolute;
+	left: -30px;
+	top: 22px;
+}
+
+.write-cm {
+	margin-bottom: 20px;
+}
+
+.write-rp {
+	margin-bottom: 20px;
+}
+
+.repl, .modRep, .delRep, .reportRep {
+    position: absolute;
+    border: none;
+	background-color: transparent;
+	font-size: 13px;
+    bottom: 3px;
+}
+
+.repl {
+	right: 10px;
+}
+
+.repl:hover, .modRep:hover, .delRep:hover, .reportRep:hover {
+	cursor: pointer;
+	color: #3498db;
+
 }
 
 .text-success {
 	margin-top: 50px;
+}
+
+
+.delRep {
+	right: 80px;
+}
+
+.reportRep {
+	right : 115px;
+}
+
+button:focus {
+	outline: none;
+}
+
+.heartBtn {
+    width: 36px;
+    height: 36px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.fa-heart:hover, .heart-active {
+    color: pink;
 }

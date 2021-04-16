@@ -203,9 +203,11 @@ body {
 					<tbody>
 						<c:forEach items="${replylist}" var="replylist" varStatus="status">
 							<tr>
-								<td class="innerposttitle"><c:out value="${replylist.reply}" /></td>
-								<td class="poststatus"><a href="#"><c:out
-										value="${replystatus[status.index]}" /></a></td>
+								<td class="innerposttitle"><c:out
+										value="${replylist.reply}" /></td>
+									<td class="poststatus" name="${replystatus[status.index]}"
+									value="${replylist.mno}"><c:out
+										value="${replystatus[status.index]}" /></td>
 								<td class="check"><input type="checkbox"
 									name="myreplycheck" value="${replylist.mrno}"></td>
 							</tr>
@@ -225,7 +227,7 @@ body {
 			for (let i = 0; i < checkbox.length; i++) {
 				checkbox[i].checked = !checkbox[i].checked;
 			}
-		}	
+		}
 		
 		$(".poststatus").on(
 				"click",
@@ -234,7 +236,6 @@ body {
 						location.href = "http://localhost:8080/meet/get?mno="
 								+ $(this).attr("value");}
 				});
-	
 	</script>
 
 </body>

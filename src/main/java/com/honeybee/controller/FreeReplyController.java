@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.honeybee.domain.Criteria;
 import com.honeybee.domain.FreeReplyVO;
+import com.honeybee.domain.ThumbVO;
 import com.honeybee.service.FreeReplyService;
 
 import lombok.AllArgsConstructor;
@@ -62,6 +63,15 @@ public class FreeReplyController {
 		vo.setFrno(frno);
 
 		return service.modify(vo) ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@RequestMapping(method = { RequestMethod.POST }, value = "/{frno}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
+	public ResponseEntity<String> thumbUp(@RequestBody ThumbVO vo) {
+		log.info("ThumbVO : " + vo);
+		int thumbCnt = service.check(vo.getId(), vo.getFrno()) ? service.thumbUp(vo) : service.cancelThumbUp(vo);
+		log.info("HEART COUNT : " + thumbCnt);
+		
+		return thumbCnt == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 		
 
