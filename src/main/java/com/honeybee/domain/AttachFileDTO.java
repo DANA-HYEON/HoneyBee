@@ -15,5 +15,4 @@ public class AttachFileDTO {
 	private Long mno;
 	private Long ino;
 
-
 }

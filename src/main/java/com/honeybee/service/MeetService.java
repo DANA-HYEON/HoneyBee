@@ -49,6 +49,11 @@ public interface MeetService {
 
 	public int applyUpdate(Long mno);//모임게시물에서 신청하면 신청인원 update
 
-
 	public int deleteUpdate(EnrollListVO vo);
+	
+	public int updateImg(MeetVO vo); //모임 썸네일 업데이트
+	
+	public MeetVO getImg(Long mno); //모임 썸네일 가져오기
+
+	public String getCid(Long mno, String cid3); //카테고리 이름에 따른 cid가져오기
 }

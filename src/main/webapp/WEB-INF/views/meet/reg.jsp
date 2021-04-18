@@ -18,12 +18,17 @@
 
  <!-- 제이쿼리 ui css -->
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- <!--제이쿼리 style css-->
- <link rel="stylesheet" href="/resources/demos/style.css">
  <!--제이쿼리 js-->
  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
  <!--제이쿼리 ui js-->
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ 
+ <!-- timepicker -->
+ <script type="text/javascript" src="/resources/timepicker/jquery.timepicker.js"></script>
+ <link rel="stylesheet" href="/resources/timepicker/jquery.timepicker.css">
+ <!-- modal -->
+ <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 </head>
 <body>
 <form role="form" action="/meet/reg" method="post">
@@ -43,14 +48,13 @@
                 </div>
                 <div class="content">
                 	<textarea rows="1" placeholder="모임 요약내용을 입력해주세요." name="smry"></textarea>
-                    <!-- <textarea rows="20" placeholder=" 내용을 입력해주세요." name="content"></textarea> -->
                     <textarea name="ir1" id="ir1" rows="10" cols="100"></textarea>
                 </div>
                 <div class="control">
                     <ul>
                         <li class="list +">+</li>
                         <li class="list -">-</li>
-                        <li class="btn"><input type="file" name="uploadFile" multiple>첨부파일</li>
+                        <li class="btn"><input type="file" name="uploadFile2" multiple>첨부파일</li>
                     </ul>
                 </div>
             </div>
@@ -60,13 +64,13 @@
                 <div class="bottom_box">
                     <div class="bot left">
                         <ul class="bottom_content">
-                            <li>모임시작일자 <input type="text" class="datepicker" name="startDt" placeholder="날짜를 선택해주세요." readonly></li>
-                            <li>모임종료일자 <input type="text" class="datepicker" name="endDt" placeholder="날짜를 선택해주세요." readonly></li>
-                            <li>모임모집시작일자 <input type="text" class="datepicker" name="recsDt" placeholder="날짜를 선택해주세요." readonly></li>
-                            <li>모임모집종료일자 <input type="text" name="receDt" class="datepicker" placeholder="날짜를 선택해주세요." readonly></li>
-                            <li>모집인원 <input type="text" name="recNo" placeholder="내용을 입력해주세요."></li>
-                            <li>비용 <input type="checkbox" name="charge" value="N">무료 <input type="checkbox" name="charge" value="Y">유료</li>
-                            <li>온오프라인유무 <input type="checkbox" name=onoff value="ON">온라인 <input type="checkbox" name="onoff" value="OFF">오프라인</li>
+                            <li>모임시작일자 <input type="text" class="datepicker" name="startDt" placeholder="날짜를 선택해주세요." readonly><input class="platanusTime" name="startDt2"  placeholder="시간" readonly/></li>
+                            <li>모임종료일자 <input type="text" class="datepicker" name="endDt" placeholder="날짜를 선택해주세요." readonly><input class="platanusTime" name="endDt2"  placeholder="시간" readonly/></li>
+                            <li>모임모집시작일자 <input type="text" class="datepicker" name="recsDt" placeholder="날짜를 선택해주세요." readonly><input class="platanusTime" name="recsDt2"  placeholder="시간" readonly/></li>
+                            <li>모임모집종료일자 <input type="text" class="datepicker" name="receDt" placeholder="날짜를 선택해주세요." readonly><input class="platanusTime" name="receDt2"  placeholder="시간" readonly/></li>
+                            <li>모집인원 <input id="recNo" type="text" name="recNo" placeholder="내용을 입력해주세요."></li>
+                            <li>비용 <input type="radio" name="charge" value="N">무료 <input type="radio" name="charge" value="Y">유료</li>
+                            <li>온오프라인유무 <input type="radio" name=onoff value="ON">온라인 <input type="radio" name="onoff" value="OFF">오프라인</li>
                             <li>모임장소<input type="text" name="place" placeholder="내용을 입력해주세요."></li>
                             <li>링크<input type="text" name="link" placeholder="대표 링크를 입력해주세요"></li>
                         </ul>
@@ -76,8 +80,15 @@
                     </div>
                     <div class="bot right">
                         <div class="thumb title">썸네일</div>
-                        <button value="첨부파일">첨부파일</button>
-                        <div class="img"><img src="/resources/img/logo.png"></div>
+                        <!-- modal -->
+                        <div id="uploadDiv" class="modal">
+							<input type="file" name="uploadFile">
+							<button id='uploadBtn'>업로드 하기</button>
+						</div>
+						
+                        <p><a href="#uploadDiv" rel="modal:open">사진 업로드</a></p>
+                        <div class="img"><img id="profile" src="/resources/img/logo.png"></div>
+                        <input type="hidden" name="img">
                     </div>
 
                 </div>
@@ -91,9 +102,29 @@
   </form>
 
 
+<script>
+//모집인원 유효성 검사
+   $('#recNo').on('keyup', function fn_nickChk() {
+         var str = $('#recNo').val();
+         var num_pattern = /^[0-9]*$/;
+         
+         if(str.search(num_pattern) == -1){
+        	 alert("숫자만 입력할 수 있습니다.");
+         }
+   });
+</script>
 
 <script>
-//datepicker
+//date, time picker
+	$(".platanusTime").timepicker({
+		timeFormat : "HH:mm",
+		interval : 10,
+		dynamic : false,
+		dropdown : true,
+		scrollbar : true
+	});
+  
+  
   $( function() {
     $( ".datepicker").datepicker();
   } );
@@ -110,10 +141,7 @@
       showMonthAfterYear: true,
       yearSuffix: '년'
   });
-
-  $(function() {
-      $("#datepicker1").datepicker();
-  });
+  
 </script>
 
 <script>
@@ -173,6 +201,17 @@ var elClickedObj = $("button[type='submit']");
 elClickedObj.on("click", function(e){
 		e.preventDefault();
 		console.log("submit clicked");
+		
+		//날짜 date, time 값 합쳐서 보내기
+		var totalstartDt = $('input[name=startDt]').val() + " " +  $('input[name=startDt2]').val()
+		var totalendDt = $('input[name=endDt]').val() + " " +  $('input[name=endDt2]').val()
+		var totalrecsDt = $('input[name=recsDt]').val() + " " +  $('input[name=recsDt2]').val()
+		var totareceDt = $('input[name=receDt]').val() + " " +  $('input[name=receDt2]').val()
+		$('input[name=startDt]').val(totalstartDt);
+		$('input[name=endDt]').val(totalendDt);
+		$('input[name=recsDt]').val(totalrecsDt);
+		$('input[name=receDt]').val(totareceDt);
+		
 		 swal({
 			  title: "정말 모임을 게시하시겠습니까?",
 			  text: "잘못 입력한 부분은 없는지 확인해주세요!",
@@ -186,10 +225,8 @@ elClickedObj.on("click", function(e){
 
 				    swal("게시물 작성이 완료되었습니다!", {
 				      icon: "success",
-				    });
-				    setTimeout(function(){
-					    $("form").submit();
-				    },1000);
+				    }).then((willDelete)=>{$("form").submit();})
+
 			  } else {
 			    swal("게시물 게시가 취소되었습니다!");
 			  }
@@ -212,7 +249,70 @@ elClickedObj.on("click", function(e){
 </script>
 
  <script>
+ //썸네일 사진 업로드
+ $(document).ready(function() {
+			var regex = new RegExp("(.*?)\.(jpg|png|JPG|PNG)$");
+			var maxSize = 5242880;
 
+			//업로드 파일 유효성 검사
+			function checkExtension(fileName, fileSize) {
+
+				if (fileSize >= maxSize) {
+					alert("파일 사이즈 초과");
+					return false;
+				}
+				if (!regex.test(fileName)) {
+					alert("해당 종류의 파일은 업로드 할 수 없습니다.")
+					return false;
+				}
+				return true;
+			}
+
+			var cloneObj = $(".uploadDiv").clone();
+
+			$("#uploadBtn").on("click", function(e) {
+				var formData = new FormData();
+				var inputFile = $("input[name='uploadFile']");
+				
+				//업로드한 썸네일 담기
+				var files = inputFile[0].files;
+				console.log(files);
+				
+				//업로드한 파일 유효성 검사
+				for (var i = 0; i < files.length; i++) {
+					if (!checkExtension(files[i].name, files[i].size)) {
+						return false;
+					}
+					formData.append("uploadFile", files[i]);
+				}
+				
+				
+				$.ajax({
+					url : '/meet/uploadAjaxAction',
+					processData : false,
+					contentType : false,
+					data : formData,
+					type : 'POST',
+					dataType : 'json',
+					success : function(result) {
+						console.log(result);
+						console.log(result[0].fileName);
+						
+					    var date = new Date();
+						var year = date.getFullYear();
+						var month = ("0" + (1 + date.getMonth())).slice(-2);
+						var day = ("0" + date.getDate()).slice(-2);
+					
+						var callFileName = year + "/" + month + "/" + day + "/" + result[0].fileName;
+					 	document.getElementById('profile').src = "display?fileName=" + callFileName;
+					 	$('input[name=img]').val(callFileName);
+						$(".uploadDiv").html(cloneObj.html());
+					}
+				});
+
+			});
+		});
+ 
  </script>
 </body>
 </html>

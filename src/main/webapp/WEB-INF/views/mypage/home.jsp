@@ -11,10 +11,8 @@
 <head>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.js"
 	integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 	crossorigin="anonymous"></script>
@@ -401,7 +399,7 @@ a:hover {
 					formData.append("uploadFile", files[i]);
 				}
 				$.ajax({
-					url : '/mypage/uploadAjaxAction',
+					url : '/meet/uploadAjaxAction',
 					processData : false,
 					contentType : false,
 					data : formData,
@@ -422,7 +420,7 @@ a:hover {
 				"a",
 				function(e) {
 					e.preventDefault();
-					location.href = "http://localhost/meet/get?mno="
+					location.href = "http://localhost:8080/meet/get?mno="
 							+ $(this).attr("value");
 				});
 
@@ -431,7 +429,7 @@ a:hover {
 				"a",
 				function(e) {
 					e.preventDefault();
-					location.href = "http://localhost/mypage/posted?id="
+					location.href = "http://localhost:8080/mypage/posted?id="
 							+ $(this).attr("value");
 				});
 
@@ -446,8 +444,7 @@ a:hover {
 		var month = ("0" + (1 + date.getMonth())).slice(-2);
 		var day = ("0" + date.getDate()).slice(-2);
 
-		document.getElementById('profile').src = "display?fileName=/" + year
-				+ "/" + month + "/" + day + "/" + "${getimg.img}"
+		document.getElementById('profile').src = "display?fileName=/" + year + "/" + month + "/" + day + "/" + "${getimg.img}"
 	</script>
 
 

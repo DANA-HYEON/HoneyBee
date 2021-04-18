@@ -145,3 +145,7 @@ li{list-style: none;}
 button{
     border: solid 1px darkgrey;
 }
+
+.platanusTime{
+	width:80px; 
+}

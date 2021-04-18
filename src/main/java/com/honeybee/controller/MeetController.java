@@ -8,6 +8,9 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,15 +30,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.honeybee.domain.AttachFileDTO;
+import com.honeybee.domain.CodeTableVO;
 import com.honeybee.domain.Criteria;
 import com.honeybee.domain.EnrollListVO;
 import com.honeybee.domain.MeetVO;
 import com.honeybee.domain.PageDTO;
-import com.honeybee.domain.ReplyVO;
 import com.honeybee.domain.ThumbVO;
 import com.honeybee.service.CodeTableService;
 import com.honeybee.service.EnrollListService;
@@ -43,6 +49,7 @@ import com.honeybee.service.MeetService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import net.coobird.thumbnailator.Thumbnailator;
 
 @Controller
 @Log4j
@@ -60,6 +67,7 @@ public class MeetController {
 		log.info("list total");
 		log.info("list total : " + cri);
 		System.out.println("category pick : " + cri.getCid());
+		model.addAttribute("upper", cService.upperregion());
 
 		//카테고리 미 선택시 리스트
 		if(cri.getCid() == null || cri.getCid().equals("카테고리") || cri.getCid().equals("M000")) {
@@ -68,7 +76,8 @@ public class MeetController {
 			model.addAttribute("list", service.getList(cri)); //모임게시물 리스트 가져오기
 			model.addAttribute("category", cService.getCatList());
 			model.addAttribute("pickCat", "M000");
-
+			
+		
 			int total = service.getTotal(cri);
 			log.info("total : " + total);
 			model.addAttribute("pageMaker", new PageDTO(cri, total));
@@ -96,10 +105,11 @@ public class MeetController {
 
 	@PostMapping("/reg")
 	public String register(MeetVO meet, HttpServletRequest request, RedirectAttributes rttr) {
-		log.info("register : " + meet);
+		log.info("register data : " + meet);
+		
 		meet.setContent(request.getParameter("ir1"));
 		service.register(meet);
-
+		
 		rttr.addFlashAttribute("result", meet.getMno());
 
 		return "redirect:/meet/list";
@@ -126,14 +136,18 @@ public class MeetController {
 		model.addAttribute("category", cService.getCatList());
 		model.addAttribute("pickedCat", vo.getCid());
 		model.addAttribute("categoryName", service.getCategoryName(mno)); //해당 모임게시물의 카테고리 이름 cname 보내기
+		model.addAttribute("getimg", service.getImg(mno));
 	}
 
 
 	@PostMapping("/modify")
 	public String modify(MeetVO meet, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr, Model model, HttpServletRequest request) {
-		log.info("modify : " + meet);
+		log.info("modify : " + meet.getCid());
+		log.info("modify : " + meet.getCid3());
 
-
+		String cid = service.getCid(meet.getMno(), meet.getCid3());
+		meet.setCid(cid);
+		meet.setContent(request.getParameter("ir1"));
 	    System.out.println("meet.getCid() : " + meet.getCid());
 
 		if(service.modify(meet)) {
@@ -294,4 +308,115 @@ public class MeetController {
 				}
 
 			}
+	
+		@ResponseBody
+		@RequestMapping(value = "/detailregion", method = RequestMethod.POST)
+		public List<CodeTableVO> detailregion(String cid) {
+			log.info(cid);
+			log.info("세부지역 cid체크입니다~~" + cService.detailregion(cid));
+			return cService.detailregion(cid);
+		}
+		
+		private String getFolder() {
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+			String str = sdf.format(date);
+			return str.replace("-", File.separator);
+
+		}
+		
+		private boolean checkImageType(File file) {
+			try {
+				String contentType = Files.probeContentType(file.toPath());
+				return contentType.startsWith("image");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return false;
+		}
+		
+		@GetMapping("/display")
+		@ResponseBody
+		public ResponseEntity<byte[]> getFile(String fileName, Model model) {
+			log.info("fileName: " + fileName);
+			File file = new File("c:\\upload\\" + fileName);
+
+			log.info("file: " + file);
+
+			ResponseEntity<byte[]> result = null;
+
+			try {
+				HttpHeaders header = new HttpHeaders();
+
+				header.add("Content-Type", Files.probeContentType(file.toPath()));
+				result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
+
+		@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+		@ResponseBody
+		public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile, Long mno, Model model) {
+			List<AttachFileDTO> list = new ArrayList<>();
+			String uploadFolder = "C:\\upload"; //파일 경로 
+			String uploadFolderPath = getFolder();
+			log.info("uploadFolderPath : " + uploadFolderPath);
+			
+			// make Folder----------
+			File uploadPath = new File(uploadFolder, uploadFolderPath);
+			if (uploadPath.exists() == false) {
+				uploadPath.mkdirs();
+			}
+			
+			for (MultipartFile multipartFile : uploadFile) {
+				AttachFileDTO attachDTO = new AttachFileDTO();
+				String extension = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().indexOf(".") + 1);
+				
+				log.info("extension : " + extension); 
+				
+				//uuid 생성
+				String uuid = UUID.randomUUID().toString();
+				String uploadFileName = "HOHO995@naver.com" + uuid +  "." + extension; //아이디 + uuid + 확장자
+				log.info("uploadFileName : "+ uploadFileName);
+				uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
+				log.info("uploadFileName : "+ uploadFileName);
+				
+				
+				attachDTO.setFileName(uploadFileName);
+				
+				log.info("mno : " + mno);
+				if(mno != null) {
+					//모임 게시물 수정 시 DB에 이미지 업데이트
+					MeetVO vo = new MeetVO();
+					attachDTO.setMno(mno);
+					vo.setMno(mno);
+					vo.setImg(uploadFileName);
+					service.updateImg(vo);
+				}
+
+
+				try {
+					File saveFile = new File(uploadPath, uploadFileName);
+					multipartFile.transferTo(saveFile);
+					attachDTO.setUploadPath(uploadFolderPath);
+					
+					//이미지 파일인지 체크
+					if (checkImageType(saveFile)) {
+						attachDTO.setImage(true);
+						FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
+						Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
+						thumbnail.close();
+					}
+					
+					list.add(attachDTO);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return new ResponseEntity<>(list, HttpStatus.OK);
+		}
 	}

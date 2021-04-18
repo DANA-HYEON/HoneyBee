@@ -21,46 +21,8 @@
 
     <!-- sweetAlert -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-     <style>
-      #modify {
-        position: absolute;
-            bottom: 3px;
-            right: 10px;
-    	}
-
-     #delete {
-        position: absolute;
-            bottom: 3px;
-            right: 60px;
-   	 }
-
-   	 #reply {
-   		position: absolute;
-            bottom: 3px;
-            right: 110px;
-   	 }
-
-   	 .post-comments {
-   	  position : relative;
-   	 }
-
-   	 i {
-   	  position : absolute;
-   	  left : -105px;
-   	  top : 30px;
-   	 }
-
-   	 .replyList{
-   	 background-color:transparent;
-   	 border: none;
-   	 width : 500px;
-   	 }
-
-
-   	 /* input:focus {outline:none};
-   	 textarea:focus {outline: none}; */
-   	 input:focus, select:focus, option:focus, textarea:focus, button:focus{outline: none};
-    </style>
+	<!-- naver map api -->
+	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=i1ygn9fyrm"></script>
 </head>
 <body>
 
@@ -78,7 +40,14 @@
     <div class="total">
     <div class="mid">
       <div class="meet left">
-        <img src="/resources/img/logo.png">
+       <c:choose>
+         <c:when test="${meet.img == null}">
+         <td><img src='/resources/img/logo.png'></td>
+         </c:when>
+         <c:when test="${meet.img != null}">
+         <td><img src='display?fileName=<c:out value="${meet.img}" />'></td>
+         </c:when>
+       </c:choose>
       </div>
 
       <div class="meet right">
@@ -100,7 +69,7 @@
               <li>취소인원   <c:out value="${meet.cnclNo}"/></li>
               <li>유무료구분   <c:out value="${meet.charge}"/></li>
               <li>온오프라인유무   <c:out value="${meet.onoff}"/></li>
-              <li>링크   <c:out value="${meet.link}"/></li>
+              <li>링크 <a id="link" href ="" target="_blank">${meet.link}</a></li>
               <li>모임개설일자   <fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${meet.regDt}" /></li>
               <li>찜수   <c:out value="${meet.thumb}"/></li>
               <li>조회수   <c:out value="${meet.hit}"/></li>
@@ -122,13 +91,14 @@
         <c:out value="${meet.id}"/>
 	        </div>
       </div>
-      <div class="text">
+      <div class="text" style="margin-bottom:100px;">
       ${meet.content}
-      <!-- <textarea rows="20" class="contents" name="content" style="width:100%; height:auto; border: none;" readonly></textarea> -->
-
       </div>
-
+      
+	  <h6>모임 장소</h6>
+      <div class="map" id="map" style="width:100%;height:500px;"></div>
       <hr class="second_line" style="border:1px color= silver;" width="90%">
+      
 
       <button data-oper='modify' class="btn btn-default" >수정하기</button>
       <button type="reset" data-oper='remove'>모임 삭제</button>
@@ -172,6 +142,14 @@
   <script type="text/javascript" src="/resources/js/meetThumb.js"></script>
   <script type="text/javascript" src="/resources/js/meetApply.js"></script>
 
+  <script>
+  $(document).ready(function(){
+	   var link = 'http://' + '<c:out value="${meet.link}"/>';
+	   console.log(link);
+	   $("#link").prop('href', link);  
+  });
+   
+  </script>
   <script>
   var mnoValue = '<c:out value="${meet.mno}"/>';
   var eno = "HOHO995@naver.com" + mnoValue;
@@ -266,6 +244,8 @@
 		  }
 	  });
   }
+  
+  
 
   //찜하기
   $(document).on("click", "#wish", function(e){
@@ -610,7 +590,7 @@
 
    </script>
 
-   <script>
+<script>
    $(document).ready(function($) {
 
 	   var scrollPosition = $(".text-success").offset().top;
@@ -619,8 +599,49 @@
                $('html,body').animate({scrollTop:scrollPosition},700);
        });
 });
-   </script>
-   <script>
-	 autosize($("textarea"));
-	</script>
+</script>
+<script>
+  autosize($("textarea"));
+ </script>
+ 
+ 
+ <script>
+//naver map api
+var HOME_PATH = window.HOME_PATH || '.';
+
+var cityhall = new naver.maps.LatLng(37.5666805, 126.9784147),
+    map = new naver.maps.Map('map', {
+        center: cityhall.destinationPoint(0, 500),
+        zoom: 15
+    }),
+    marker = new naver.maps.Marker({
+        map: map,
+        position: cityhall
+    });
+
+var contentString = [
+        '<div class="iw_inner">',
+        '   <h3>서울특별시청</h3>',
+        '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
+        '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
+        '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
+        '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
+        '   </p>',
+        '</div>'
+    ].join('');
+
+var infowindow = new naver.maps.InfoWindow({
+    content: contentString
+});
+
+naver.maps.Event.addListener(marker, "click", function(e) {
+    if (infowindow.getMap()) {
+        infowindow.close();
+    } else {
+        infowindow.open(map, marker);
+    }
+});
+
+infowindow.open(map, marker);
+</script>
 <%@include file="../include/footer.jsp" %>

@@ -84,6 +84,4 @@ public class FreeServiceImpl implements FreeService {
 		return mapper.checkThumbed(id, fno) == null;
 	}
 
-	
-
 }

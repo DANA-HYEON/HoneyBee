@@ -34,5 +34,4 @@ public class MeetVO {
 	private Date updDt; //모임수정일자
 	private Date delDt; //모임삭제일자
 	
-	private List<MeetAttachVO> attachList; //첨부파일
 }

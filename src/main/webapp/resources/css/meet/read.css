@@ -155,3 +155,39 @@
     width: 100%;
     margin-top: 15px;
 }
+
+#modify {
+        position: absolute;
+            bottom: 3px;
+            right: 10px;
+    	}
+
+ #delete {
+    position: absolute;
+    bottom: 3px;
+    right: 60px;
+ }
+
+ #reply {
+	position: absolute;
+    bottom: 3px;
+    right: 110px;
+ }
+
+ .post-comments {
+	  position : relative;
+ }
+
+ i {
+	  position : absolute;
+	  left : -105px;
+	  top : 30px;
+ }
+
+ .replyList{
+	 background-color:transparent;
+	 border: none;
+	 width : 500px;
+ }
+
+ input:focus, select:focus, option:focus, textarea:focus, button:focus{outline: none};

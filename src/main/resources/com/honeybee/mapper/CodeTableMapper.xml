@@ -14,8 +14,7 @@
 		SELECT * FROM CODE_TABLE WHERE CTYPE='시도'
 	</select>
 	
-	<select id="detailregion"
-	resultType="com.honeybee.domain.CodeTableVO">
-	select cname from code_table where (substr(cid,0) like  #{cid} || '%') and cid != #{cid}
+	<select id="detailregion" resultType="com.honeybee.domain.CodeTableVO">
+	select CNAME from code_table where (substr(CID,0) like  #{cId} || '%') and CID != #{cId}
 	</select>
 </mapper>

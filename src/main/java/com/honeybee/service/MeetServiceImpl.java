@@ -132,28 +132,6 @@ public class MeetServiceImpl implements MeetService {
 	}
 
 
-	@Override
-	public boolean views(Long mno) {
-		log.info("counting views.............");
-		return mapper.countViews(mno) == 1;
-	}
-
-	@Transactional
-	@Override
-	public boolean thumbs(ThumbVO vo) {
-		log.info("counting thumbs............");
-
-		insertThumbList(vo);
-		return mapper.countThumbs(vo.getMno()) == 1;
-	}
-
-	@Override
-	public void insertThumbList(ThumbVO vo) {
-		log.info("insert into thumb_list...........");
-		mapper.insertThumbList(vo);
-	}
-
-
 	@Transactional
 	@Override
 	public boolean deleteThumbList(ThumbVO vo) {
@@ -181,17 +159,21 @@ public class MeetServiceImpl implements MeetService {
 		return mapper.deleteUpdate(vo.getMno());
 	}
 
-
 	@Override
-	public int applyUpdate(Long mno) {
-		log.info("updaet meet CURRNO...........");
-		return mapper.applyUpdate(mno);
+	public int updateImg(MeetVO vo) {
+		log.info("update meet Img.................");
+		return mapper.updateImg(vo.getMno(), vo.getImg());
 	}
 
 	@Override
-	public int deleteUpdate(EnrollListVO vo) {
-		log.info("update meet currRno-1 and CNCLNO+1..........");
-		return mapper.deleteUpdate(vo.getMno());
+	public MeetVO getImg(Long mno) {
+		log.info("get Img from meet............");
+		return mapper.getImg(mno);
 	}
 
+	@Override
+	public String getCid(Long mno, String cid3) {
+		log.info("get Cid from meet.............");
+		return mapper.getCid(mno, cid3);
+	}
 }
