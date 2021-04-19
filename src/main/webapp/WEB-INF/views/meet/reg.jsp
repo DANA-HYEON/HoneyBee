@@ -23,7 +23,7 @@
  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
  <!--제이쿼리 ui js-->
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
- 
+
  <!-- timepicker -->
  <script type="text/javascript" src="/resources/timepicker/jquery.timepicker.js"></script>
  <link rel="stylesheet" href="/resources/timepicker/jquery.timepicker.css">
@@ -86,7 +86,7 @@
 							<input type="file" name="uploadFile">
 							<button id='uploadBtn'>업로드 하기</button>
 						</div>
-						
+
                         <p><a href="#uploadDiv" rel="modal:open">사진 업로드</a></p>
                         <div class="img"><img id="profile" src="/resources/img/logo.png"></div>
                         <input type="hidden" name="img">
@@ -108,7 +108,7 @@
    $('#recNo').on('keyup', function fn_nickChk() {
          var str = $('#recNo').val();
          var num_pattern = /^[0-9]*$/;
-         
+
          if(str.search(num_pattern) == -1){
         	 alert("숫자만 입력할 수 있습니다.");
          }
@@ -124,8 +124,8 @@
 		dropdown : true,
 		scrollbar : true
 	});
-  
-  
+
+
   $( function() {
     $( ".datepicker").datepicker();
   } );
@@ -142,7 +142,7 @@
       showMonthAfterYear: true,
       yearSuffix: '년'
   });
-  
+
 </script>
 
 <script>
@@ -300,7 +300,7 @@ var elClickedObj = $("button[type='submit']");
 elClickedObj.on("click", function(e){
 		e.preventDefault();
 		console.log("submit clicked");
-		
+
 		//날짜 date, time 값 합쳐서 보내기
 		var totalstartDt = $('input[name=startDt]').val() + " " +  $('input[name=startDt2]').val()
 		var totalendDt = $('input[name=endDt]').val() + " " +  $('input[name=endDt2]').val()
@@ -310,7 +310,7 @@ elClickedObj.on("click", function(e){
 		$('input[name=endDt]').val(totalendDt);
 		$('input[name=recsDt]').val(totalrecsDt);
 		$('input[name=receDt]').val(totareceDt);
-		
+
 		 swal({
 			  title: "정말 모임을 게시하시겠습니까?",
 			  text: "잘못 입력한 부분은 없는지 확인해주세요!",
@@ -372,11 +372,11 @@ elClickedObj.on("click", function(e){
 			$("#uploadBtn").on("click", function(e) {
 				var formData = new FormData();
 				var inputFile = $("input[name='uploadFile']");
-				
+
 				//업로드한 썸네일 담기
 				var files = inputFile[0].files;
 				console.log(files);
-				
+
 				//업로드한 파일 유효성 검사
 				for (var i = 0; i < files.length; i++) {
 					if (!checkExtension(files[i].name, files[i].size)) {
@@ -384,8 +384,8 @@ elClickedObj.on("click", function(e){
 					}
 					formData.append("uploadFile", files[i]);
 				}
-				
-				
+
+
 				$.ajax({
 					url : '/meet/uploadAjaxAction',
 					processData : false,
@@ -396,12 +396,12 @@ elClickedObj.on("click", function(e){
 					success : function(result) {
 						console.log(result);
 						console.log(result[0].fileName);
-						
+
 					    var date = new Date();
 						var year = date.getFullYear();
 						var month = ("0" + (1 + date.getMonth())).slice(-2);
 						var day = ("0" + date.getDate()).slice(-2);
-					
+
 						var callFileName = year + "/" + month + "/" + day + "/" + result[0].fileName;
 					 	document.getElementById('profile').src = "display?fileName=" + callFileName;
 					 	$('input[name=img]').val(callFileName);
@@ -411,7 +411,52 @@ elClickedObj.on("click", function(e){
 
 			});
 		});
- 
+
+			var cloneObj = $(".uploadDiv").clone();
+
+			$("#uploadBtn").on("click", function(e) {
+				var formData = new FormData();
+				var inputFile = $("input[name='uploadFile']");
+
+				//업로드한 썸네일 담기
+				var files = inputFile[0].files;
+				console.log(files);
+
+				//업로드한 파일 유효성 검사
+				for (var i = 0; i < files.length; i++) {
+					if (!checkExtension(files[i].name, files[i].size)) {
+						return false;
+					}
+					formData.append("uploadFile", files[i]);
+				}
+
+
+				$.ajax({
+					url : '/meet/uploadAjaxAction',
+					processData : false,
+					contentType : false,
+					data : formData,
+					type : 'POST',
+					dataType : 'json',
+					success : function(result) {
+						console.log(result);
+						console.log(result[0].fileName);
+
+					    var date = new Date();
+						var year = date.getFullYear();
+						var month = ("0" + (1 + date.getMonth())).slice(-2);
+						var day = ("0" + date.getDate()).slice(-2);
+
+						var callFileName = year + "/" + month + "/" + day + "/" + result[0].fileName;
+					 	document.getElementById('profile').src = "display?fileName=" + callFileName;
+					 	$('input[name=img]').val(callFileName);
+						$(".uploadDiv").html(cloneObj.html());
+					}
+				});
+
+			});
+		});
+
  </script>
 </body>
 </html>

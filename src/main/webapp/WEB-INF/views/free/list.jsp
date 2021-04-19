@@ -50,7 +50,7 @@
                     <option value="C"  <c:out value='${pageMaker.cri.type eq "C" ? selected : ""}'/>>내용</option>
                     <option value="W"  <c:out value='${pageMaker.cri.type eq "W" ? selected : ""}'/>>작성자</option>
                 </select>
-                <input type="text" name="keyword" />
+                <input type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>" />
                 <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }" />
                 <input type="hidden" name="amount" value="${pageMaker.cri.amount }" />
                 <button>Search</button>

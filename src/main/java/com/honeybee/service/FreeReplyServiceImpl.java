@@ -105,4 +105,11 @@ public class FreeReplyServiceImpl implements FreeReplyService {
 	public void freplyremove(Long mrno) { // 내가 자유게시물에 쓴 댓글 삭제
 		mapper.freplyremove(mrno);
 	}
+
+	@Override
+	public boolean checkReply(Long frno) {
+		return mapper.checkReply(frno) == null ? true : false; // 답글 없으면 true
+	}
+
+
 }

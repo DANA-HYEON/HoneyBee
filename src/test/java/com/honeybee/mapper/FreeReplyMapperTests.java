@@ -1,5 +1,7 @@
 package com.honeybee.mapper;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -26,6 +28,7 @@ public class FreeReplyMapperTests {
 	@Test
 	public void testMapper() {
 		log.info(mapper);
+		// 이건 어떻게 하면 assertTrue로 테스트할 수 있을까..?
 	}
 	
 	
@@ -40,27 +43,41 @@ public class FreeReplyMapperTests {
 			
 			mapper.insert(vo);
 		});
+		
 	}
 	
 	@Test
 	public void testRead() {
 		FreeReplyVO vo = mapper.read(3L);
 		log.info(vo);
+		
+		assertTrue(vo != null && vo.getDeldt() == null);
 	}
 	
 	@Test
 	public void testUpdate() {
-		FreeReplyVO vo = mapper.read(2L);
+		FreeReplyVO vo = mapper.read(284L);
+		String oldReply = vo.getReply();
+		
 		vo.setReply("이거 수정했어요");
 		
 		int cnt = mapper.update(vo);
+		String newReply = vo.getReply();
+		
+		log.info("oldReply : " + oldReply);
+		log.info("newReply : " + newReply);
+		
 		log.info("UPDATE COUNT: " + cnt);
+		
+		assertTrue(cnt == 1 && !oldReply.equals(newReply));
 	}
 	
 	@Test
 	public void testDelete() {
-		int cnt = mapper.delete(4L);
+		int cnt = mapper.delete(298L);
 		log.info("DELETE COUNT: " + cnt);
+		
+		assertTrue(cnt == 1);
 	}
 	
 	@Test
@@ -69,5 +86,6 @@ public class FreeReplyMapperTests {
 		List<FreeReplyVO> list = mapper.getList(cri, fnoArr[0]);
 		list.forEach(reply -> log.info(reply));
 	}
+	
 	
 }

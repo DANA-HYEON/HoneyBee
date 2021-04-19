@@ -6,7 +6,7 @@
 	<select id="getList" resultType="com.honeybee.domain.FreeVO">
 		<![CDATA[
 			select
-				FNO, ID, TITLE, TO_CHAR(CONTENT) as content, HIT, THUMB, REGDT, UPDDT
+				FNO, ID, TITLE, TO_CHAR(CONTENT) as content, HIT, THUMB, REPLYCNT, REGDT, UPDDT, DELDT
 			from FREE
 			where FNO > 0 and DELDT is null
 		]]>
@@ -33,44 +33,44 @@
 	<!-- READ -->
 	<select id="read" resultType="com.honeybee.domain.FreeVO">
 		select
-			FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, DELDT
+			FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REPLYCNT, REGDT, UPDDT, DELDT
 		from FREE
-		where FNO = #{fno}
+		where FNO = #{fno} and DELDT is null
 	</select>
 
 	<!-- UPDATE -->
 	<update id="update">
 		update FREE
-		set id = #{id},
-			title = #{title},
-			content = #{content},
-			upddt = sysdate
-		where fno = #{fno}
+		set ID = #{id},
+			TITLE = #{title},
+			CONTENT = #{content},
+			UPDDT = SYSDATE
+		where FNO = #{fno}
 	</update>
 
 	<!-- DELETE -->
 	<delete id="delete">
 		update FREE
-		set deldt = sysdate
-		where fno = #{fno}
+		set DELDT = SYSDATE
+		where FNO = #{fno} and DELDT is null
 	</delete>
 
 	<sql id="criteria">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 			<foreach item='type' collection="typeArr">
-				<!-- <trim prefix="OR"> -->
-				<choose>
-					<when test="type == 'T'.toString()">
-						title like '%' || #{keyword} || '%'
-					</when>
-					<when test="type == 'C'.toString()">
-						content like '%' || #{keyword} || '%'
-					</when>
-					<when test="type == 'W'.toString()">
-						id like '%' || #{keyword} || '%'
-					</when>
-				</choose>
-				<!-- </trim> -->
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							title like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'C'.toString()">
+							content like '%' || #{keyword} || '%'
+						</when>
+						<when test="type == 'W'.toString()">
+							id like '%' || #{keyword} || '%'
+						</when>
+					</choose>
+				</trim>
 			</foreach>
 		</trim>
 	</sql>
@@ -78,12 +78,12 @@
 	<select id="getListWithPaging" resultType="com.honeybee.domain.FreeVO">
 		<![CDATA[
 			select
-				fno, id, title, content, hit, thumb, regdt, upddt, replycnt
+				FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, REPLYCNT
 			from (
 				select /*+INDEX_DESC(FREE pk_free) */
-					rownum rn, fno, id, title, content, hit, thumb, regdt, upddt, replycnt
+					rownum rn, FNO, ID, TITLE, TO_CHAR(CONTENT) AS CONTENT, HIT, THUMB, REGDT, UPDDT, REPLYCNT
 				from FREE
-				where 
+				where
 		]]>
 
 		<include refid="criteria"></include>
@@ -113,15 +113,15 @@
 	<!-- 게시물에 입력된 댓글 개수 -->
 	<update id="updateReplyCnt">
 		update FREE
-		set replycnt = replycnt + #{amount}
-		where fno = #{fno}
+		set REPLYCNT = REPLYCNT + #{amount}
+		where FNO = #{fno} and DELDT is null
 	</update>
 
 	<!--  게시물 조회수 + 1 -->
 	<update id="hitup">
 		update FREE
-		set hit = hit + #{amount}
-		where fno = #{fno}
+		set HIT = HIT + #{amount}
+		where FNO = #{fno}
 	</update>
 
 	<!--  게시물 좋아요  -->
@@ -138,7 +138,7 @@
 
 	<!-- 특정 회원이 게시물 좋아요 했는지 여부 확인 -->
 	<select id="checkThumbed" resultType="com.honeybee.domain.ThumbVO">
-		select ID, FNO
+		select THUMBNO, ID, FNO
 		from THUMBED
 		where THUMBNO = #{id}||#{fno}||'F'
 	</select>

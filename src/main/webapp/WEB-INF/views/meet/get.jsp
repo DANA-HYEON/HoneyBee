@@ -94,11 +94,11 @@
       <div class="text" style="margin-bottom:100px;">
       ${meet.content}
       </div>
-      
+
 	  <h6>모임 장소</h6>
       <div class="map" id="map" style="width:100%;height:500px;"></div>
       <hr class="second_line" style="border:1px color= silver;" width="90%">
-      
+
 
       <button data-oper='modify' class="btn btn-default" >수정하기</button>
       <button type="reset" data-oper='remove'>모임 삭제</button>
@@ -146,9 +146,9 @@
   $(document).ready(function(){
 	   var link = 'http://' + '<c:out value="${meet.link}"/>';
 	   console.log(link);
-	   $("#link").prop('href', link);  
+	   $("#link").prop('href', link);
   });
-   
+
   </script>
   <script>
   var mnoValue = '<c:out value="${meet.mno}"/>';
@@ -244,8 +244,10 @@
 		  }
 	  });
   }
-  
-  
+
+
+
+
 
   //찜하기
   $(document).on("click", "#wish", function(e){
@@ -603,8 +605,8 @@
 <script>
   autosize($("textarea"));
  </script>
- 
- 
+
+
  <script>
 //naver map api
 var HOME_PATH = window.HOME_PATH || '.';

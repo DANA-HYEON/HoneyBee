@@ -221,6 +221,8 @@ a:hover {
 	</div>
 	<div class="user_status"></div>
 	<form action="myinfomodify" method="post">
+	<input type="hidden" id="region" name="region" value="">
+	<input type="hidden" id="category" name ="category" value="">
 		<div class="user_info">
 			<div class="user_info_name">회원정보</div>
 			<div class="user_gender">
@@ -231,84 +233,57 @@ a:hover {
 			<div class="user_birth">
 				<span>생년월일</span> <select id="user_birth_year" name="year">
 					<option>년도</option>
-					<option>1986</option>
-					<option>1987</option>
-					<option>1988</option>
-					<option>1989</option>
-					<option>1990</option>
-					<option>1991</option>
-					<option>1992</option>
-					<option>1993</option>
-					<option>1994</option>
-					<option>1995</option>
-					<option>1996</option>
-					<option>1997</option>
-					<option>1998</option>
-					<option>1999</option>
-					<option>2000</option>
-					<option>2001</option>
-					<option>2002</option>
-					<option>2003</option>
-					<option>2004</option>
-					<option>2005</option>
-					<option>2006</option>
-					<option>2007</option>
-					<option>2008</option>
-					<option>2009</option>
-					<option>2010</option>
+					<c:forEach var="i" begin="1900" end="2021" step="1">
+					<option value='${i}'>${i}</option>
+					</c:forEach>
+				
 
 				</select> <select id="user_birth_month" name="month">
 					<option>월</option>
-					<option>12</option>
-					<option>11</option>
-					<option>10</option>
-					<option>9</option>
-					<option>8</option>
-					<option>7</option>
-					<option>6</option>
-					<option>5</option>
-					<option>4</option>
-					<option>3</option>
-					<option>2</option>
-					<option>1</option>
+					<c:forEach var="i" begin="1" end="12" step="1">
+					<c:choose>
+					<c:when test='${i lt 10}'>
+					<c:set var="test" value="0${i}"/>
+					<option value= <c:out value="${test}"/>>${i}</option>
+					</c:when>
+					<c:otherwise> <option value='${i}'>${i}</option></c:otherwise>
+					</c:choose>
+					</c:forEach>
 				</select> <select id="user_birth_day" name="day">
 					<option>일</option>
-					<option>12</option>
-					<option>11</option>
-					<option>10</option>
-					<option>9</option>
-					<option>8</option>
-					<option>7</option>
-					<option>6</option>
-					<option>5</option>
-					<option>4</option>
-					<option>3</option>
-					<option>2</option>
-					<option>1</option>
+					<c:forEach var="i" begin="1" end="31" step="1">
+					<c:choose>
+					<c:when test='${i lt 10}'>
+					<c:set var="test" value="0${i}"/>
+					<option value= <c:out value="${test}"/>>${i}</option>
+					</c:when>
+					<c:otherwise> <option value='${i}'>${i}</option></c:otherwise>
+					</c:choose>
+					</c:forEach>
 				</select>
 			</div>
-			<div class="user_region">
+			<div class="user_region" id="user_region">
 				<span>관심지역</span> <select id="user_region_select" name="region">
-					<option>관심지역</option>
+					<option disabled>관심지역</option>
 					<c:forEach items="${upper}" var="upper">
 						<option value="${upper.CId}">${upper.CName}</option>
 					</c:forEach>
 				</select> <select id="user_detailregion_select">
-					<option>관심지역</option>
+					<option disabled>세부지역</option>
 				</select>
 			</div>
 
 
 
-			<div class="user_category">
+			<div class="user_category" id="user_category">
 				<span>관심분야</span> <select id="user_category_select" name="category">
-					<option>관심분야</option>
+					<option disabled>관심분야</option>
 					<c:forEach items="${cat}" var="cat">
-						<option value="${cat.CId}">${cat.CName}</option>
+						<option value="${cat.CName}">${cat.CName}</option>
 					</c:forEach>
 				</select> <br>
 				<div class="pwd_change_button">
-					<button
+					<button id="submit"
 						style="width: 200px; height: 40px; background-color: yellow; color: black; border: none;">적용</button>
 				</div>
 			</div>
@@ -393,6 +368,45 @@ a:hover {
 
 
 	<script type="text/javascript">
+	$(document).ready(function(){
+		var hope="${hope}";
+		var sex="${user.sex}";
+		var birth="${user.birth}"
+		var year=birth.substring(0,4);
+		var month=birth.substring(4,6);
+		var day=birth.substring(6,8);
+		alert(month);
+		alert(day);
+		if(sex==='1'){
+			$('.user_gender_male').prop("checked", true);
+		}else{
+			$('.user_gender_female').prop("checked", true);
+		}
+		
+		$('#user_birth_year option[value='+ year +']').attr('selected', true);
+			$('#user_birth_month option[value='+ month +']').attr('selected', true);
+			$('#user_birth_day option[value='+ day +']').attr('selected', true);
+		
+		
+	
+		
+				
+				
+		alert(hope);
+		/* $('.user_gender_male').prop("checked", true);
+ 		$('.user_gender_female').prop("checked", false);
+		$('input[name=region]').prop("checked", false);
+		$('input[name=region]').prop("checked", false);
+		$('input[name=region]').prop("checked", false); 
+		
+		 */
+		
+		
+	});
+
+	
+	var arr = new Array(); //관심 지역
+	var arr2 = new Array(); //관심 카테고리
 		$('#user_region_select').on(
 				'change',
 				function() {
@@ -415,12 +429,42 @@ a:hover {
 				});
 
 		$('#user_detailregion_select').on('change', function() {
-			alert($('#user_region_select').val());
+		 	if(arr.length<=2){
+		 		if(arr.indexOf($('#user_detailregion_select').val(),0)!=-1){
+		 			alert("동일한 지역은 입력 할 수 없습니다.");
+		 			return false;
+		 		}
+		 	$('#user_region').append('<p name:selectedregion >' + $('#user_detailregion_select').val());
+			arr.push($('#user_detailregion_select').val());
+			alert($('#user_detailregion_select').val());
+		 	$('input[name=region]').val(arr);
+		 	}else{alert("관심지역은 세 개까지 추가할 수 있습니다.")}
 		});
 
 		$('#user_category_select').on('change', function() {
-			alert($('#user_category_select').val());
+			if(arr2.length<=2){
+				if(arr2.indexOf($('#user_category_select').val(),0)!=-1){
+		 			alert("동일한 카테고리는 입력 할 수 없습니다.");
+		 			return false;
+		 		}
+			 	$('#user_category').append('<p name:selectedregion >' + $('#user_category_select').val());
+				arr2.push($('#user_category_select').val());
+				$('#category').attr('value',arr2)
+			}else{alert("관심카테고리는 세 개까지 추가할 수 있습니다.")}
+		
 		});
+		
+		$(document).on('click', 'p', function(e){
+			var regOrder = arr.indexOf($(this).text(),0);
+			var catOrder = arr2.indexOf($(this).text(),0);
+			arr.splice(regOrder, 1);
+			arr2.splice(catOrder, 1);
+ 			$(this).remove(); 
+			
+		});
+
+		
+	
 
 		/* 
 		 $('#user_birth_year').on('change', function() {

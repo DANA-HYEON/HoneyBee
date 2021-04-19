@@ -76,8 +76,8 @@ public class MeetController {
 			model.addAttribute("list", service.getList(cri)); //모임게시물 리스트 가져오기
 			model.addAttribute("category", cService.getCatList());
 			model.addAttribute("pickCat", "M000");
-			
-		
+
+
 			int total = service.getTotal(cri);
 			log.info("total : " + total);
 			model.addAttribute("pageMaker", new PageDTO(cri, total));
@@ -106,10 +106,10 @@ public class MeetController {
 	@PostMapping("/reg")
 	public String register(MeetVO meet, HttpServletRequest request, RedirectAttributes rttr) {
 		log.info("register data : " + meet);
-		
+
 		meet.setContent(request.getParameter("ir1"));
 		service.register(meet);
-		
+
 		rttr.addFlashAttribute("result", meet.getMno());
 
 		return "redirect:/meet/list";
@@ -239,7 +239,7 @@ public class MeetController {
 		return eService.delete(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	
+
 	@RequestMapping("/file_uploader_html5")
 	public void file_uploader_html5(HttpServletRequest request, HttpServletResponse response){
 		try {
@@ -309,7 +309,7 @@ public class MeetController {
 				}
 
 			}
-	
+
 		@ResponseBody
 		@RequestMapping(value = "/detailregion", method = RequestMethod.POST)
 		public List<CodeTableVO> detailregion(String cid) {
@@ -317,7 +317,7 @@ public class MeetController {
 			log.info("세부지역 cid체크입니다~~" + cService.detailregion(cid));
 			return cService.detailregion(cid);
 		}
-		
+
 		private String getFolder() {
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -326,7 +326,7 @@ public class MeetController {
 			return str.replace("-", File.separator);
 
 		}
-		
+
 		private boolean checkImageType(File file) {
 			try {
 				String contentType = Files.probeContentType(file.toPath());
@@ -336,7 +336,7 @@ public class MeetController {
 			}
 			return false;
 		}
-		
+
 		@GetMapping("/display")
 		@ResponseBody
 		public ResponseEntity<byte[]> getFile(String fileName, Model model) {
@@ -362,32 +362,32 @@ public class MeetController {
 		@ResponseBody
 		public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile, Long mno, Model model) {
 			List<AttachFileDTO> list = new ArrayList<>();
-			String uploadFolder = "C:\\upload"; //파일 경로 
+			String uploadFolder = "C:\\upload"; //파일 경로
 			String uploadFolderPath = getFolder();
 			log.info("uploadFolderPath : " + uploadFolderPath);
-			
+
 			// make Folder----------
 			File uploadPath = new File(uploadFolder, uploadFolderPath);
 			if (uploadPath.exists() == false) {
 				uploadPath.mkdirs();
 			}
-			
+
 			for (MultipartFile multipartFile : uploadFile) {
 				AttachFileDTO attachDTO = new AttachFileDTO();
 				String extension = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().indexOf(".") + 1);
-				
-				log.info("extension : " + extension); 
-				
+
+				log.info("extension : " + extension);
+
 				//uuid 생성
 				String uuid = UUID.randomUUID().toString();
 				String uploadFileName = "HOHO995@naver.com" + uuid +  "." + extension; //아이디 + uuid + 확장자
 				log.info("uploadFileName : "+ uploadFileName);
 				uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
 				log.info("uploadFileName : "+ uploadFileName);
-				
-				
+
+
 				attachDTO.setFileName(uploadFileName);
-				
+
 				log.info("mno : " + mno);
 				if(mno != null) {
 					//모임 게시물 수정 시 DB에 이미지 업데이트
@@ -403,7 +403,7 @@ public class MeetController {
 					File saveFile = new File(uploadPath, uploadFileName);
 					multipartFile.transferTo(saveFile);
 					attachDTO.setUploadPath(uploadFolderPath);
-					
+
 					//이미지 파일인지 체크
 					if (checkImageType(saveFile)) {
 						attachDTO.setImage(true);
@@ -411,7 +411,7 @@ public class MeetController {
 						Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
 						thumbnail.close();
 					}
-					
+
 					list.add(attachDTO);
 
 				} catch (Exception e) {

@@ -32,6 +32,7 @@ public interface FreeReplyService {
 
 	public void freplyremove(Long mrno); // 내가 자유게시물에 쓴 댓글 삭제
 
+	public boolean checkReply(Long frno); // 답글 달려있는지 여부 확인
 
 
 }

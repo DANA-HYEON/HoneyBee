@@ -71,12 +71,12 @@ public class FreeController {
 	}
 	
 	@RequestMapping("/del")
-	public String remove(FreeVO vo, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+	public String remove(@RequestParam("fno") Long fno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		
-		log.info("remove..." + vo);
+		log.info("remove..." + fno);
 		
-		if (vo.getDeldt() == null)
-			service.remove(vo);
+		if (service.get(fno).getDeldt() == null)
+			service.remove(fno);
 		
 		return "redirect:/free/list" + cri.getListLink();
 	}

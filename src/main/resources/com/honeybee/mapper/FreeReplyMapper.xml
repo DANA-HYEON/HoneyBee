@@ -62,34 +62,34 @@
 		=#{id}) and
 		(r.fno=f.fno) order by r.regdt
 	</select><!-- 김세훈 내가 쓴 댓글이 달린 자유 게시글의 상태 -->
-	
+
 	<insert id="thumbUp">
 		insert into THUMBED (THUMBNO, ID, FRNO)
 		values (#{id}||#{frno}||'R', #{id}, #{frno})
 	</insert>
-	
+
 	<delete id="cancelThumbUp">
 		delete from THUMBED
 		where THUMBNO = #{id}||#{frno}||'R'
 	</delete>
-	
+
 	<select id="checkThumbed" resultType="com.honeybee.domain.ThumbVO">
 		select ID, FRNO
 		from THUMBED
 		where THUMBNO = #{id}||#{frno}||'R'
 	</select>
-	
+
 	<update id="updateThumbCnt">
 		update FREE_REPLY
 		set THUMB = THUMB + #{amount}
 		where FRNO = #{frno}
 	</update>
-	
+
+	<!-- 답글이 있는지 여부 확인. 답글 있는 댓글은 삭제 불가. -->
 	<select id="checkReply" resultType="com.honeybee.domain.FreeReplyVO">
-		<!-- 답글이 존재하는지 체크하기 위한 SQL 구문 -->
-		<!-- SELF JOIN 사용해야 할까...? -->
-		select FRNO
-		
+		select *
+		from FREE_REPLY
+		where bunorder = #{frno} and DELDT is null
 	</select>
 
 

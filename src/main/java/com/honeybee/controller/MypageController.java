@@ -35,6 +35,7 @@ import com.honeybee.domain.AttachFileDTO;
 import com.honeybee.domain.CodeTableVO;
 import com.honeybee.domain.FreeReplyVO;
 import com.honeybee.domain.FreeVO;
+import com.honeybee.domain.HopeVO;
 import com.honeybee.domain.MeetVO;
 import com.honeybee.domain.MsgVO;
 import com.honeybee.domain.ReplyVO;
@@ -43,6 +44,7 @@ import com.honeybee.service.CodeTableService;
 import com.honeybee.service.EnrollListService;
 import com.honeybee.service.FreeReplyService;
 import com.honeybee.service.FreeService;
+import com.honeybee.service.HopeService;
 import com.honeybee.service.MeetReplyService;
 import com.honeybee.service.MeetService;
 import com.honeybee.service.SubscribeService;
@@ -70,6 +72,7 @@ public class MypageController {
 	private FreeReplyService frservice;
 	private CodeTableService cservice;
 	private MeetReplyService mrservice;
+	private HopeService hservice;
 
 	@GetMapping("/posted")
 	public void posted(Model model, String id) {
@@ -204,7 +207,7 @@ public class MypageController {
 		msgservice.sendmsg(msg);
 		return "redirect:/mypage/sendmsg";
 	}
-	
+
 //	@ResponseBody
 //	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	@GetMapping("/modify")
@@ -212,6 +215,7 @@ public class MypageController {
 		model.addAttribute("user", service.getMyList("HOHO995@naver.com"));
 		model.addAttribute("cat", cservice.getCatList());
 		model.addAttribute("upper", cservice.upperregion());
+		model.addAttribute("hope", hservice.getList("HOHO995@naver.com"));
 	}
 
 	@GetMapping("/readcontent")
@@ -367,17 +371,33 @@ public class MypageController {
 	}
 
 	@PostMapping("/myinfomodify") // 내 정보 수정
-	public String myinfomodify(HttpServletRequest request, Model model, UserVO uvo) {
+	public String myinfomodify(HttpServletRequest request, Model model, UserVO uvo, HopeVO hvo) {
 		int gender = Integer.parseInt(request.getParameter("gender"));
-		String year = request.getParameter("year");
+		String year = request.getParameter("year"); 
 		String month = request.getParameter("month");
-		String day = request.getParameter("day");
+		String day = request.getParameter("day"); //생년월일 
+		String forSplitReg= request.getParameter("region");
+		String forSplitCat= request.getParameter("category");
+		String[] reg=forSplitReg.split(",");
+		String[] cat=forSplitCat.split(",");
 		uvo.setSex(gender);
 		uvo.setBirth(year + month + day);
 		uvo.setId("HOHO995@naver.com");
 		service.infomodify(uvo);
+		
+		hservice.delete("HOHO995@naver.com");
+		hvo.setId("HOHO995@naver.com");	
+		for(int i=0; i<cat.length; i++) {
+			hvo.setCid(hservice.cidSearch(cat[i]));
+			log.info("set된 값 체크입니다~~"+hvo.getCid());
+			hservice.hopeInsert(hvo);
+		} //관심 카테고리를 db에 insert
+		for(int i=0; i<reg.length; i++) {
+			hvo.setCid(hservice.cidSearch(reg[i]));
+			log.info("set된 지역 체크입니다~~~~"+hvo.getCid());
+						hservice.hopeInsert(hvo);
+		} //관심지역을 db에 insert
 		return "redirect:/mypage/modify";
-		// 관심지역 관심분야 추가
 	}
 
 	@PostMapping("/nickmodify") // 닉네임 수정
@@ -396,14 +416,13 @@ public class MypageController {
 		log.info(service.nickChk(nick));
 		return service.nickChk(nick);
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/detailregion", method = RequestMethod.POST)
-	public List<CodeTableVO> detailregion(@RequestBody String cid) {
-		log.info("세부지역 cid체크입니다~~" + cservice.detailregion(cid));
+	public List<CodeTableVO> detailregion(String cid) {
 		return cservice.detailregion(cid);
 	}
-	
-	
+
+
 
 }

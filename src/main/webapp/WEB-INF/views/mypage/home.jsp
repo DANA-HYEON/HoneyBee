@@ -232,14 +232,14 @@ a:hover {
 	<div class="mypage-top" style="margin-bottom: 10px">
 		<div class="uploadResult">
 			<img id="profile" src="" width="200px" height="200px"> <span>
-				썸네일
+				프로필
 				<div id="uploadDiv" class="modal">
 					<input type="file" name="uploadFile">
 					<button id='uploadBtn'>업로드 하기</button>
 				</div>
 
 				<p>
-					<a href="#uploadDiv" rel="modal:open">사진 변경</a>
+					<button><a href="#uploadDiv" rel="modal:open">사진 변경</a></button>
 				</p>
 
 
@@ -411,7 +411,6 @@ a:hover {
 						$(".uploadDiv").html(cloneObj.html());
 					}
 				});
-
 			});
 		});
 
@@ -433,7 +432,7 @@ a:hover {
 							+ $(this).attr("value");
 				});
 
-		/* 	let today = new Date();   
+		/* 	let today = new Date();
 			let year = today.getFullYear(); // 년도
 			let month = ("0" + (1 + date.getMonth())).slice(-2);
 		    let day = ("0" + date.getDate()).slice(-2);

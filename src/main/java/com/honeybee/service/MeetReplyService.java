@@ -26,4 +26,5 @@ public interface MeetReplyService {
 
 	public void mreplyremove(Long mrno); // 내가 모임게시물에 쓴 댓글 삭제
 
+	
 }

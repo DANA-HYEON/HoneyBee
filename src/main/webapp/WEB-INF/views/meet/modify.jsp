@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@include file="../include/header.jsp" %>
 <!DOCTYPE html>
@@ -24,7 +24,7 @@
  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
  <!--제이쿼리 ui js-->
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
- 
+
  <!-- timepicker -->
  <script type="text/javascript" src="/resources/timepicker/jquery.timepicker.js"></script>
  <link rel="stylesheet" href="/resources/timepicker/jquery.timepicker.css">
@@ -57,7 +57,7 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="b bottom">
                 <div class="bottom title">모임 상세</div>
                 <div class="bottom_box">
@@ -71,10 +71,10 @@
                             <li>비용 <input id="free" type="radio" name="charge" value="N">무료<input id="charge" type="radio" name="charge" value="Y" >유료</li>
                             <li>온오프라인유무 <input id="ON" type="radio" name=onoff value="ON">온라인<input id="OFF" type="radio" name="onoff" value="OFF">오프라인</li>
                             <li>모임장소<input type="text" name="place" value='<c:out value="${meet.place}"/>'></li>
-                            <li>링크<input type="text" name="link" value='<c:out value="${meet.link}"/>'></li> 
+                            <li>링크<input type="text" name="link" value='<c:out value="${meet.link}"/>'></li>
                         </ul>
-                        
-                        
+
+
                         <!-- 하드코딩 -->
                         <input type='hidden' name="cid2" value="RC002">
                         <input type='hidden' name="id" value="tony">
@@ -87,11 +87,11 @@
 							<input type="file" name="uploadFile">
 							<button id='uploadBtn'>업로드 하기</button>
 						</div>
-						
-						
+
+
                         <p><a href="#uploadDiv" rel="modal:open">사진 업로드</a></p>
                         <div class="img">
-                        
+
                          <c:choose>
 					         <c:when test="${meet.img == null}">
 					         <td><img id="profile" src='/resources/img/logo.png'></td>
@@ -104,13 +104,13 @@
 				       </c:choose>
                         </div>
                     </div>
-                    
+
                 </div>
-                
+
                 <div class="map" id="map" style="width:100%;height:500px;"></div>
-                
-                <button type="submit" data-oper='modify'>모임 수정</button>
-                <button type="reset" data-oper='remove'>모임 삭제</button>
+
+                <button type="submit" data-oper='modfy'>모임 수정</button>
+                <button type="reset" data-oper='delete'>모임 삭제</button>
                 <button type="submit" data-oper='list'>목록으로 가기</button>
 
                 <!-- 추가 -->
@@ -136,19 +136,19 @@ $(document).ready(function(){
 	var recsDt = recsDt.split(" ");
 	var receDt="${meet.receDt}";
 	var receDt = receDt.split(" ");
-	
-	
 
-	
+
+
+
 	$('input[name=startDt]').val(startDt[0]);
 	$('input[name=startDt2]').val(startDt[1]);
-	
+
 	$('input[name=endDt]').val(endDt[0]);
 	$('input[name=endDt2]').val(endDt[1]);
-	
+
 	$('input[name=recsDt]').val(recsDt[0]);
 	$('input[name=recsDt2]').val(recsDt[1]);
-	
+
 	$('input[name=receDt]').val(receDt[0]);
 	$('input[name=receDt2]').val(receDt[1]);
 });
@@ -159,7 +159,7 @@ $(document).ready(function(){
    $('#recNo').on('keyup', function(){
          var str = $('#recNo').val();
          var num_pattern = /^[0-9]*$/;
-         
+
          if(str.search(num_pattern) == -1){
         	 alert("숫자만 입력할 수 있습니다.");
          }
@@ -176,12 +176,12 @@ $(document).ready(function(){
 			dropdown : true,
 			scrollbar : true
 		});
-	  
-	  
+
+
 	  $( function() {
 	    $( ".datepicker").datepicker();
 	  } );
-	
+
 	  $.datepicker.setDefaults({
 	      dateFormat: 'yy-mm-dd',
 	      prevText: '이전 달',
@@ -194,8 +194,8 @@ $(document).ready(function(){
 	      showMonthAfterYear: true,
 	      yearSuffix: '년'
 	  });
-	  
-	
+
+
 });
 </script>
 
@@ -215,10 +215,10 @@ $(document).ready(function(){
 var elClickedObj = $("button[type='submit']");
 elClickedObj.on("click", function(e){
 		e.preventDefault();
-		
-		
+
+
 		console.log("submit clicked");
-		
+
 		//날짜 date, time 값 합쳐서 보내기
 		var totalstartDt = $('input[name=startDt]').val() + " " +  $('input[name=startDt2]').val()
 		var totalendDt = $('input[name=endDt]').val() + " " +  $('input[name=endDt2]').val()
@@ -228,7 +228,7 @@ elClickedObj.on("click", function(e){
 		$('input[name=endDt]').val(totalendDt);
 		$('input[name=recsDt]').val(totalrecsDt);
 		$('input[name=receDt]').val(totareceDt);
-		
+
 		 swal({
 			  title: "정말 모임을 수정하시겠습니까?",
 			  text: "잘못 입력한 부분은 없는지 확인해주세요!",
@@ -274,7 +274,7 @@ elClickedObj.on("click", function(e){
 			 console.log("성공!" + charge);
 			 $("input:radio[id=free]").prop("checked", true);
 		 }
-		 
+
 		 var onOff = "<c:out value='${meet.onoff}'/>";
 		 if(onOff=="ON"){
 			 console.log("성공!" + onOff);
@@ -283,16 +283,16 @@ elClickedObj.on("click", function(e){
 			 console.log("성공!" + onOff);
 			 $("input:radio[id=OFF]").prop("checked", true);
 		 }
-		 
+
 		 var formObj = $("form");
-		 
+
 		 $('button').on("click", function(e){
 			 e.preventDefault();
-			 
+
 			 var operation = $(this).data("oper");
-			 
+
 			 console.log(operation);
-			 
+
 			 if(operation === 'remove'){
 				 formObj.attr("action", "/meet/remove");
 				 formObj.submit();
@@ -314,7 +314,7 @@ elClickedObj.on("click", function(e){
 				 formObj.append(keywordTag);
 				 formObj.append(typeTag);
 				 formObj.append(cidTag);
-				 
+
 				 formObj.submit();
 			 }
 			 //formObj.submit();
@@ -322,7 +322,7 @@ elClickedObj.on("click", function(e){
 
 	 });
  </script>
- 
+
  <script>
 //naver map api
 var HOME_PATH = window.HOME_PATH || '.';
@@ -369,8 +369,8 @@ infowindow.open(map, marker);
 			var year = date.getFullYear();
 			var month = ("0" + (1 + date.getMonth())).slice(-2);
 			var day = ("0" + date.getDate()).slice(-2);
-			
-			
+
+
 			var regex = new RegExp("(.*?)\.(jpg|png|JPG|PNG)$");
 			var maxSize = 5242880;
 
@@ -393,22 +393,22 @@ infowindow.open(map, marker);
 			$("#uploadBtn").on("click", function(e) {
 				var formData = new FormData();
 				var inputFile = $("input[name='uploadFile']");
-				
+
 				//업로드한 썸네일 담기
 				var files = inputFile[0].files;
 				console.log(files);
-				
+
 				//업로드한 파일 유효성 검사
 				for (var i = 0; i < files.length; i++) {
 					if (!checkExtension(files[i].name, files[i].size)) {
 						return false;
 					}
 					formData.append("uploadFile", files[i]);
-					
+
 				}
 				var mno = ${meet.mno};
 				formData.append("mno", mno);
-				
+
 				$.ajax({
 					url : '/meet/uploadAjaxAction',
 					processData : false,
@@ -419,19 +419,19 @@ infowindow.open(map, marker);
 					success : function(result) {
 						console.log(result);
 						console.log(result[0].fileName);
-						
-					
+
+
 						var callFileName = year + "/" + month + "/" + day + "/" + result[0].fileName;
 					 	document.getElementById('profile').src = "display?fileName=" + callFileName;
 					 	$('input[name=img]').val(callFileName);
 						$(".uploadDiv").html(cloneObj.html());
 					}
 				});
-				
-				
+
+
 			});
 		});
- 
+
  </script>
  <script>
 

@@ -5,7 +5,7 @@ let reportService = (function() {
 	function reportObj(inquiry, callback, error) {
 		console.log("reporting freeboard...");
 		
-		let badObj = inquiry.fno === null ? inquiry.frno : inquiry.fno;
+		let badObj = inquiry.fno === null || inquiry.fno === undefined ? inquiry.frno : inquiry.fno;
 		
 		$.ajax({
 			type : 'POST',

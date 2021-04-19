@@ -70,7 +70,7 @@
 
     <select id="user_detailregion_select">
       <option>구</option>
-      
+
     </select>
 
     <select class="cat" >
@@ -299,7 +299,7 @@
 
 
 		 //최신순 인기순
-		 
+
 
 	 });
  </script>

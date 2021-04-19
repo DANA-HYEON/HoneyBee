@@ -55,6 +55,9 @@ public class FreeReplyController {
 	@DeleteMapping(value = "/{frno}", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> remove(@PathVariable("frno") Long frno) {
 		
+		if (!service.checkReply(frno))
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		
 		return service.remove(frno) ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
@@ -73,6 +76,6 @@ public class FreeReplyController {
 		
 		return thumbCnt == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-		
+	
 
  }

@@ -61,9 +61,9 @@
                     <div class="blog-comment">
                         <h3 class="text-success">댓글</h3>
                         <ul class="comments">
-	                        
+
                        	</ul>
-                       	
+
                        	<!-- 댓글 입력창 -->
 	                    <div class="write-cm">
                        		<hr class="solid">
@@ -71,7 +71,7 @@
 		                        <ul class="comment">
 		                        	<li>
 				                        <h6>댓글 입력</h6>
-				                        <input type="text" class="reply" name="o-reply" />
+				                        <input type="text" class="o-reply" name="o-reply" />
 				                        <button id='regBtn' class="regBtn" type='button'>입력</button>
 			                        </li>
 		                        </ul>
@@ -87,7 +87,7 @@
 		                        </ul>
 	                        </form>
                         </div> -->
-                        
+
                     </div>
                 </div>
             </div>
@@ -150,9 +150,10 @@
 		    e.preventDefault();
 		    freeService.thumbUp({id:"asdf", fno: fnoValue}, function(result) {
 		    	alert(result);
+		    	location.reload(); // 새로고침 안해도 되게 수정할 것!
 		    });
         });
-
+		
 		// 신고 기능 구현
 		let modal = $(".modal");
 		let reportTitle = modal.find("input[name='reportTitle']");
@@ -213,41 +214,16 @@
 	});
 </script>
 
-<!-- 게시물 -->
-<script type="text/javascript">
-	$(document).ready(function() {
-
-		// 게시물 좋아요
-		// View
-		// 1. 하트버튼 클릭했는지 여부를 DB(테이블명 : THUMBED)를 통해 확인
-		// 2. 있을 경우, 하트는 꽉찬 분홍색으로 처리
-		// 3. 없을 경우, 하트는 꽉찬 검은색으로 처리
-
-		// Back
-		// 1. 하트버튼 클릭했을 경우,
-		$(".heart").on("click", function(e) {
-		    e.preventDefault();
-		    // 2. 게시물 좋아요 + 1
-		    // 3. DB(테이블명:THUMBED)에 좋아요 누른 것 기록
-
-		    // 4. 좋아요 누른 적이 있다면
-		    // 5. 하트 눌렀을 때 좋아요 -1
-		    // 6. THUMBED 테이블에서 기록 삭제
-           	console.log($(this));
-        });
-
-	});
-</script>
 
 <!-- 댓글 -->
 <script type="text/javascript">
 	$(document).ready(function() {
-		
+
 		var fnoValue = '<c:out value="${free.fno}"/>';
 		var replyUL = $(".comments");
-		
+
     	showList(1);
-		
+
 		function showList(page) {
 			freeReplyService.getList({fno:fnoValue, page: page || 1}, function(list) {
 				let str = "";
@@ -255,11 +231,11 @@
 					replyUL.html("");
 					return;
 				}
-				
+
  				for (let i = 0, len = list.length || 0; i < len; i++) {
  					let showHide = list[i].layer === 0 ? 'none' : 'flex';
- 					
-					str += "<li class='clearfix' id='" + list[i].frno + "' style='margin-left:" + list[i].layer * 4 + "%' data-frno='" + list[i].frno + "'>"; 
+
+					str += "<li class='clearfix' id='" + list[i].frno + "' style='margin-left:" + list[i].layer * 4 + "%' data-frno='" + list[i].frno + "'>";
 					str += "	<i class='fa fa-share fa-flip-vertical re' style='display:" + showHide + "'></i>"
 					str += "	<img src='https://bootdey.com/img/Content/user_1.jpg' class='avatar' alt=''>";
 					str += "	<div class='post-comments'><p class='meta'><a href='#'>" + list[i].id + "</a>";
@@ -272,7 +248,7 @@
 					str += "	<input type='hidden' data-order='" + list[i].bunorder + "'>";
 					str += "	<input type='hidden' data-layer='" + list[i].layer + "'></li>"
 				}
- 				
+
 				replyUL.html(str);
 			}); // end function
 		} // end showList
@@ -301,7 +277,7 @@
 			let thisEl = $(this)[0];
 			let div = thisEl.parentNode.parentNode;
 			comm(div.id);
-			$(".reply")[0].value = thisEl.previousSibling.innerText;
+			$(".reply").val(thisEl.previousSibling.innerText);
 			$(".write-rp").data("frno", div.id);
  		});
 
@@ -319,18 +295,18 @@
 
 				freeReplyService.update(reply, function(result) {
 					alert(result);
-					/* showList(1); */
-					location.reload();
+					cnt = 0;
+					showList(1);
 				});
 			} else { // 답글 입력
 				let bundle = prev.prev().prev().data("bundle");
-				let bunorder = writeRp.parent().attr("id"); // order + (0.1 * (Math.pow(0.1, layer)));
+				let bunorder = writeRp.parent().attr("id");
  				let reply = {fno: fnoValue, id: "asdf", reply: $(".reply").val(), layer: layer + 1, bundle: bundle, bunorder: bunorder};
 
  				freeReplyService.add(reply, function(result) {
 					alert(result);
-					/* showList(1); */
- 					location.reload();
+					cnt = 0;
+					showList(1);
  				});
  			}
 		});
@@ -383,9 +359,17 @@
 
 	function hide_box(id) {
 		let rp = $(".write-rp");
+		
+		console.log(rp[0].outerHTML);
+		console.log("=================");
+		console.log(rp.clone().wrapAll("<div/>").parent().html());
+
+		console.log(rp[0].outerHTML);
+		console.log("=================");
+		console.log(rp.clone().wrapAll("<div/>").parent().html());
 
 		rp[0].outerHTML = "";
- 		$(".reply").val("");
+ 		$("input[type='text']").val("");
 		cnt = 0;
 	}
 </script>
@@ -393,7 +377,7 @@
 
 <!-- TEST -->
 <script type="text/javascript">
-		
+
 	/* var fnoValue = '<c:out value="${free.fno}"/>'; */
 
 	// for freeReplyService add test

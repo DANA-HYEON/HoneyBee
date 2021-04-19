@@ -21,11 +21,13 @@ public class FreeServiceImpl implements FreeService {
 	
 	private FreeMapper mapper;
 	
+	// CREATE
 	@Override
 	public void register(FreeVO vo) {
 		mapper.insert(vo);
 	}
 
+	// READ
 	@Transactional
 	@Override
 	public FreeVO get(Long fno) {
@@ -34,17 +36,20 @@ public class FreeServiceImpl implements FreeService {
 		return mapper.read(fno);
 	}
 
+	// UPDATE
 	@Override
 	public boolean modify(FreeVO vo) {
 		log.info("modify........." + vo);
 		return mapper.update(vo) == 1;
 	}
 
+	// DELETE
 	@Override
-	public boolean remove(FreeVO vo) {
-		return mapper.delete(vo) == 1;
+	public boolean remove(Long fno) {
+		return mapper.delete(fno) == 1;
 	}
 
+	// 게시물 전체 가져오기
 	@Override
 	public List<FreeVO> getList(Criteria cri) {
 		return mapper.getListWithPaging(cri);
@@ -65,13 +70,16 @@ public class FreeServiceImpl implements FreeService {
 		mapper.mypostremove(fno); //김세훈 테스트
 	}
 
+	// 게시물 좋아요
 	@Transactional
 	@Override
 	public int thumbUp(ThumbVO vo) {
 		mapper.updateThumbCnt(vo.getFno(), 1);
 		return mapper.thumbUp(vo.getId(), vo.getFno());
+		// THUMED 테이블에서 개수를 세어서 가져오는 방법은 없을까...?
 	}
 	
+	// 게시물 좋아요 취소
 	@Transactional
 	@Override
 	public int cancelThumbUp(ThumbVO vo) {
@@ -79,6 +87,7 @@ public class FreeServiceImpl implements FreeService {
 		return mapper.cancelThumbUp(vo.getId(), vo.getFno());
 	}
 
+	// 게시물 좋아요 여부 확인
 	@Override
 	public boolean check(String id, Long fno) {
 		return mapper.checkThumbed(id, fno) == null;

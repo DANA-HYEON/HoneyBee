@@ -146,7 +146,7 @@ a {
     color: #8dc63f !important;
 }
 
-.reply {
+.reply, .o-reply {
     width: 90%;
     padding: 10px;
     background-color: rgb(246, 218, 66);
