@@ -57,4 +57,7 @@ public interface MeetMapper {
 	public MeetVO getImg(Long mno); //이미지 가져오기
 	
 	public String getCid(@Param("mno") Long mno, @Param("cid3") String cid3); //카테고리 이름에 따른 코드 가져오기
+	
+	public boolean removeReply(Long mno); //모임 게시물이 삭제되면 댓글도 삭제되게
+	
 }

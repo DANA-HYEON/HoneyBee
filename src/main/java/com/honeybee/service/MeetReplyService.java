@@ -26,5 +26,7 @@ public interface MeetReplyService {
 
 	public void mreplyremove(Long mrno); // 내가 모임게시물에 쓴 댓글 삭제
 
+	public List<ReplyVO> checkReply(Long mno);
 	
+	public int updateMrno2(Long mrno); //대댓글이 달려있는 원댓글을 삭제할 경우 mrno2 컬럼 업데이트
 }

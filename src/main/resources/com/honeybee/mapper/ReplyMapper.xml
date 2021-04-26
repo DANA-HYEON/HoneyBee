@@ -7,8 +7,8 @@
 		select seq_reply.nextval from dual
 	</selectKey>
 
-	insert into meet_reply(MRNO,MNO,ID,REPLY,LAYER, BUNDLE,BUNORDER,NICK,REGDT,UPTDT)
-	values(#{mrno}, #{mno}, #{id},#{reply}, #{layer}, #{mrno}, #{mrno}, (select nick from user_info where id = #{id}), sysdate, sysdate)
+	insert into meet_reply(MRNO,MNO,ID,MRNO2,REPLY,LAYER, BUNDLE,BUNORDER,NICK,REGDT,UPTDT)
+	values(#{mrno}, #{mno}, #{id}, 'Y' ,#{reply}, #{layer}, #{mrno}, #{mrno}, (select nick from user_info where id = #{id}), sysdate, sysdate)
 </insert>
 
 <insert id="insertReply">
@@ -16,7 +16,7 @@
 		select seq_reply.nextval from dual
 	</selectKey>
 
-	insert into meet_reply(MRNO,MNO,ID,REPLY,LAYER, BUNDLE,BUNORDER,NICK,REGDT,UPTDT)
+	insert into meet_reply(MRNO,MNO,ID,REPLY,LAYER,BUNDLE,BUNORDER,NICK,REGDT,UPTDT)
 	values(#{mrno}, #{mno}, #{id},#{reply}, #{layer}, #{bundle}, #{bunOrder}, (select nick from user_info where id = #{id}), sysdate, sysdate)
 </insert>
 
@@ -27,7 +27,7 @@
 
 <update id="delete">
 	update meet_reply
-	set DELDT = sysdate
+	set DELDT = sysdate, MRNO2 = 'N'
 	where MRNO = #{mRno}
 </update>
 
@@ -38,7 +38,7 @@
 <select id="getListWithPaging" resultType="com.honeybee.domain.ReplyVO">
 	select MRNO,MNO,ID,MRNO2,REPLY,LAYER,BUNDLE,BUNORDER,NICK,REGDT,UPTDT,DELDT
 	from meet_reply
-	where mno = #{mno} and DELDT is null
+	where MRNO2 = 'Y' and mno = #{mno}
 	order by bundle asc, layer asc, regdt asc
 </select>
 
@@ -64,6 +64,13 @@
 	where mrno = #{mrno}
 </update>
 
+<select id="checkReply" resultType="com.honeybee.domain.ReplyVO">
+	select *
+	from MEET_REPLY m
+	where mno = #{mno} (m.bundle = m.bunorder)
+</select>
 
-
+<update id="updateMrno2">
+ update MEET_REPLY set MRNO2 = 'Y' where MRNO = #{mrno}
+</update>
 </mapper>

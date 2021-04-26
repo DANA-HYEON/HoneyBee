@@ -115,12 +115,34 @@ var replyService = (function(){
 		}
 	};
 	
+	function updateMrno2(mrno, callback, error){
+		$.ajax({
+			url : '/replies/update',
+			processData : false,
+			contentType: 'application/json',
+			data : mrno,
+			type : 'POST',
+			dataType : 'json',
+			success : function(Result, status, xhr){
+				if(callback){
+					callback(Result);
+				}
+			},
+			error : function(xhr, status, er){
+				if(error){
+					error(er);
+				}
+			}
+		});
+	}
+	
 	return {
 		add : add,
 		getList : getList,
 		remove : remove,
 		update : update,
 		get : get,
-		displayTime : displayTime
+		displayTime : displayTime,
+		updateMrno2 : updateMrno2
 		};
 })();

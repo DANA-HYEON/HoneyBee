@@ -252,8 +252,11 @@
       </trim>
 </sql>
 
+<resultMap type="com.honeybee.domain.MeetVO" id="nclobContent">
+	<result property="content" column="CONTENT" jdbcType="NCLOB" javaType="java.lang.String" />
+</resultMap>
 
-<select id="getListWithPaging" resultType="com.honeybee.domain.MeetVO">
+<select id="getListWithPaging" parameterType="com.honeybee.domain.MeetVO" resultType="com.honeybee.domain.MeetVO" resultMap="nclobContent">
 	<![CDATA[
 		select
 		  MNO,
@@ -263,7 +266,7 @@
 	      ID,
 	      TITLE,
 	      SMRY,
-	      to_char(SUBSTR(CONTENT,1,2000)) AS CONTENT,
+	      CONTENT,
 	      STARTDT,
 	      ENDDT,
 	      RECSDT,
@@ -298,7 +301,7 @@
 	      ID,
 	      TITLE,
 	      SMRY,
-	      to_char(SUBSTR(CONTENT,1,2000)) AS CONTENT,
+	      CONTENT,
 	      STARTDT,
 	      ENDDT,
 	      RECSDT,
@@ -330,7 +333,7 @@
 		      ID,
 		      TITLE,
 		      SMRY,
-		      to_char(SUBSTR(CONTENT,1,2000)) AS CONTENT,
+		      CONTENT,
 		      STARTDT,
 		      ENDDT,
 		      RECSDT,
@@ -369,7 +372,7 @@
 </select>
 
 
-<select id="getListWithPagingAndCat" resultType="com.honeybee.domain.MeetVO">
+<select id="getListWithPagingAndCat"  parameterType="com.honeybee.domain.MeetVO" resultType="com.honeybee.domain.MeetVO" resultMap="nclobContent">
 	<![CDATA[
 		select
 		  MNO,
@@ -379,7 +382,7 @@
 	      ID,
 	      TITLE,
 	      SMRY,
-	      to_char(SUBSTR(CONTENT,1,2000)) AS CONTENT,
+	      CONTENT,
 	      STARTDT,
 	      ENDDT,
 	      RECSDT,
@@ -408,7 +411,7 @@
 	      ID,
 	      TITLE,
 	      SMRY,
-	      to_char(SUBSTR(CONTENT,1,2000)) AS CONTENT,
+	      CONTENT,
 	      STARTDT,
 	      ENDDT,
 	      RECSDT,
@@ -527,4 +530,8 @@
 <select id="getCid" resultType="String">
  	select cid from meet where mno= #{mno} and cid3 = #{cid3}
 </select>
+
+<update id="removeReply">
+	update meet_reply set deldt = sysdate where mno = #{mno}
+</update>
 </mapper>

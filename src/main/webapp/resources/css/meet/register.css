@@ -132,15 +132,15 @@ li{list-style: none;}
 
 .bot.right img{
     margin-top: 10px;
-    width: 80%;
-    height: 40%;
+     width: 500px;
+    height: 500px; 
     background-color: darkgrey;
-    object-fit: cover;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 
 button{
     border: solid 1px darkgrey;

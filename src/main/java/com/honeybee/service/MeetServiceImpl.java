@@ -176,4 +176,10 @@ public class MeetServiceImpl implements MeetService {
 		log.info("get Cid from meet.............");
 		return mapper.getCid(mno, cid3);
 	}
+
+	@Override
+	public boolean removeReply(Long mno) {
+		log.info("update deldt from meet_reply.....");
+		return mapper.removeReply(mno);
+	}
 }

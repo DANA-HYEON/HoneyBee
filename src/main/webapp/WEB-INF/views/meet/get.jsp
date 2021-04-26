@@ -100,9 +100,9 @@
       <hr class="second_line" style="border:1px color= silver;" width="90%">
 
 
-      <button data-oper='modify' class="btn btn-default" >수정하기</button>
+      <button data-oper='modify' class="btn btn-default">모임 수정</button>
       <button type="reset" data-oper='remove'>모임 삭제</button>
-	  <button data-oper='list' class="btn btn-info">목록으로 돌아가기</button>
+	  <button data-oper='list' class="btn btn-info">목록으로</button>
 
 	  <form id='operForm' action="/meet/modify" method="get">
 	  	<input type='hidden' id='mno' name='mno' value='<c:out value="${meet.mno}"/>'>
@@ -211,9 +211,9 @@
 					  meetApply.removeApply(eno, function(result){
 						  //alert("신청 취소 완료");
 						  swal("신청 취소 완료").then((value)=>location.reload());
-						  //location.reload();
+						  
 					  });
-					  //location.reload();
+					  
 				  }
 			  }
 		  });
@@ -244,10 +244,6 @@
 		  }
 	  });
   }
-
-
-
-
 
   //찜하기
   $(document).on("click", "#wish", function(e){
@@ -325,7 +321,11 @@
               str += "<p class='meta'>";
               str += "닉네임 : " + list[i].nick +"<small class='float-right'>" + replyService.displayTime(list[i].regDt) + "</small>";
               str += "</p>";
-              str += "<input type='text' class='replyList' style='background-color:transparent;' id='"+ list[i].mrno + "'value='" + list[i].reply + "' readonly>";
+              if(list[i].mrno2 == 'Y' && list[i].delDt != null){
+            	  str += "<input type='text' class='replyList' style='background-color:transparent;' id='"+ list[i].mrno + "'value='삭제 된 댓글입니다.' readonly>";
+              }else{
+	              str += "<input type='text' class='replyList' style='background-color:transparent;' id='"+ list[i].mrno + "'value='" + list[i].reply + "' readonly>";            	  
+              }
 
               if(list[i].layer != 1){
 
@@ -390,6 +390,7 @@
 		  });
 	  }else{
 		  $('#'+mrno).prop('readonly',false);
+		  $('#'+mrno).focus();
 		  $(this).text('확인');
 
 	  }
@@ -397,10 +398,9 @@
 
   //대댓글 입력창 띄우기 이벤트 처리
    $(document).on("click", "#reply", function(e){
-	   $(".float-right").off();
+	  $(".float-right").off();
 	  console.log("대댓글");
 	  e.preventDefault(); //기본 a태그 작동 멈추기
-	  var parentMrno = $()
 	  var mrno = $(this).data("mrno");
 	  console.log(mrno);
 
@@ -417,9 +417,9 @@
 	  str += "</ul>";
 	  str += "</div>";
 
-       if($("."+mrno).children(".write-repl").length == 0){
-    	   $("."+mrno).append(str);
-
+       if($("."+mrno).children(".write-repl").length == 0 && $("#reply_reply").length == 0){
+    	   console.log( $('li[data-value=mrno]'));
+    	   $('li[data-mrno='+mrno+']').append(str);
       }
 
   });
@@ -464,58 +464,42 @@
 	  var bundle = $(this).data("bundle");
 	  console.log("mrno : " + mrno + ", layer : " + layer + ", bundle : " + bundle);
 
-
-	  //댓글 삭제시 대댓글이 달려 있을 경우 문구 띄우기. true일 겨우 대댓글도 같이 삭제
-	 /*  var deleteResult = false;
 	  var bundleArr = new Array();
-	  var myMrnoArr = new Array();
+	  $('li[name="replyList"]').each(function(){
+		  var myBundle = $(this).data('bundle');
 
-	  if(layer == 0){
-		 deleteResult = confirm("대댓글이 달려 있는 댓글입니다. 삭제 시 대댓글도 같이 삭제됩니다. 삭제하시겠습니까?");
-		 console.log(deleteResult);
-	  }
-
-	  if(deleteResult){
-		  $('li[name="replyList"]').each(function(){
-			  var myBundle = $(this).data('bundle');
-
-			  bundleArr.push(myBundle);
-		  });
-
-		  console.log(bundleArr);
-	  }else{
-
-	  }
-
-		  for(var i = 0; i<bundleArr.length; i++){
-			  if(bundle == bundleArr[i]){
-				  console.log("같음");
-				  var multi = $('.' + bundle);
-				  var multi_array = [];
-
-				  $.each(multi, function(index, item){
-					  multi_array.push($(item).data("mrno"));
-				  });
-
-				  console.log(multi_array);
-
-				  for(var j=0; j<multi_array.length; j++){
-					  console.log(multi_array[j]);
-					  replyService.remove(multi_array[j], function(result){
-						  /* alert(result);
-						  showList(1);
-					  });
-
-				  }
-				  showList(1);
-				  return;
-			  }
-		  } */
-
-	  replyService.remove(mrno, function(result){
-		  alert(result);
-		  showList(1);
+		  bundleArr.push(myBundle);
 	  });
+	  
+	  //console.log(bundleArr);
+	  let count = bundleArr.filter(element => bundle === element).length;
+	  console.log(count);
+	  
+	  if(layer == 0 && count > 1){
+		  console.log("대댓글이 있는 원 댓글입니다");
+	  
+		  //deldt update
+		  replyService.remove(mrno, function(result){
+			  alert(result);
+		  });  
+		  
+		  //mrno2 'Y'로 변경
+		  replyService.updateMrno2(mrno, function(result){
+			  console.log("성공 : " + result);
+			  showList(1);
+		  });
+		  
+
+	  }else{
+		  
+		  //deldt update
+		   replyService.remove(mrno, function(result){
+			  alert(result);
+			  showList(1);
+		  }); 
+		  
+	  }
+
   });
 
 
@@ -625,7 +609,7 @@ var contentString = [
         '<div class="iw_inner">',
         '   <h3>서울특별시청</h3>',
         '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
-        '       <img src="'+ HOME_PATH +'/img/example/hi-seoul.jpg" width="55" height="55" alt="서울시청" class="thumb" /><br />',
+        '       <br />',
         '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
         '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
         '   </p>',

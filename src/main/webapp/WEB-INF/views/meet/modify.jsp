@@ -109,9 +109,9 @@
 
                 <div class="map" id="map" style="width:100%;height:500px;"></div>
 
-                <button type="submit" data-oper='modfy'>모임 수정</button>
+                <button type="submit" data-oper='modfy'>수정 완료</button>
                 <button type="reset" data-oper='delete'>모임 삭제</button>
-                <button type="submit" data-oper='list'>목록으로 가기</button>
+                <button type="submit" data-oper='list'>목록으로</button>
 
                 <!-- 추가 -->
                 <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
@@ -156,14 +156,20 @@ $(document).ready(function(){
 
 <script>
 //모집인원 유효성 검사
-   $('#recNo').on('keyup', function(){
-         var str = $('#recNo').val();
-         var num_pattern = /^[0-9]*$/;
-
-         if(str.search(num_pattern) == -1){
-        	 alert("숫자만 입력할 수 있습니다.");
-         }
-   });
+$('#recNo').on('keyup', function fn_nickChk() {
+      var str = $('#recNo').val();
+      var num_pattern = /^[0-9]*$/;
+      
+      
+      if(str.search(num_pattern) == -1){
+     	 alert("숫자만 입력할 수 있습니다.");
+     	 $('#recNo').val(str.replace(/[^0-9+]/g,""));
+      }
+      
+      if(str.length > 4){
+     	 $('#recNo').val(str.substring(0,4));
+      }
+});
 </script>
 
 <script>
@@ -179,8 +185,8 @@ $(document).ready(function(){
 
 
 	  $( function() {
-	    $( ".datepicker").datepicker();
-	  } );
+	    $(".datepicker").datepicker();
+	  });
 
 	  $.datepicker.setDefaults({
 	      dateFormat: 'yy-mm-dd',
@@ -293,7 +299,7 @@ elClickedObj.on("click", function(e){
 
 			 console.log(operation);
 
-			 if(operation === 'remove'){
+			 if(operation === 'delete'){
 				 formObj.attr("action", "/meet/remove");
 				 formObj.submit();
 

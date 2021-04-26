@@ -173,6 +173,7 @@ public class MeetController {
 		log.info("remove.............." + mno);
 
 		if(service.remove(mno)) {
+			service.removeReply(mno); //댓글 deldt update
 			rttr.addFlashAttribute("result" , "success");
 		}
 
@@ -224,7 +225,6 @@ public class MeetController {
 	@GetMapping(value="/mApply/{eno}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<EnrollListVO> applyGet(@PathVariable("eno") String eno){
 		log.info("get eno : " + eno);
-
 
 		return new ResponseEntity<>(eService.checkApplyList(eno), HttpStatus.OK);
 	}

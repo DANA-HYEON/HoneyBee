@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.honeybee.domain.Criteria;
@@ -89,4 +91,23 @@ public class MeetReplyController {
 		
 		return service.modify(vo) == 1 ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	//대댓글이 달려 있는 원댓글을 삭제할 경우 mrno2 컬럼 업데이트
+	@ResponseBody
+	@RequestMapping(value="/update", method = RequestMethod.POST)
+	public int updateMrno2(@RequestBody Long mrno){
+		log.info("update Mrno2 : " + mrno);
+		int result = service.updateMrno2(mrno);
+		log.info("결과 : " + result);
+		return result;
+	}
+	
+	//대댓글이 있는 원댓글인지 체크
+	@GetMapping(value="/{mno}", produces= {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<ReplyVO>> checkReply(@PathVariable("mno") Long mno){
+		log.info("checkReply...................");
+
+		return new ResponseEntity<>(service.checkReply(mno), HttpStatus.OK);
+	}
+	
 }

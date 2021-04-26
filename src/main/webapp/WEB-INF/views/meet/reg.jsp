@@ -12,12 +12,13 @@
 <!-- smartEditor -->
 <script type="text/javascript" src="/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <!-- sweetAlert -->
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<!-- naver map api -->
-<!-- <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=i1ygn9fyrm"></script> -->
+ <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ <!-- modal -->
+ <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+ <link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+ <!-- naver map api -->
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=i1ygn9fyrm&submodules=geocoder"><\/script>
-
- <!-- 제이쿼리 ui css -->
+  <!-- 제이쿼리 ui css -->
  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
  <!--제이쿼리 js-->
  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -27,12 +28,15 @@
  <!-- timepicker -->
  <script type="text/javascript" src="/resources/timepicker/jquery.timepicker.js"></script>
  <link rel="stylesheet" href="/resources/timepicker/jquery.timepicker.css">
- <!-- modal -->
- <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+<style>
+.search { position:absolute;z-index:1000;top:20px;left:20px; }
+.search #address { width:150px;height:20px;line-height:20px;border:solid 1px #555;padding:5px;font-size:12px;box-sizing:content-box; }
+.search .submit { height:30px;line-height:30px;padding:0 10px;font-size:12px;border:solid 1px #555;border-radius:3px;cursor:pointer;box-sizing:content-box; }
+</style>
 </head>
 <body>
-<form role="form" action="/meet/reg" method="post">
+<form name="frm" role="form" action="/meet/reg" method="post">
     <div class="wrap">
         <div class="box">
             <div class="b top">
@@ -45,7 +49,7 @@
 				        	</c:if>
 				        </c:forEach>
                     </select>
-                    <input type="text" name="title" value='<c:out value="${meet.mno}"/>'>
+                    <input type="text" name="title" value='<c:out value="${meet.mno}"/>'> <!-- <p style="font-size : small;">*필수</p> -->
                 </div>
                 <div class="content">
                 	<textarea rows="1" placeholder="모임 요약내용을 입력해주세요." name="smry"></textarea>
@@ -70,6 +74,7 @@
                             <li>모임모집시작일자 <input type="text" class="datepicker" name="recsDt" placeholder="날짜를 선택해주세요." readonly><input class="platanusTime" name="recsDt2"  placeholder="시간" readonly/></li>
                             <li>모임모집종료일자 <input type="text" class="datepicker" name="receDt" placeholder="날짜를 선택해주세요." readonly><input class="platanusTime" name="receDt2"  placeholder="시간" readonly/></li>
                             <li>모집인원 <input id="recNo" type="text" name="recNo" placeholder="내용을 입력해주세요."></li>
+                            <li><p style="font-size:10px; color:red;">최대 4자리 숫자까지 입력이 가능합니다.</p></li>
                             <li>비용 <input type="radio" name="charge" value="N">무료 <input type="radio" name="charge" value="Y">유료</li>
                             <li>온오프라인유무 <input type="radio" name=onoff value="ON">온라인 <input type="radio" name="onoff" value="OFF">오프라인</li>
                             <li>모임장소<input type="text" name="place" placeholder="내용을 입력해주세요."></li>
@@ -88,12 +93,21 @@
 						</div>
 
                         <p><a href="#uploadDiv" rel="modal:open">사진 업로드</a></p>
-                        <div class="img"><img id="profile" src="/resources/img/logo.png"></div>
+                        <div class="img">
+                        	<img id="profile" src="/resources/img/logo.png">
+                        </div>
                         <input type="hidden" name="img">
                     </div>
 
                 </div>
-                <div class="map" id="map" style="width:100%;height:500px;"></div>
+                <div class="map" id="map" style="width:100%;height:600px;">
+			        <div class="search" style="">
+			            <input id="address" type="text" placeholder="검색할 주소" value="불정로 6" />
+			            <input class="submit" type="button" value="주소 검색" />
+			        </div>
+		        </div>
+		    
+		    <!-- <code id="snippet" class="snippet"></code> -->
 
 
                 <button type="submit">모임 등록</button>
@@ -103,14 +117,21 @@
   </form>
 
 
+
 <script>
 //모집인원 유효성 검사
    $('#recNo').on('keyup', function fn_nickChk() {
          var str = $('#recNo').val();
          var num_pattern = /^[0-9]*$/;
-
+         
+         
          if(str.search(num_pattern) == -1){
         	 alert("숫자만 입력할 수 있습니다.");
+        	 $('#recNo').val(str.replace(/[^0-9+]/g,""));
+         }
+         
+         if(str.length > 4){
+        	 $('#recNo').val(str.substring(0,4));
          }
    });
 </script>
@@ -127,8 +148,8 @@
 
 
   $( function() {
-    $( ".datepicker").datepicker();
-  } );
+    $(".datepicker").datepicker();
+  });
 
   $.datepicker.setDefaults({
       dateFormat: 'yy-mm-dd',
@@ -145,143 +166,138 @@
 
 </script>
 
-<script>
-//naver map api
-/**
- * 스크립트 로드
- * <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=YOUR_CLIENT_ID&submodules=geocoder"><\/script>
- */
 
-var map = new naver.maps.Map("map", {
-  center: new naver.maps.LatLng(37.3595316, 127.1052133),
-  zoom: 15,
-  mapTypeControl: true
-});
+ <script>
+ var map = new naver.maps.Map("map", {
+	  center: new naver.maps.LatLng(37.3595316, 127.1052133),
+	  zoom: 15,
+	  mapTypeControl: true
+	});
 
-var infoWindow = new naver.maps.InfoWindow({
-  anchorSkew: true
-});
+	var infoWindow = new naver.maps.InfoWindow({
+	  anchorSkew: true
+	});
 
-map.setCursor('pointer');
+	map.setCursor('pointer');
 
-function searchCoordinateToAddress(latlng) {
+	function searchCoordinateToAddress(latlng) {
 
-  infoWindow.close();
+	  infoWindow.close();
 
-  naver.maps.Service.reverseGeocode({
-    coords: latlng,
-    orders: [
-      naver.maps.Service.OrderType.ADDR,
-      naver.maps.Service.OrderType.ROAD_ADDR
-    ].join(',')
-  }, function(status, response) {
-    if (status === naver.maps.Service.Status.ERROR) {
-      if (!latlng) {
-        return alert('ReverseGeocode Error, Please check latlng');
-      }
-      if (latlng.toString) {
-        return alert('ReverseGeocode Error, latlng:' + latlng.toString());
-      }
-      if (latlng.x && latlng.y) {
-        return alert('ReverseGeocode Error, x:' + latlng.x + ', y:' + latlng.y);
-      }
-      return alert('ReverseGeocode Error, Please check latlng');
-    }
+	  naver.maps.Service.reverseGeocode({
+	    coords: latlng,
+	    orders: [
+	      naver.maps.Service.OrderType.ADDR,
+	      naver.maps.Service.OrderType.ROAD_ADDR
+	    ].join(',')
+	  }, function(status, response) {
+	    if (status === naver.maps.Service.Status.ERROR) {
+	      if (!latlng) {
+	        return alert('ReverseGeocode Error, Please check latlng');
+	      }
+	      if (latlng.toString) {
+	        return alert('ReverseGeocode Error, latlng:' + latlng.toString());
+	      }
+	      if (latlng.x && latlng.y) {
+	        return alert('ReverseGeocode Error, x:' + latlng.x + ', y:' + latlng.y);
+	      }
+	      return alert('ReverseGeocode Error, Please check latlng');
+	    }
 
-    var address = response.v2.address,
-        htmlAddresses = [];
+	    var address = response.v2.address,
+	        htmlAddresses = [];
 
-    if (address.jibunAddress !== '') {
-        htmlAddresses.push('[지번 주소] ' + address.jibunAddress);
-    }
+	    if (address.jibunAddress !== '') {
+	        htmlAddresses.push('[지번 주소] ' + address.jibunAddress);
+	    }
 
-    if (address.roadAddress !== '') {
-        htmlAddresses.push('[도로명 주소] ' + address.roadAddress);
-    }
+	    if (address.roadAddress !== '') {
+	        htmlAddresses.push('[도로명 주소] ' + address.roadAddress);
+	    }
 
-    infoWindow.setContent([
-      '<div style="padding:10px;min-width:200px;line-height:150%;">',
-      '<h4 style="margin-top:5px;">검색 좌표</h4><br />',
-      htmlAddresses.join('<br />'),
-      '</div>'
-    ].join('\n'));
+	    infoWindow.setContent([
+	      '<div style="padding:10px;min-width:200px;line-height:150%;">',
+	      '<h4 style="margin-top:5px;">검색 좌표</h4><br />',
+	      htmlAddresses.join('<br />'),
+	      '</div>'
+	    ].join('\n'));
 
-    infoWindow.open(map, latlng);
-  });
-}
+	    infoWindow.open(map, latlng);
+	  });
+	}
 
-function searchAddressToCoordinate(address) {
-  naver.maps.Service.geocode({
-    query: address
-  }, function(status, response) {
-    if (status === naver.maps.Service.Status.ERROR) {
-      if (!address) {
-        return alert('Geocode Error, Please check address');
-      }
-      return alert('Geocode Error, address:' + address);
-    }
+	function searchAddressToCoordinate(address) {
+	  naver.maps.Service.geocode({
+	    query: address
+	  }, function(status, response) {
+	    if (status === naver.maps.Service.Status.ERROR) {
+	      if (!address) {
+	        return alert('Geocode Error, Please check address');
+	      }
+	      return alert('Geocode Error, address:' + address);
+	    }
 
-    if (response.v2.meta.totalCount === 0) {
-      return alert('No result.');
-    }
+	    if (response.v2.meta.totalCount === 0) {
+	      return alert('No result.');
+	    }
 
-    var htmlAddresses = [],
-      item = response.v2.addresses[0],
-      point = new naver.maps.Point(item.x, item.y);
+	    var htmlAddresses = [],
+	      item = response.v2.addresses[0],
+	      point = new naver.maps.Point(item.x, item.y);
 
-    if (item.roadAddress) {
-      htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
-    }
+	    if (item.roadAddress) {
+	      htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
+	    }
 
-    if (item.jibunAddress) {
-      htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
-    }
+	    if (item.jibunAddress) {
+	      htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
+	    }
 
-    if (item.englishAddress) {
-      htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
-    }
+	    if (item.englishAddress) {
+	      htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
+	    }
 
-    infoWindow.setContent([
-      '<div style="padding:10px;min-width:200px;line-height:150%;">',
-      '<h4 style="margin-top:5px;">검색 주소 : '+ address +'</h4><br />',
-      htmlAddresses.join('<br />'),
-      '</div>'
-    ].join('\n'));
+	    infoWindow.setContent([
+	      '<div style="padding:10px;min-width:200px;line-height:150%;">',
+	      '<h4 style="margin-top:5px;">검색 주소 : '+ address +'</h4><br />',
+	      htmlAddresses.join('<br />'),
+	      '</div>'
+	    ].join('\n'));
 
-    map.setCenter(point);
-    infoWindow.open(map, point);
-  });
-}
+	    map.setCenter(point);
+	    infoWindow.open(map, point);
+	  });
+	}
 
-function initGeocoder() {
-  if (!map.isStyleMapReady) {
-    return;
-  }
+	function initGeocoder() {
+	  if (!map.isStyleMapReady) {
+	    return;
+	  }
 
-  map.addListener('click', function(e) {
-    searchCoordinateToAddress(e.coord);
-  });
+	  map.addListener('click', function(e) {
+	    searchCoordinateToAddress(e.coord);
+	  });
 
-  $('#address').on('keydown', function(e) {
-    var keyCode = e.which;
+	  $('#address').on('keydown', function(e) {
+	    var keyCode = e.which;
 
-    if (keyCode === 13) { // Enter Key
-      searchAddressToCoordinate($('#address').val());
-    }
-  });
+	    if (keyCode === 13) { // Enter Key
+	      searchAddressToCoordinate($('#address').val());
+	    }
+	  });
 
-  $('#submit').on('click', function(e) {
-    e.preventDefault();
+	  $('#submit').on('click', function(e) {
+	    e.preventDefault();
 
-    searchAddressToCoordinate($('#address').val());
-  });
+	    searchAddressToCoordinate($('#address').val());
+	  });
 
-  searchAddressToCoordinate('정자동 178-1');
-}
+	  searchAddressToCoordinate('정자동 178-1');
+	}
 
-naver.maps.onJSContentLoaded = initGeocoder;
-naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
-</script>
+	naver.maps.onJSContentLoaded = initGeocoder;
+	naver.maps.Event.once(map, 'init_stylemap', initGeocoder);
+ </script>
 
  <script type="text/javascript">
  //naver smartEditor
@@ -301,50 +317,77 @@ elClickedObj.on("click", function(e){
 		e.preventDefault();
 		console.log("submit clicked");
 
-		//날짜 date, time 값 합쳐서 보내기
-		var totalstartDt = $('input[name=startDt]').val() + " " +  $('input[name=startDt2]').val()
-		var totalendDt = $('input[name=endDt]').val() + " " +  $('input[name=endDt2]').val()
-		var totalrecsDt = $('input[name=recsDt]').val() + " " +  $('input[name=recsDt2]').val()
-		var totareceDt = $('input[name=receDt]').val() + " " +  $('input[name=receDt2]').val()
-		$('input[name=startDt]').val(totalstartDt);
-		$('input[name=endDt]').val(totalendDt);
-		$('input[name=recsDt]').val(totalrecsDt);
-		$('input[name=receDt]').val(totareceDt);
+		
+		
+ 		function Checkform(){
+			
+			var elements = document.frm.getElementsByTagName("input");
+			for (var i = 0; i < elements.length; i++){
+					if(elements[i].value == ""){
+ 						$("#errormsg").fadeIn().text("Error").css("color", "red");
+						alert("필수 입력값이 부족합니다.");
+						
+						elements[i].focus();
+						console.log(elements[i].name);
+						$("input[name="+elements[i].name+"]").css("box-shadow","0px 0px 10px #000");
+						
+						return false;
+					}
+				}
+			return true;
+		} 
 
-		 swal({
-			  title: "정말 모임을 게시하시겠습니까?",
-			  text: "잘못 입력한 부분은 없는지 확인해주세요!",
-			  icon: "warning",
-			  buttons: true,
-			  dangerMode: true,
-			})
-			.then((willDelete) => {
-			  if (willDelete) {
-					oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
-
-				    swal("게시물 작성이 완료되었습니다!", {
-				      icon: "success",
-				    }).then((willDelete)=>{$("form").submit();})
-
-			  } else {
-			    swal("게시물 게시가 취소되었습니다!");
-			  }
-			});
-
-		// ‘저장’ 버튼을 누르는 등 저장을 위한 액션을 했을 때 submitContents가 호출된다고 가정한다.
-		function submitContents(elClickedObj) {
-		 // 에디터의 내용이 textarea에 적용된다.
-		 oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
-
-		 // 에디터의 내용에 대한 값 검증은 이곳에서
-		 // document.getElementById("ir1").value를 이용해서 처리한다.
-
-		 console.log(document.getElementById("ir1").value);
-		 try {
-		     elClickedObj.form.submit();
-		 } catch(e) {}
-		}
-	});
+ 		
+ 		if(Checkform()){
+ 			swal({
+				  title: "정말 모임을 게시하시겠습니까?",
+				  text: "잘못 입력한 부분은 없는지 확인해주세요!",
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
+				}).then((willDelete) => {
+				  if (willDelete) {
+						oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+	
+					    swal("게시물 작성이 완료되었습니다!", {
+					      icon: "success",
+					    }).then((willDelete)=>{
+					    	//날짜 date, time 값 합쳐서 보내기
+				 			var totalstartDt = $('input[name=startDt]').val() + " " +  $('input[name=startDt2]').val()
+				 			var totalendDt = $('input[name=endDt]').val() + " " +  $('input[name=endDt2]').val()
+				 			var totalrecsDt = $('input[name=recsDt]').val() + " " +  $('input[name=recsDt2]').val()
+				 			var totareceDt = $('input[name=receDt]').val() + " " +  $('input[name=receDt2]').val()
+				 			$('input[name=startDt]').val(totalstartDt);
+				 			$('input[name=endDt]').val(totalendDt);
+				 			$('input[name=recsDt]').val(totalrecsDt);
+				 			$('input[name=receDt]').val(totareceDt);
+				 			
+				 			
+					    	$("form").submit();
+					    	});
+	
+				  } else {
+				    swal("게시물 게시가 취소되었습니다!");
+				  }
+				});
+	
+			// ‘저장’ 버튼을 누르는 등 저장을 위한 액션을 했을 때 submitContents가 호출된다고 가정한다.
+			function submitContents(elClickedObj) {
+			 // 에디터의 내용이 textarea에 적용된다.
+			 oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+	
+			 // 에디터의 내용에 대한 값 검증은 이곳에서
+			 // document.getElementById("ir1").value를 이용해서 처리한다.
+	
+			 console.log(document.getElementById("ir1").value);
+			 try {
+			     elClickedObj.form.submit();
+			 } catch(e) {}
+			}
+ 		}
+				 
+			
+		});
 </script>
 
  <script>
@@ -406,56 +449,13 @@ elClickedObj.on("click", function(e){
 					 	document.getElementById('profile').src = "display?fileName=" + callFileName;
 					 	$('input[name=img]').val(callFileName);
 						$(".uploadDiv").html(cloneObj.html());
+						$(".close-modal").trigger('click');
 					}
 				});
 
 			});
 		});
-
-			var cloneObj = $(".uploadDiv").clone();
-
-			$("#uploadBtn").on("click", function(e) {
-				var formData = new FormData();
-				var inputFile = $("input[name='uploadFile']");
-
-				//업로드한 썸네일 담기
-				var files = inputFile[0].files;
-				console.log(files);
-
-				//업로드한 파일 유효성 검사
-				for (var i = 0; i < files.length; i++) {
-					if (!checkExtension(files[i].name, files[i].size)) {
-						return false;
-					}
-					formData.append("uploadFile", files[i]);
-				}
-
-
-				$.ajax({
-					url : '/meet/uploadAjaxAction',
-					processData : false,
-					contentType : false,
-					data : formData,
-					type : 'POST',
-					dataType : 'json',
-					success : function(result) {
-						console.log(result);
-						console.log(result[0].fileName);
-
-					    var date = new Date();
-						var year = date.getFullYear();
-						var month = ("0" + (1 + date.getMonth())).slice(-2);
-						var day = ("0" + date.getDate()).slice(-2);
-
-						var callFileName = year + "/" + month + "/" + day + "/" + result[0].fileName;
-					 	document.getElementById('profile').src = "display?fileName=" + callFileName;
-					 	$('input[name=img]').val(callFileName);
-						$(".uploadDiv").html(cloneObj.html());
-					}
-				});
-
-			});
-		});
+	
 
  </script>
 </body>

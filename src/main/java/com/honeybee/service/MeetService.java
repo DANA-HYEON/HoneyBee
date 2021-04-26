@@ -56,4 +56,6 @@ public interface MeetService {
 	public MeetVO getImg(Long mno); //모임 썸네일 가져오기
 
 	public String getCid(Long mno, String cid3); //카테고리 이름에 따른 cid가져오기
+	
+	public boolean removeReply(Long mno); //모임 게시물이 삭제되면 댓글도 다 삭제되게
 }

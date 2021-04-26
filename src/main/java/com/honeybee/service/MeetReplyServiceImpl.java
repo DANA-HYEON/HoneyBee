@@ -73,4 +73,16 @@ public class MeetReplyServiceImpl implements MeetReplyService {
 		log.info("mreplyremove................");
 		mapper.mreplyremove(mrno);
 	}
+
+	@Override
+	public List<ReplyVO> checkReply(Long mno) {
+		log.info("check reply list......");
+		return mapper.checkReply(mno);
+	}
+
+	@Override
+	public int updateMrno2(Long mrno) {
+		log.info("update mrno2 .....................");
+		return mapper.updateMrno2(mrno);
+	}
 }

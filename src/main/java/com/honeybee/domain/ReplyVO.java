@@ -12,7 +12,7 @@ public class ReplyVO {
 	
 	private String id; //회원id
 	private String nick; //회원 닉네임
-	private Long mrno2; //대댓글번호
+	private String mrno2; //대댓글번호
 	private String reply; //댓글내용
 	private int layer; //대댓글계층
 	private int bundle; //댓글그룹
