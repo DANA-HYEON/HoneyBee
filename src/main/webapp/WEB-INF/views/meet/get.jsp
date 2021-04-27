@@ -480,16 +480,14 @@
 	  
 		  //deldt update
 		  replyService.remove(mrno, function(result){
-			  alert(result);
+			  if(result != null){
+				  //mrno2 'Y'로 변경
+				  replyService.updateMrno2(mrno, function(result){
+					  console.log("성공 : " + result);
+					  showList(1);
+				  });
+			  }
 		  });  
-		  
-		  //mrno2 'Y'로 변경
-		  replyService.updateMrno2(mrno, function(result){
-			  console.log("성공 : " + result);
-			  showList(1);
-		  });
-		  
-
 	  }else{
 		  
 		  //deldt update
