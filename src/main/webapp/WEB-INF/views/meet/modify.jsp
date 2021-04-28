@@ -35,7 +35,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 </head>
 <body>
-<form role="form" action="/meet/modify" method="post">
+<form name="frm" role="form" action="/meet/modify" method="post">
     <div class="wrap">
         <div class="box">
             <div class="b top">
@@ -58,7 +58,7 @@
                     <ul>
                         <li class="list +">+</li>
                         <li class="list -">-</li>
-                        <li class="btn"><button value="첨부파일">첨부파일</button></li>
+                        <li class="btn"><input type="file" name="uploadFile2" multiple>첨부파일</li>
                     </ul>
                 </div>
             </div>
@@ -68,10 +68,10 @@
                 <div class="bottom_box">
                     <div class="bot left">
                         <ul class="bottom_content">
-                        	<li>모임시작일자 <input type="text" class="datepicker" name="startDt" value='<c:out value="${meet.startDt}"/>' readonly><input class="platanusTime" name="startDt2" value='<c:out value="${meet.startDt}"/>' readonly/></li>
-                            <li>모임종료일자 <input type="text" class="datepicker"  name="endDt" value='<c:out value="${meet.endDt}"/>' readonly><input class="platanusTime" name="endDt2"  readonly/></li>
                             <li>모임모집시작일자 <input type="text" class="datepicker" name="recsDt" value='<c:out value="${meet.recsDt}"/>' readonly><input class="platanusTime" name="recsDt2"  readonly/></li>
                             <li>모임모집종료일자 <input type="text" class="datepicker" name="receDt" value='<c:out value="${meet.receDt}"/>' readonly><input class="platanusTime" name="receDt2" readonly/></li>
+                        	<li>모임시작일자 <input type="text" class="datepicker" name="startDt" value='<c:out value="${meet.startDt}"/>' readonly><input class="platanusTime" name="startDt2" value='<c:out value="${meet.startDt}"/>' readonly/></li>
+                            <li>모임종료일자 <input type="text" class="datepicker"  name="endDt" value='<c:out value="${meet.endDt}"/>' readonly><input class="platanusTime" name="endDt2"  readonly/></li>
                             <li>모집인원 <input type="text" id="recNo" name="recNo" value='<c:out value="${meet.recNo}"/>'></li>
                             <li>비용 <input id="free" type="radio" name="charge" value="N">무료<input id="charge" type="radio" name="charge" value="Y" >유료</li>
                             <li>온오프라인유무 <input id="ON" type="radio" name=onoff value="ON">온라인<input id="OFF" type="radio" name="onoff" value="OFF">오프라인</li>
@@ -162,7 +162,7 @@
 				    </div>
 				</div>
 
-                <button type="submit" data-oper='modfy'>수정 완료</button>
+                <button type="submit" data-oper='modify'>수정 완료</button>
                 <button type="reset" data-oper='delete'>모임 삭제</button>
                 <button type="submit" data-oper='list'>목록으로</button>
 
@@ -287,10 +287,69 @@ $(document).ready(function(){
 
 <script>
 var elClickedObj = $("button[type='submit']");
-elClickedObj.on("click", function(e){
+$("button[type='submit']").on("click", function(e){
 		e.preventDefault();
 		console.log("submit clicked");
 
+		//모임 날짜 유효성검사
+		var recsDt = $('input[name=recsDt]').val() +  $('input[name=recsDt2]').val();
+		var receDt = $('input[name=receDt]').val() +  $('input[name=receDt2]').val();
+		var startDt = $('input[name=startDt]').val() +  $('input[name=startDt2]').val();
+		var endDt = $('input[name=endDt]').val() +  $('input[name=endDt2]').val();
+		
+ 		function Checkform(){			
+			
+			//모임모집시작일자
+			recsDt = checkDate(recsDt);
+			//모임모집종료일자
+			receDt = checkDate(receDt);
+			//모임시작일자
+			startDt = checkDate(startDt);
+			//모임종료일자
+			endDt = checkDate(endDt);
+			
+			//날짜를 숫자로 바꾸는 메서드
+			function checkDate(text){
+				var textNum = text.toString().replaceAll(/[^0-9]/g,"");
+				var textInt = parseInt(textNum);
+				console.log("결과 : " + textInt);
+				return textInt;
+			}
+			
+			if(!(recsDt <= receDt)){
+				swal("모임모집종료일자는 모임모집시작일자보다 이전일 수 없습니다.");
+				return false;
+			}
+			
+			if(!(receDt <= startDt)){
+				swal("모임 시작일자가 모임모집종료일자보다 이전일 수 없습니다.");
+				return false;
+			}
+			
+			if(!(startDt <= endDt)){
+				swal("모임종료일자가 모임시작일자보다 이전일 수 없습니다.");
+				return false;
+			}
+				
+ 			//필수 입력값 유효성검사
+			/* var elements = document.frm.getElementsByTagName("input");
+			for (var i = 0; i < elements.length; i++){
+					if(elements[i].value == ""){
+ 						$("#errormsg").fadeIn().text("Error").css("color", "red");
+						alert("필수 입력값이 부족합니다.");
+						
+						elements[i].focus();
+						console.log(elements[i].name);
+						$("input[name="+elements[i].name+"]").css("box-shadow","0px 0px 10px #000");
+						
+						return false;
+					}
+				}
+			return true; */
+			return true;
+		} 
+
+ 	  if(Checkform()){
 		 swal({
 			  title: "정말 모임을 수정하시겠습니까?",
 			  text: "잘못 입력한 부분은 없는지 확인해주세요!",
@@ -299,27 +358,56 @@ elClickedObj.on("click", function(e){
 			  dangerMode: true,
 			}).then((willDelete) => {
 			  if (willDelete) {
-					//날짜 date, time 값 합쳐서 보내기
-					var totalstartDt = $('input[name=startDt]').val() + " " +  $('input[name=startDt2]').val()
-					var totalendDt = $('input[name=endDt]').val() + " " +  $('input[name=endDt2]').val()
-					var totalrecsDt = $('input[name=recsDt]').val() + " " +  $('input[name=recsDt2]').val()
-					var totareceDt = $('input[name=receDt]').val() + " " +  $('input[name=receDt2]').val()
-					
-					var totalplace = $('input[name=place]').val() + ", " + $('input[name=placeDetail]').val();
-					
-					$('input[name=startDt]').val(totalstartDt);
-					$('input[name=endDt]').val(totalendDt);
-					$('input[name=recsDt]').val(totalrecsDt);
-					$('input[name=receDt]').val(totareceDt);
-					$('input[name=place]').val(totalplace);
-					
 					oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
-
+				
 				    swal("게시물 수정이 완료되었습니다!", {
 				      icon: "success",
 				    }).then((willDelete)=>{
+				    	//날짜 date, time 값 합쳐서 보내기
+						var totalstartDt = $('input[name=startDt]').val() + " " +  $('input[name=startDt2]').val()
+						var totalendDt = $('input[name=endDt]').val() + " " +  $('input[name=endDt2]').val()
+						var totalrecsDt = $('input[name=recsDt]').val() + " " +  $('input[name=recsDt2]').val()
+						var totareceDt = $('input[name=receDt]').val() + " " +  $('input[name=receDt2]').val()
+						
+						var place = $('input[name=place]').val() + ", " + $('input[name=placeDetail]').val();
+						
+						$('input[name=startDt]').val(totalstartDt);
+						$('input[name=endDt]').val(totalendDt);
+						$('input[name=recsDt]').val(totalrecsDt);
+						$('input[name=receDt]').val(totareceDt);
+						$('input[name=place]').val(place);
+						
+						//현재날짜 추출
+			 			var date = new Date();
+					    var year = date.getFullYear();
+					    var month = ("0" + (1 + date.getMonth())).slice(-2);
+					    var day = ("0" + date.getDate()).slice(-2);
+					    var hour = date.getHours();
+				        hour = hour < 10 ? '0' + hour.toString() : hour.toString();
+				        var minites = date.getMinutes();
+				        minites = minites < 10 ? '0' + minites.toString() : minites.toString();
+				        
+					    var currDt = parseInt(year + month + day + hour + minites);
+					    
+			 			console.log("오늘 날짜 " + currDt);
+			 			
+			 			//현재 날짜 < 모임모집시작일자 : 모집대기
+			 			if(currDt < recsDt){
+			 				$('input[name=cid2]').val("RC001");
+			 			}
+			 			
+			 			//모임모집시작일자 <= 현재날짜 : 모집중
+			 			if(recsDt <= currDt){
+			 				$('input[name=cid2]').val("RC002");
+			 			}
+			 			
+			 			//모임모집종료일자 < 현재일자 || 모임종료일자 < 현재일자 : 모집완료
+			 			if(receDt < currDt || endDt < currDt){
+			 				$('input[name=cid2]').val("RC003");
+			 			}
+			 			
 				    	$("form").submit();
-				    	});
+				    });
 
 			  } else {
 			    swal("게시물 수정이 취소되었습니다!");
@@ -336,6 +424,8 @@ elClickedObj.on("click", function(e){
 		    elClickedObj.form.submit();
 		 } catch(e) {}
 		}
+		
+	  }
 	});
 </script>
 
@@ -677,7 +767,7 @@ function removeAllChildNods(el) {
     }
 }
  
- $(document).on("click", "li", function(e){
+ $(document).on("click", "#placesList li", function(e){
 	 console.log($(this).find('span')[1].innerText);
 	 var place = $(this).find('span')[1].innerText;
 	 $("input[name='place']").val(place);

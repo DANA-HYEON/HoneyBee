@@ -19,12 +19,12 @@
  <!-- kakao map api -->
  <!-- services 라이브러리 불러오기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3ed5d0df10f1c229f2d8ea4a01f8f665&libraries=services,clusterer,drawing"></script>
- <!-- 제이쿼리 ui css -->
- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- <!--제이쿼리 js-->
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
- <!--제이쿼리 ui js-->
- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" /> 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> 
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+
 
  <!-- timepicker -->
  <script type="text/javascript" src="/resources/timepicker/jquery.timepicker.js"></script>
@@ -37,6 +37,15 @@
 .search { position:absolute;z-index:1000;top:20px;left:20px; }
 .search #address { width:150px;height:20px;line-height:20px;border:solid 1px #555;padding:5px;font-size:12px;box-sizing:content-box; }
 .search .submit { height:30px;line-height:30px;padding:0 10px;font-size:12px;border:solid 1px #555;border-radius:3px;cursor:pointer;box-sizing:content-box; }
+
+.datepicker {
+	width : 210px;
+	margin-right : 10px;
+}
+
+.platanusTime{
+	width : 100px;
+}
 </style>
 </head>
 <body>
@@ -73,10 +82,10 @@
                 <div class="bottom_box">
                     <div class="bot left">
                         <ul class="bottom_content">
-                            <li>모임시작일자 <input type="text" class="datepicker" name="startDt" placeholder="날짜를 선택해주세요." readonly><input class="platanusTime" name="startDt2"  placeholder="시간" readonly/></li>
-                            <li>모임종료일자 <input type="text" class="datepicker" name="endDt" placeholder="날짜를 선택해주세요." readonly><input class="platanusTime" name="endDt2"  placeholder="시간" readonly/></li>
                             <li>모임모집시작일자 <input type="text" class="datepicker" name="recsDt" placeholder="날짜를 선택해주세요." readonly><input class="platanusTime" name="recsDt2"  placeholder="시간" readonly/></li>
                             <li>모임모집종료일자 <input type="text" class="datepicker" name="receDt" placeholder="날짜를 선택해주세요." readonly><input class="platanusTime" name="receDt2"  placeholder="시간" readonly/></li>
+                            <li>모임시작일자 <input type="text" class="datepicker" name="startDt" placeholder="날짜를 선택해주세요." readonly><input class="platanusTime" name="startDt2"  placeholder="시간" readonly/></li>
+                            <li>모임종료일자 <input type="text" class="datepicker" name="endDt" placeholder="날짜를 선택해주세요." readonly><input class="platanusTime" name="endDt2"  placeholder="시간" readonly/></li>
                             <li>모집인원 <input id="recNo" type="text" name="recNo" placeholder="내용을 입력해주세요."></li>
                             <li><p style="font-size:10px; color:red;">최대 4자리 숫자까지 입력이 가능합니다.</p></li>
                             <li>비용 <input type="radio" name="charge" value="N">무료 <input type="radio" name="charge" value="Y">유료</li>
@@ -198,9 +207,42 @@
 	});
 
 
-  $( function() {
-    $(".datepicker").datepicker();
-  });
+	//datepicker 유효성 검사	
+	//모임모집시작일자 recsDt
+	$("input[name=recsDt]").datepicker("option", "maxDate", $("input[name=receDt]").val());
+	$("input[name=recsDt]").datepicker({
+		minDate : 0,
+		onClose:function(selectedDate){
+		  $("input[name=receDt]").datepicker("option", "minDate", selectedDate);
+		}
+	});
+	
+	//모임모집종료일자 receDt
+	$("input[name=receDt]").datepicker("option", "maxDate", $("input[name=startDt]").val());
+	$("input[name=receDt]").datepicker({
+		minDate : 0,
+		onClose:function(selectedDate){
+			$("input[name=recsDt]").datepicker("option", "maxDate", selectedDate);
+			$("input[name=startDt]").datepicker("option", "minDate", selectedDate);
+		}
+	});
+	
+	//모임시작일자
+	$("input[name=startDt]").datepicker("option", "maxDate", $("input[name=endDt]").val());
+	$("input[name=startDt]").datepicker({
+		minDate : 0,
+		onClose:function(selectedDate){
+		  $("input[name=endDt]").datepicker("option", "minDate", selectedDate);
+		}
+	});
+	
+	//모임종료일자
+	$("input[name=endDt]").datepicker({
+		minDate : 0,
+		onClose:function(selectedDate){
+			$("input[name=startDt]").datepicker("option", "maxDate", selectedDate);
+		}
+	});
 
   $.datepicker.setDefaults({
       dateFormat: 'yy-mm-dd',
@@ -214,7 +256,6 @@
       showMonthAfterYear: true,
       yearSuffix: '년'
   });
-
 </script>
 
  <script type="text/javascript">
@@ -508,7 +549,7 @@ function removeAllChildNods(el) {
     }
 }
  
- $(document).on("click", "li", function(e){
+ $(document).on("click", "#placesList li", function(e){
 	 console.log($(this).find('span')[1].innerHTML);
 	 var place = $(this).find('span')[1].innerHTML;
 	 $("input[name='place']").val(place);
@@ -518,15 +559,52 @@ function removeAllChildNods(el) {
 
 <script>
 
-var elClickedObj = $("button[name='reg']");
-elClickedObj.on("click", function(e){
+ var elClickedObj = $("button[name='reg']"); 
+$("button[name='reg']").on("click", function(e){
 		e.preventDefault();
 		console.log("submit clicked");
-
 		
+	    //모임 날짜 유효성검사
+		var recsDt = $('input[name=recsDt]').val() +  $('input[name=recsDt2]').val();
+		var receDt = $('input[name=receDt]').val() +  $('input[name=receDt2]').val();
+		var startDt = $('input[name=startDt]').val() +  $('input[name=startDt2]').val();
+		var endDt = $('input[name=endDt]').val() +  $('input[name=endDt2]').val();
 		
- 		function Checkform(){
+ 		function Checkform(){			
 			
+			//모임모집시작일자
+			recsDt = checkDate(recsDt);
+			//모임모집종료일자
+			receDt = checkDate(receDt);
+			//모임시작일자
+			startDt = checkDate(startDt);
+			//모임종료일자
+			endDt = checkDate(endDt);
+			
+			//날짜를 숫자로 바꾸는 메서드
+			function checkDate(text){
+				var textNum = text.toString().replaceAll(/[^0-9]/g,"");
+				var textInt = parseInt(textNum);
+				console.log("결과 : " + textInt);
+				return textInt;
+			}
+			
+			if(!(recsDt <= receDt)){
+				swal("모임모집종료일자는 모임모집시작일자보다 이전일 수 없습니다.");
+				return false;
+			}
+			
+			if(!(receDt <= startDt)){
+				swal("모임 시작일자가 모임모집종료일자보다 이전일 수 없습니다.");
+				return false;
+			}
+			
+			if(!(startDt <= endDt)){
+				swal("모임종료일자가 모임시작일자보다 이전일 수 없습니다.");
+				return false;
+			}
+				
+ 			//필수 입력값 유효성검사
 			var elements = document.frm.getElementsByTagName("input");
 			for (var i = 0; i < elements.length; i++){
 					if(elements[i].value == ""){
@@ -559,10 +637,10 @@ elClickedObj.on("click", function(e){
 					      icon: "success",
 					    }).then((willDelete)=>{
 					    	//날짜 date, time 값 합쳐서 보내기
-				 			var totalstartDt = $('input[name=startDt]').val() + " " +  $('input[name=startDt2]').val()
-				 			var totalendDt = $('input[name=endDt]').val() + " " +  $('input[name=endDt2]').val()
-				 			var totalrecsDt = $('input[name=recsDt]').val() + " " +  $('input[name=recsDt2]').val()
-				 			var totareceDt = $('input[name=receDt]').val() + " " +  $('input[name=receDt2]').val()
+				 			var totalstartDt = $('input[name=startDt]').val() + " " +  $('input[name=startDt2]').val();
+				 			var totalendDt = $('input[name=endDt]').val() + " " +  $('input[name=endDt2]').val();
+				 			var totalrecsDt = $('input[name=recsDt]').val() + " " +  $('input[name=recsDt2]').val();
+				 			var totareceDt = $('input[name=receDt]').val() + " " +  $('input[name=receDt2]').val();
 				 			
 				 			//주소 상세주소 값 합쳐서 보내기
 				 			var place = $('input[name="place"]').val() + ", " + $('input[name="placeDetail"]').val();
@@ -573,8 +651,36 @@ elClickedObj.on("click", function(e){
 				 			$('input[name=receDt]').val(totareceDt);
 				 			$('input[name=place]').val(place);
 				 			
+				 			//현재날짜 추출
+				 			var date = new Date();
+						    var year = date.getFullYear();
+						    var month = ("0" + (1 + date.getMonth())).slice(-2);
+						    var day = ("0" + date.getDate()).slice(-2);
+						    var hour = date.getHours();
+					        hour = hour < 10 ? '0' + hour.toString() : hour.toString();
+					        var minites = date.getMinutes();
+					        minites = minites < 10 ? '0' + minites.toString() : minites.toString();
+					        
+					        var currDt = parseInt(year + month + day + hour + minites);
+				 			console.log("오늘 날짜 " + currDt);
+				 			
+				 			//현재 날짜 < 모임모집시작일자 : 모집대기
+				 			if(currDt < recsDt){
+				 				$('input[name=cid2]').val("RC001");
+				 			}
+				 			
+				 			//모임모집시작일자 <= 현재날짜 : 모집중
+				 			if(recsDt <= currDt){
+				 				$('input[name=cid2]').val("RC002");
+				 			}
+				 			
+				 			//모임모집종료일자 < 현재일자 || 모임종료일자 < 현재일자 : 모집완료
+				 			if(receDt < currDt || endDt < currDt){
+				 				$('input[name=cid2]').val("RC003");
+				 			}
+				 			
 					    	$("form").submit();
-					    	});
+					    });
 	
 				  } else {
 				    swal("게시물 게시가 취소되었습니다!");
@@ -594,10 +700,9 @@ elClickedObj.on("click", function(e){
 			     elClickedObj.form.submit();
 			 } catch(e) {}
 			}
- 		}
-				 
+ 		}		 
 			
-		});
+	});
 </script>
 
  <script>

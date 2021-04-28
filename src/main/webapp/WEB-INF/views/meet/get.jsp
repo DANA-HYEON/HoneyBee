@@ -65,9 +65,9 @@
           <div class="content">
             <ul>
               <li>모집상태   <c:out value="${meet.cid2}"/></li>
-              <li>모임일 <c:out value="${meet.startDt}"/> ~ <c:out value="${meet.endDt}"/></li>
+              <li>모임모집시작일자 : <c:out value="${meet.recsDt}"/> 모임모집종료일자  : <c:out value="${meet.receDt}"/></li>
+              <li>모임시작일자 :  <c:out value="${meet.startDt}"/>  모임종료일자 : <c:out value="${meet.endDt}"/></li>
               <li>모임장소 <c:out value="${meet.place}"/></li>
-              <li>모임모집일 <c:out value="${meet.recsDt}"/> ~ <c:out value="${meet.receDt}"/></li>
               <li>모집인원   <c:out value="${meet.recNo}"/></li>
               <li>현재인원   <c:out value="${meet.currNo}"/></li>
               <li>취소인원   <c:out value="${meet.cnclNo}"/></li>

@@ -146,8 +146,8 @@
 
 <select id="read" resultType="com.honeybee.domain.MeetVO">
 	select MNO,
-			CID,
-			CID2,
+			m.CID,
+			c.cname AS CID2,
 			CID3,
 			ID,
 			TITLE,
@@ -170,8 +170,8 @@
 			REGDT,
 			UPDDT,
 			DELDT
-			from MEET
-			where mno = #{mno}
+			from MEET m, code_table c
+			where mno = #{mno} and m.cid2 = c.cid
 </select>
 
 <update id="delete">
@@ -184,6 +184,7 @@
 			TITLE = #{title},
 			SMRY = #{smry},
 			CID = #{cid},
+			CID2 = #{cid2},
 			CID3 = (select cname from code_table where cid = #{cid}),
 			CONTENT = #{content},
 			STARTDT = #{startDt},
