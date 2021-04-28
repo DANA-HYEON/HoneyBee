@@ -89,29 +89,58 @@
 
                     </div>
                     <div class="bot right">
+                    
                         <div class="thumb title">썸네일</div>
                         <!-- modal -->
-                        <div id="uploadDiv" class="modal">
+                        <!-- <div id="uploadDiv" class="modal">
 							<input type="file" name="uploadFile">
 							<button id='uploadBtn'>업로드 하기</button>
-						</div>
+						</div> -->
 
-                        <p><a href="#uploadDiv" rel="modal:open">사진 업로드</a></p>
+
+                        <!-- <p><a href="#uploadDiv" rel="modal:open">사진 업로드</a></p> -->
+                       
+                        <!-- Button trigger modal --> 
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+						  사진 업로드
+						</button>
+						
+						
+						<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="staticBackdropLabel">썸네일 업로드</h5>
+						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						      </div>
+						      <div class="modal-body">
+						        <input type="file" name="uploadFile">
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						        <button type="button" id='uploadBtn' class="btn btn-primary">업로드 하기</button>
+						      </div>
+						    </div>
+						  </div>
+						</div> 
+						
+						
                         <div class="img">
                         	<img id="profile" src="/resources/img/logo.png">
                         </div>
                         <input type="hidden" name="img">
+                        
                     </div>
 
                 </div>
-                <!-- <div><strong>모임 장소</strong></div> -->
+                <div><strong>모임 장소</strong></div>
                 <div class="input-group mb-3">
-				  <button class="btn btn-outline-secondary" type="button" id="button-addon1"><strong>모임 장소</strong></button>
-				  <input type="text" class="form-control" name="place" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+				  <button class="btn btn-outline-secondary" type="button" id="button-addon1"><strong>도로명 주소</strong></button>
+				  <input type="text" class="form-control" name="place" placeholder="아래 지도 리스트에서 선택해주세요." aria-label="Example text with button addon" aria-describedby="button-addon1">
 				</div>
 				<div class="input-group mb-3">
 				  <button class="btn btn-outline-secondary" type="button" id="button-addon1"><strong>상세 주소</strong></button>
-				  <input type="text" class="form-control" name="placeDetail" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+				  <input type="text" class="form-control" name="placeDetail" placeholder="상세 주소를 수기입력해주세요." aria-label="Example text with button addon" aria-describedby="button-addon1">
 				</div>
                 
 				<div class="map_wrap">
@@ -480,8 +509,8 @@ function removeAllChildNods(el) {
 }
  
  $(document).on("click", "li", function(e){
-	 console.log($(this).find('span')[1].innerText);
-	 var place = $(this).find('span')[1].innerText;
+	 console.log($(this).find('span')[1].innerHTML);
+	 var place = $(this).find('span')[1].innerHTML;
 	 $("input[name='place']").val(place);
  });
 </script>
@@ -536,7 +565,7 @@ elClickedObj.on("click", function(e){
 				 			var totareceDt = $('input[name=receDt]').val() + " " +  $('input[name=receDt2]').val()
 				 			
 				 			//주소 상세주소 값 합쳐서 보내기
-				 			var place = $('input[name="place"]').val() + " " + $('input[name="placeDetail"]').val();
+				 			var place = $('input[name="place"]').val() + ", " + $('input[name="placeDetail"]').val();
 					    	
 				 			$('input[name=startDt]').val(totalstartDt);
 				 			$('input[name=endDt]').val(totalendDt);

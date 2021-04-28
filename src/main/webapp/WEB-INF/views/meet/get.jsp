@@ -7,22 +7,26 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/resources/css/meet/read.css">
+<!-- sweetAlert -->
+ <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+ <link rel="stylesheet" href="/resources/css/meet/read.css">
 
-    <!-- 희승 댓글 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/resources/css/free/get.css">
+ <!-- 희승 댓글 -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+ <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="/resources/css/free/get.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+ <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
 
-    <!-- sweetAlert -->
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<!-- naver map api -->
-	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=i1ygn9fyrm"></script>
+ <!-- sweetAlert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<!-- kakao map api -->
+<!-- services 라이브러리 불러오기 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3ed5d0df10f1c229f2d8ea4a01f8f665&libraries=services,clusterer,drawing"></script>
 </head>
 <body>
 
@@ -95,8 +99,9 @@
       ${meet.content}
       </div>
 
-	  <h6>모임 장소</h6>
-      <div class="map" id="map" style="width:100%;height:500px;"></div>
+	  <div><strong>모임 장소</strong></div>
+      <div id="map" style="width:100%;height:500px;"></div>
+      
       <hr class="second_line" style="border:1px color= silver;" width="90%">
 
 
@@ -137,11 +142,52 @@
 	        </div>
 	    </div>
     </div>
-
+</div>
   <script type="text/javascript" src="/resources/js/meetReply.js"></script>
   <script type="text/javascript" src="/resources/js/meetThumb.js"></script>
   <script type="text/javascript" src="/resources/js/meetApply.js"></script>
 
+  <script>
+  var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+  mapOption = {
+      center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+      level: 1 // 지도의 확대 레벨
+  };  
+
+//지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+//주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+var destination = "${meet.place}";
+console.log("destination" + destination);
+//주소로 좌표를 검색합니다
+geocoder.addressSearch(destination, function(result, status) {
+
+  // 정상적으로 검색이 완료됐으면 
+   if (status === kakao.maps.services.Status.OK) {
+
+      var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+      // 결과값으로 받은 위치를 마커로 표시합니다
+      var marker = new kakao.maps.Marker({
+          map: map,
+          position: coords
+      });
+
+      // 인포윈도우로 장소에 대한 설명을 표시합니다
+      var infowindow = new kakao.maps.InfoWindow({
+          content: '<div style="width:150px;text-align:center;padding:6px 0;">'+ destination +'</div>'
+      });
+      infowindow.open(map, marker);
+
+      // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+      map.setCenter(coords);
+  } 
+});   
+  </script>
+  
   <script>
   $(document).ready(function(){
 	   var link = 'http://' + '<c:out value="${meet.link}"/>';
@@ -477,17 +523,25 @@
 	  
 	  if(layer == 0 && count > 1){
 		  console.log("대댓글이 있는 원 댓글입니다");
-	  
-		  //deldt update
-		  replyService.remove(mrno, function(result){
-			  if(result != null){
-				  //mrno2 'Y'로 변경
-				  replyService.updateMrno2(mrno, function(result){
-					  console.log("성공 : " + result);
-					  showList(1);
-				  });
-			  }
-		  });  
+		  swal("대댓글이 있는 댓글은 삭제된 메시지로 표시되며 복구할 수 없습니다. 삭제하시겠습니까?", {
+			  buttons: ["취소", "삭제"],
+			}).then((willDelete) => {
+				if(willDelete){
+					//deldt update
+					  replyService.remove(mrno, function(result){
+						  if(result != null){
+							  //mrno2 'Y'로 변경
+							  replyService.updateMrno2(mrno, function(result){
+								  console.log("성공 : " + result);
+								  showList(1);
+							  });
+						  }
+					  }); 	
+				}else{
+					swal("댓글 삭제가 취소되었습니다!");
+				}
+			});
+
 	  }else{
 		  
 		  //deldt update
@@ -588,44 +642,4 @@
   autosize($("textarea"));
  </script>
 
-
- <script>
-//naver map api
-var HOME_PATH = window.HOME_PATH || '.';
-
-var cityhall = new naver.maps.LatLng(37.5666805, 126.9784147),
-    map = new naver.maps.Map('map', {
-        center: cityhall.destinationPoint(0, 500),
-        zoom: 15
-    }),
-    marker = new naver.maps.Marker({
-        map: map,
-        position: cityhall
-    });
-
-var contentString = [
-        '<div class="iw_inner">',
-        '   <h3>서울특별시청</h3>',
-        '   <p>서울특별시 중구 태평로1가 31 | 서울특별시 중구 세종대로 110 서울특별시청<br />',
-        '       <br />',
-        '       02-120 | 공공,사회기관 &gt; 특별,광역시청<br />',
-        '       <a href="http://www.seoul.go.kr" target="_blank">www.seoul.go.kr/</a>',
-        '   </p>',
-        '</div>'
-    ].join('');
-
-var infowindow = new naver.maps.InfoWindow({
-    content: contentString
-});
-
-naver.maps.Event.addListener(marker, "click", function(e) {
-    if (infowindow.getMap()) {
-        infowindow.close();
-    } else {
-        infowindow.open(map, marker);
-    }
-});
-
-infowindow.open(map, marker);
-</script>
 <%@include file="../include/footer.jsp" %>
