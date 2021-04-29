@@ -70,25 +70,18 @@
 
     <select id="user_detailregion_select">
       <option>구</option>
-
     </select>
 
-    <select class="cat" >
+    <select class="cost">
       <option>비용</option>
       <option>유료</option>
       <option>무료</option>
     </select>
 
-    <select class="cat" >
+    <select class="time">
       <option>시간</option>
-      <option>스터디</option>
-      <option>취미</option>
-      <option>사랑</option>
-      <option>김자바</option>
-      <option>이자바</option>
-      <option>어쩌구</option>
-      <option>저쩌구</option>
-      <option>하이룽</option>
+      <option>오전</option>
+      <option>오후</option>
      </select>
 
      <div class="checkedBox"> <input type="checkbox">마감된 모임 포함</div>

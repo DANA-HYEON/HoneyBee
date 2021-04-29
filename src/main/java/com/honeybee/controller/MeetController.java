@@ -129,6 +129,7 @@ public class MeetController {
 		log.info("GetMapping get cri : " + cri.getCid());
 
 		MeetVO vo = service.get(mno);
+		
 		model.addAttribute("meet", vo);
 
 
