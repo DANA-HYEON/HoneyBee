@@ -351,7 +351,19 @@
 		      IMG,
 		      REGDT,
 		      UPDDT,
-		      DELDT from meet where DELDT is null order by thumb desc, hit desc, regdt desc
+		      DELDT from meet
+		      <choose>
+			  <when test='city != null and fullCity.equals("구")'>
+		      <![CDATA[ where (DELDT is null) and place like (select cname from code_table where cid=#{city})||'%' order by thumb desc, hit desc, regdt desc]]>
+			  </when>
+			  <when test='city != null and fullCity != null'>
+		      <![CDATA[ where (DELDT is null) and place like (select cname from code_table where cid=#{city})||'%' and place like '%'||#{fullCity}||'%' order by thumb desc, hit desc, regdt desc]]>
+			  </when>
+			  <when test='city == null'>
+			  <![CDATA[ where (DELDT is null) order by thumb desc, hit desc, regdt desc]]>
+			  </when>
+			  </choose>
+		      
 	       	</when>
 	       	<when test='order == "latest"'>
 	       	 meet
@@ -359,9 +371,17 @@
 	       </choose>
 		   </trim>
 
-
-	      <![CDATA[ where (DELDT is null) and ]]>
-
+		  <choose>
+		  <when test='city != null and fullCity.equals("구")'>
+	      <![CDATA[ where (DELDT is null) and place like (select cname from code_table where cid=#{city})||'%' and ]]>
+		  </when>
+		  <when test='city != null and fullCity != null'>
+	      <![CDATA[ where (DELDT is null) and place like (select cname from code_table where cid=#{city})||'%' and place like '%'||#{fullCity}||'%' and ]]>
+		  </when>
+		  <when test='city == null'>
+		  <![CDATA[ where (DELDT is null) and ]]>
+		  </when>
+		  </choose>
 	      <include refid="criteria"></include>
 
 	      <![CDATA[
@@ -430,8 +450,18 @@
 	      REGDT,
 	      UPDDT,
 	      DELDT
-	      from meet where  (DELDT is null) and (CID = #{cid}) and ]]>
-
+	      from meet ]]>
+	      <choose>
+	      <when test='city != null and fullCity.equals("구")'>
+	      <![CDATA[ where (DELDT is null) and (CID = #{cid}) and place like (select cname from code_table where cid=#{city})||'%' and ]]>
+		  </when>
+		  <when test='city != null and fullCity != null'>
+	      <![CDATA[ where (DELDT is null) and (CID = #{cid}) and place like (select cname from code_table where cid=#{city})||'%' and place like '%'||#{fullCity}||'%' and ]]>
+		  </when>
+		  <when test='city == null'>
+		  <![CDATA[ where (DELDT is null) and (CID = #{cid}) and ]]>
+		  </when>
+		  </choose>
 	      <include refid="criteria"></include>
 
 	      <![CDATA[
@@ -443,11 +473,35 @@
 </select>
 
 <select id="getTotalCount" resultType="int">
-	select count(*) from meet where (delDt is null) and <include refid="criteria"></include> mno > 0
+	select count(*) from meet
+	<choose>
+	  <when test='city != null and fullCity.equals("구")'>
+	     where (DELDT is null) and place like (select cname from code_table where cid=#{city})||'%' and
+	  </when>
+	  <when test='city != null and fullCity != null'>
+	     where (DELDT is null) and place like (select cname from code_table where cid=#{city})||'%' and place like '%'||#{fullCity}||'%' and
+	  </when>
+	  <when test='city == null'>
+	     where (DELDT is null) and
+	  </when>
+	  </choose>
+	 <include refid="criteria"></include> mno > 0
 </select>
 
 <select id="getTotalCountWithCat" resultType="int">
-	select count(*) from meet where (delDt is null) and (CID=#{cid}) and <include refid="criteria"></include> mno > 0
+	select count(*) from meet 
+	<choose>
+     <when test='city != null and fullCity.equals("구")'>
+     where (DELDT is null) and (CID = #{cid}) and place like (select cname from code_table where cid=#{city})||'%' and
+	 </when>
+	 <when test='city != null and fullCity != null'>
+	 where (DELDT is null) and (CID = #{cid}) and place like (select cname from code_table where cid=#{city})||'%' and place like '%'||#{fullCity}||'%' and
+	 </when>
+	 <when test='city == null'>
+	 where (DELDT is null) and (CID = #{cid}) and
+	 </when>
+	 </choose>
+	<include refid="criteria"></include> mno > 0
 </select>
 
 <select id="getListTest" resultType="com.honeybee.domain.MeetVO">

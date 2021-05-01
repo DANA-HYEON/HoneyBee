@@ -20,6 +20,11 @@ public class Criteria {
     
     //정렬기준
     private String order;
+    
+    private String city; //시
+	private String fullCity; //군구
+	private String cost; //비용
+	private String time; //시간
 	
 	public Criteria() {
 		this(1, 10, "latest");

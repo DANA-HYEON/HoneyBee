@@ -60,15 +60,14 @@
         </c:forEach>
     </select>
 
-
-    <select id="user_region_select">
+    <select id="user_region_select" name="city">
       <option>지역분류</option>
       <c:forEach items="${upper}" var="upper">
 		<option value="${upper.CId}">${upper.CName}</option>
 	  </c:forEach>
     </select>
 
-    <select id="user_detailregion_select">
+    <select id="user_detailregion_select" name="fullCity">
       <option>구</option>
     </select>
 
@@ -83,7 +82,7 @@
       <option>오전</option>
       <option>오후</option>
      </select>
-
+     
      <div class="checkedBox"> <input type="checkbox">마감된 모임 포함</div>
 
      <input type="submit" value="검색">
@@ -93,8 +92,8 @@
 
 
     <div class="board_list_wrap">
-      <div class="box"><a class="latest" href="/meet/list">최신순</a></div>
-      <div class="box"><a class="Popularity" href="/meet/list?order=popul" >인기순</a></div>
+      <div class="box"><a class="latest" name="order" href="/meet/list">최신순</a></div>
+      <div class="box"><a class="Popularity" href="/meet/list?order=popul">인기순</a></div>
       <table class="board_list">
           <caption>게시판 목록</caption>
           <thead>
@@ -188,6 +187,8 @@
      	   	<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'>
      	   	<input type='hidden' name='cid' value='<c:out value="${pageMaker.cri.cid}"/>'>
      	   	<input type='hidden' name='order' value='<c:out value="${pageMaker.cri.order}"/>'>
+     	   	<input type='hidden' name='city' value='<c:out value="${pageMaker.cri.city}"/>'>
+     	   	<input type='hidden' name='fullCity' value='<c:out value="${pageMaker.cri.fullCity}"/>'>
      	   </form>
   </div>
 
@@ -282,22 +283,23 @@
 		 });
 
 
-		/* 카테코리 선택 검색 후 카테고리 유지 */
-
+		/*  검색 조건 선택 후 해당 값들  유지 */
 		 console.log("카테고리 : " + "${pageMaker.cri.cid}");
 		 var pickCat = "${pageMaker.cri.cid}";
-
+		 var city = "${cri.city}";
+		 //카테고리
 		 $("#cat").val(pickCat).prop("selected",true);
-
-
-
-		 //최신순 인기순
-
-
+		 if(city.length != 0){
+			 //시
+			 $("#user_region_select").val(city).prop("selected", true); 
+			 //군구를 표시하기 위해 ajax를 사용하기 위한 강제클릭이벤트
+			 $("#user_region_select").val(city).click(); 						 
+		 }
 	 });
  </script>
  <script>
-	$('#user_region_select').on('change',function() {
+
+	$('#user_region_select').on('click',function() {
 			$.ajax({
 				url : "/meet/detailregion",
 				type : "post", //get으로 바꾸세요
@@ -311,12 +313,17 @@
 					for (let i = 0; i < data.length; i++) {
 						$("#user_detailregion_select").append('<option>' + data[i].cname + '</option>');
 					}
+					
+					
+					/*  검색 조건 선택 후 해당 값들  유지 */
+					var fullCity = "${cri.city}";
+					if(fullCity.length != 0){
+						//군구
+						 $("#user_detailregion_select").val("${cri.fullCity}").prop("selected", true);						
+					}
 				}
 			});
 		});
 
 	 //세부지역 긁어오기
- </script>
- <script>
- //document.getElementById('profile').src = "display?fileName=" + "2021/04/18/HOHO995@naver.com3087c0b5-cd9f-44ad-8159-f76d16ae4f7d.JPG";
  </script>

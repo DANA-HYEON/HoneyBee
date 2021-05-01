@@ -64,8 +64,8 @@ public class MeetController {
 
 	@RequestMapping("/list")
 	public void list(@ModelAttribute("cri") Criteria cri, Model model) {
-		log.info("list total");
 		log.info("list total : " + cri);
+		
 		System.out.println("category pick : " + cri.getCid());
 		model.addAttribute("upper", cService.upperregion());
 

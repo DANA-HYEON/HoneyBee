@@ -172,7 +172,8 @@
                 <input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
                 <input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
                 <input type='hidden' name='cid' value='<c:out value="${cri.cid}"/>'>
-
+                <input type='hidden' name='city' value='<c:out value="${cri.city}"/>'>
+                <input type='hidden' name='fullCity' value='<c:out value="${cri.fullCity}"/>'>
             </div>
         </div>
     </div>
@@ -471,6 +472,11 @@ $("button[type='submit']").on("click", function(e){
 				 var keywordTag = $("input[name='keyword']").clone();
 				 var typeTag = $("input[name='type']").clone();
 				 var cidTag = $("input[name='cid']").clone();
+				 $("input[name='place']").on("change", function(){
+					 
+				 });
+				 var cityTag = $("input[name='city']").clone();
+				 var fullCityTag = $("input[name='fullCity']").clone();
 
 				 formObj.empty();
 
@@ -479,6 +485,8 @@ $("button[type='submit']").on("click", function(e){
 				 formObj.append(keywordTag);
 				 formObj.append(typeTag);
 				 formObj.append(cidTag);
+				 formObj.append(cityTag);
+				 formObj.append(fullCityTag);
 
 				 formObj.submit();
 			 }

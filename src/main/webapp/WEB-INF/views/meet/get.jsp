@@ -117,6 +117,8 @@
 	  	<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>
 	  	<input type='hidden' name='cid' value='<c:out value="${cri.cid}"/>'>
 		<input type='hidden' name='order' value='<c:out value="${cri.order}"/>'>
+		<input type='hidden' name='city' value='<c:out value="${cri.city}"/>'>
+		<input type='hidden' name='fullCity' value='<c:out value="${cri.fullCity}"/>'>
 	  </form>
 
 
