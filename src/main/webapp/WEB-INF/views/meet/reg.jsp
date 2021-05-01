@@ -12,6 +12,7 @@
 <!-- smartEditor -->
 <script type="text/javascript" src="/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 <!-- sweetAlert -->
+
  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
  <!-- modal -->
  <script	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
@@ -24,7 +25,6 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" /> 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script> 
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-
 
  <!-- timepicker -->
  <script type="text/javascript" src="/resources/timepicker/jquery.timepicker.js"></script>
@@ -256,6 +256,7 @@
       showMonthAfterYear: true,
       yearSuffix: '년'
   });
+  
 </script>
 
  <script type="text/javascript">
